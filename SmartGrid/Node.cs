@@ -8,17 +8,13 @@ namespace SmartGrid
 {
     class Node : IHeader
     {
-        private int _pos;
         private string _val;
-
+        private string _header;
         public string Val
         {
             get { return _val; }
             set { _val = value; }
         }
-
-        private string _header;
-
         public string Header
         {
             get { return _header; }

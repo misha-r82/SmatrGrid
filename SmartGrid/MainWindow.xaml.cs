@@ -20,9 +20,20 @@ namespace SmartGrid
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SmartFiled _field;
         public MainWindow()
         {
             InitializeComponent();
+            _field = new SmartFiled();
+            tag11.DataContext = _field.Cells[0, 0];
+            tag12.DataContext = _field.Cells[0, 1];
+            tag13.DataContext = _field.Cells[0, 2];
+            tag21.DataContext = _field.Cells[1, 0];
+            tag22.DataContext = _field.Cells[1, 1];
+            tag23.DataContext = _field.Cells[1, 2];
+            tag31.DataContext = _field.Cells[2, 0];
+            tag32.DataContext = _field.Cells[2, 1];
+            tag33.DataContext = _field.Cells[2, 2];
         }
     }
 }
