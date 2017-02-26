@@ -15,7 +15,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox Name="txtHeader" Text="{Binding Header}"/>
-        <ListBox Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}" dr>
+        <ListBox Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}" PreviewMouseDown="ListBox_OnPreviewMouseDown"
+                  Drop="ListBox_Drop" AllowDrop="True">
             <ListBox.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="TextWrapping" Value="Wrap"/>
@@ -31,10 +32,12 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Text="{Binding Header}" Grid.Row="0" HorizontalAlignment="Stretch" MouseDown="UIElement_OnMouseDown"/>
-                        <Button Name="btnDrop" Content="=>" Click="ButtonBase_OnClick"/>
-                        <TextBox Text="{Binding Val}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Grid.ColumnSpan="1"/>
+                        <TextBox Text="{Binding Val}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Grid.ColumnSpan="3"/>
+                        <StackPanel Name="panelDrag" PreviewMouseDown="UIElement_OnPreviewMouseDown" 
+                                    Background="Blue" Grid.Column="2" Grid.RowSpan="2"/>
                     </Grid>
                 </DataTemplate>
                 <DataTemplate x:Key="HeadNodeTemplate">

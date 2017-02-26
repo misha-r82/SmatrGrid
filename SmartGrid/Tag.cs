@@ -28,14 +28,18 @@ namespace SmartGrid
             var node = new Node() { Header = "Header", Val = "Val" };
             Nodelist.Add(0, node);
         }
-        public void Add(Node node)
+        public void Add(Node node, bool notify = true)
         {
             var topKey = Nodelist.Keys[Nodelist.Count - 1];
             Nodelist.Add(topKey+1, node);
-            OnCollectionChanged();
-
+            if (notify) OnCollectionChanged();
         }
-
+        public void Add(IEnumerable<Node> nodes)
+        {
+            foreach (Node node in nodes)
+                Add(node, false);
+            OnCollectionChanged();
+        }
         public void Remove(Node node)
         {
             

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,26 @@ namespace SmartGrid
         {
             var btn = sender as Button;
             DragDrop.DoDragDrop(btn, "123", DragDropEffects.Copy);  
+        }
+        private void ListBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ListBox_Drop(object sender, DragEventArgs e)
+        {
+            ListBox parent = (ListBox)sender;
+            var data = (Node[])e.Data.GetData(typeof(Node[]));
+            var tag = lstMain.DataContext as Tag;
+            tag.Add(data);
+        }
+
+        private void UIElement_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            var data = lstMain.SelectedItems.OfType<Node>().ToArray();
+            if (data.Length == 0) data = new[] {(Node) element.DataContext};
+                DragDrop.DoDragDrop(element, data, DragDropEffects.Move);
         }
     }
 }
