@@ -14,7 +14,15 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Name="txtHeader" Text="{Binding Header}"/>
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>    
+            <TextBox Name="txtHeader" Text="{Binding Header}"/>
+            <Button Grid.Column="1" Name="btnDel" Content="X" Width="20" Margin="2" Click="BtnDel_OnClick"/>
+        </Grid>
+        
         <ListBox Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}" PreviewMouseDown="ListBox_OnPreviewMouseDown"
                   Drop="ListBox_Drop" AllowDrop="True">
             <ListBox.Resources>

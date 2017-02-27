@@ -30,6 +30,8 @@ namespace SmartGrid
         }
         public void Add(Node node, bool notify = true)
         {
+            if (Nodelist.Values.Any(n=>n.Header.Equals(node.Header, StringComparison.CurrentCultureIgnoreCase)
+            && !(n is HeadNode))) return;
             var topKey = Nodelist.Keys[Nodelist.Count - 1];
             Nodelist.Add(topKey+1, node);
             if (notify) OnCollectionChanged();
@@ -40,11 +42,33 @@ namespace SmartGrid
                 Add(node, false);
             OnCollectionChanged();
         }
-        public void Remove(Node node)
+
+        private int NodePos(string header)
         {
-            
+            var nodes = Nodelist.Where(pair => pair.Value.Header.Equals(header, StringComparison.CurrentCultureIgnoreCase)
+            && !(pair.Value is HeadNode));
+            if (!nodes.Any()) return -1;
+            return nodes.First().Key;
+        }
+        public void Remove(string header, bool notify = true)
+        {
+            int pos = NodePos(header);
+            if (pos == -1) return;
+            Nodelist.Remove(pos);
+            if (notify) OnCollectionChanged();
         }
 
+        public void Remove(IEnumerable<string> headers)
+        {
+            foreach (string header in headers)
+                Remove(header, false);
+            OnCollectionChanged();
+        }
+        public void Remove(IEnumerable<Node> nodes)
+        {
+            var headers = nodes.Select(n => n.Header);
+            Remove(headers);
+        }
         public IEnumerator<Node> GetEnumerator()
         {
             return Nodelist.Values.GetEnumerator();

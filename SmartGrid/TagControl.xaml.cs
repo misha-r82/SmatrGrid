@@ -26,7 +26,11 @@ namespace SmartGrid
             InitializeComponent();
         }
 
-
+        private Node[] SelectedNodes
+        {
+            get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
+        }
+        private Tag CurTag { get { return lstMain.DataContext as Tag; } }
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var element = sender as FrameworkElement;
@@ -60,16 +64,21 @@ namespace SmartGrid
         {
             ListBox parent = (ListBox)sender;
             var data = (Node[])e.Data.GetData(typeof(Node[]));
-            var tag = lstMain.DataContext as Tag;
-            tag.Add(data);
+            CurTag.Add(data);
         }
 
         private void UIElement_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var element = (FrameworkElement)sender;
-            var data = lstMain.SelectedItems.OfType<Node>().ToArray();
+            var data = SelectedNodes;
             if (data.Length == 0) data = new[] {(Node) element.DataContext};
                 DragDrop.DoDragDrop(element, data, DragDropEffects.Move);
+        }
+
+
+        private void BtnDel_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurTag.Remove(SelectedNodes);
         }
     }
 }
