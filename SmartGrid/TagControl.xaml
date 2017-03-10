@@ -6,9 +6,32 @@
              xmlns:local="clr-namespace:SmartGrid"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid >
         <Grid.Resources>
             <local:TagTemplateSelector x:Key="TagTemplateSelector"/>
+            <Style TargetType="Button" x:Key="ExpandBtnStyle">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Path Fill="Black" Stretch="Fill" Margin="1,0" Data="M 0 0 L 3 0 L 1.5 3 Z"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Border.CornerRadius" Value="15"/>
+                <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="0" Background="{TemplateBinding Background}"
+                                    BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -20,16 +43,27 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>    
             <TextBox Name="txtHeader" Text="{Binding Header}"/>
-            <Button Grid.Column="1" Name="btnDel" Content="X" Width="20" Margin="2" Click="BtnDel_OnClick"/>
+            <Button Grid.Column="1" Name="btnDel" Content="-"  Width="25" Height="25" Margin="2" Click="BtnDel_OnClick">
+                
+            </Button>
         </Grid>
         
-        <ListBox Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}" PreviewMouseDown="ListBox_OnPreviewMouseDown"
-                  Drop="ListBox_Drop" AllowDrop="True">
-            <ListBox.Resources>
+        <ListView Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}"
+                  Drop="ListBox_Drop" AllowDrop="True" HorizontalContentAlignment="Stretch">
+            <ListView.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="TextWrapping" Value="Wrap"/>
                     <Setter Property="AcceptsReturn" Value="True"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Style.Triggers>
+                        <DataTrigger
+                    Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType={x:Type ListViewItem}, AncestorLevel=1}}"
+                    Value="True">
+                            <Setter Property="IsHitTestVisible" Value="True" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
                 <DataTemplate x:Key="NodeTemplate">
                     <Grid>
@@ -38,30 +72,35 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding Header}" Grid.Row="0" HorizontalAlignment="Stretch" MouseDown="UIElement_OnMouseDown"/>
-                        <TextBox Text="{Binding Val}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Grid.ColumnSpan="3"/>
-                        <StackPanel Name="panelDrag" PreviewMouseDown="UIElement_OnPreviewMouseDown" 
-                                    Background="Blue" Grid.Column="2" Grid.RowSpan="2"/>
+                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Stretch"/>
+                        <TextBox Name="txtVal" Text="{Binding Val}" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Grid.ColumnSpan="3"/>
+                        <Grid Name="gridDrag" Background="Blue" Grid.Column="2" PreviewMouseDown="Drag_OnPreviewMouseDown">
+                            <Button Name="btnExpand" Style="{StaticResource ExpandBtnStyle}" Click="btnExpand_Click" />
+
+                        </Grid>
                     </Grid>
                 </DataTemplate>
                 <DataTemplate x:Key="HeadNodeTemplate">
-                    <Grid >
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBox Text="{Binding Header}" Grid.Row="0"/>
-                        <Button Name ="btnAdd"  Content="+" Grid.Column="1" Click="BtnAdd_OnClick"/>
+                        <Button Name ="btnAdd" Content="+"  Grid.Column="1" Click="BtnAdd_OnClick">
+                            
+                        </Button>
+
                     </Grid>
                 </DataTemplate>
-            </ListBox.Resources>
+            </ListView.Resources>
 
-        </ListBox>
+        </ListView>
     </Grid>
 
 </UserControl>

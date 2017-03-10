@@ -39,16 +39,6 @@ namespace SmartGrid
         }
 
 
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ButtonState == MouseButtonState.Pressed)
-            {
-                var txt = sender as TextBox;
-                if(txt == null) return;
-                              
-            }
-
-        }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -67,18 +57,24 @@ namespace SmartGrid
             CurTag.Add(data);
         }
 
-        private void UIElement_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void Drag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var element = (FrameworkElement)sender;
             var data = SelectedNodes;
-            if (data.Length == 0) data = new[] {(Node) element.DataContext};
+            //if (data.Length == 0) data = new[] {(Node) element.DataContext};
                 DragDrop.DoDragDrop(element, data, DragDropEffects.Move);
+            e.Handled = false;
         }
 
 
         private void BtnDel_OnClick(object sender, RoutedEventArgs e)
         {
             CurTag.Remove(SelectedNodes);
+        }
+
+        private void btnExpand_Click(object sender, RoutedEventArgs e)
+        {
+            txtVal.
         }
     }
 }
