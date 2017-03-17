@@ -35,5 +35,6 @@ namespace SmartGrid
             tag32.DataContext = _field.Cells[2, 1];
             tag33.DataContext = _field.Cells[2, 2];
         }
+
     }
 }

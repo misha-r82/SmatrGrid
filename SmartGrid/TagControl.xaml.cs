@@ -38,18 +38,6 @@ namespace SmartGrid
             headNode.AddToTag();
         }
 
-
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            DragDrop.DoDragDrop(btn, "123", DragDropEffects.Copy);  
-        }
-        private void ListBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void ListBox_Drop(object sender, DragEventArgs e)
         {
             ListBox parent = (ListBox)sender;
@@ -74,7 +62,7 @@ namespace SmartGrid
 
         private void btnExpand_Click(object sender, RoutedEventArgs e)
         {
-            txtVal.
+            
         }
     }
 }

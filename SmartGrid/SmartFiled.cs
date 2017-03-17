@@ -19,9 +19,12 @@ namespace SmartGrid
                 {
                     Cells[i, j] = new Tag() {Header = i.ToString() + j};
                 }
-                    
+            foreach (var node in Cells[0,0])
+            {
+                node.ViewStl.DetailsVisile = true;
+            }
+            
         }
-
-        
+       
     }
 }

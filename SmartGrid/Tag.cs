@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace SmartGrid
 {
-    class Tag : IHeader , IEnumerable<Node>, INotifyPropertyChanged, INotifyCollectionChanged
+    class Tag : INoteElement , IEnumerable<Node>, INotifyPropertyChanged, INotifyCollectionChanged
     {
         private const int HEAD_INDEX = Int32.MinValue;
         private SortedList<int, Node> Nodelist;
+        public ViewStyle ViewStl { get; set; }
         private string _header;
         public string Header
         {
@@ -27,6 +28,7 @@ namespace SmartGrid
             Nodelist.Add(HEAD_INDEX, head);
             var node = new Node() { Header = "Header", Val = "Val" };
             Nodelist.Add(0, node);
+            ViewStl = new ViewStyle();
         }
         public void Add(Node node, bool notify = true)
         {
@@ -91,5 +93,7 @@ namespace SmartGrid
         {
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
+
+
     }
 }

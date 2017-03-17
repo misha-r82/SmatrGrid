@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartGrid
 {
-    interface IHeader
+    interface INoteElement
     {
         string Header { get; set; }
+        ViewStyle ViewStl { get; set; }
     }
 }

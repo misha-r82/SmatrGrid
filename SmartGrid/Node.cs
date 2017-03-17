@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace SmartGrid
 {
-    class Node : IHeader
+    class Node : INoteElement
     {
         private string _val;
         private string _header;
+
+        public Node()
+        {
+            ViewStl = new ViewStyle();
+        }
         public string Val
         {
             get { return _val; }
@@ -20,5 +25,6 @@ namespace SmartGrid
             get { return _header; }
             set { _header = value; }
         }
+        public ViewStyle ViewStl { get; set; }
     }
 }

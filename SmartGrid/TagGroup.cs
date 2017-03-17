@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartGrid
 {
-    class TagGroup : IHeader
+    class TagGroup : INoteElement
     {
         private string _header;
 
@@ -15,5 +15,7 @@ namespace SmartGrid
             get { return _header; }
             set { _header = value; }
         }
+
+        public ViewStyle ViewStl { get; set; }
     }
 }

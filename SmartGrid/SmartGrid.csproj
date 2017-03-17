@@ -56,7 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HeadNode.cs" />
-    <Compile Include="IHeader.cs" />
+    <Compile Include="INoteElement.cs" />
     <Compile Include="SmartFiled.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="TagControl.xaml.cs">
@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="TagGroup.cs" />
     <Compile Include="TagTemplateSelector.cs" />
+    <Compile Include="ViewStyle.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,6 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lib\Lib.csproj">
+      <Project>{7b5fdddd-33c1-4211-b321-f3e588beb6fa}</Project>
+      <Name>Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
