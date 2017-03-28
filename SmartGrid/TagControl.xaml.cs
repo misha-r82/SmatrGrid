@@ -25,7 +25,7 @@ namespace SmartGrid
         {
             InitializeComponent();
         }
-
+        private bool CopyMode { get { return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl); } }
         private Node[] SelectedNodes
         {
             get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
@@ -40,17 +40,37 @@ namespace SmartGrid
 
         private void ListBox_Drop(object sender, DragEventArgs e)
         {
-            ListBox parent = (ListBox)sender;
             var data = (Node[])e.Data.GetData(typeof(Node[]));
-            CurTag.Add(data);
+            if (!data.Any()) return;
+            if (CopyMode)
+            {
+                var clones = data.Select(d => d.GetClone());
+                foreach (Node clone in clones)
+                    clone.Tag = CurTag;
+                CurTag.Add(data);
+            }
+            else
+            {
+                var oldTag = data.First().Tag;
+                foreach (Node node in data)
+                    node.Tag = CurTag;
+                CurTag.Add(data);
+                oldTag.Remove(data);
+            }
+
+            
         }
 
         private void Drag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var element = (FrameworkElement)sender;
-            var data = SelectedNodes;
-            //if (data.Length == 0) data = new[] {(Node) element.DataContext};
-                DragDrop.DoDragDrop(element, data, DragDropEffects.Move);
+            var node = (Node) element.DataContext;
+            var data = SelectedNodes.ToList();
+            if (!data.Any(d=>d.Header.Equals(node.Header, StringComparison.OrdinalIgnoreCase)))
+                data.Add(node);
+            //if (data.Length == 0) data = new[] {};
+            var dragEfect = CopyMode ? DragDropEffects.Copy : DragDropEffects.Move;
+                DragDrop.DoDragDrop(element, data.ToArray(), dragEfect);
             e.Handled = false;
         }
 

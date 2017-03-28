@@ -81,6 +81,7 @@
     <Compile Include="FrmLogin.xaml.cs">
       <DependentUpon>FrmLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ICloneableEx.cs" />
     <Compile Include="IComparer.cs" />
     <Compile Include="KVPair.cs" />
     <Compile Include="Log\ErrLog.cs" />

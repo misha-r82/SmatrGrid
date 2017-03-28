@@ -26,7 +26,7 @@ namespace SmartGrid
             Nodelist = new SortedList<int, Node>();
             var head = new HeadNode(this) {Header = "headHeder", Val = "headVal"};
             Nodelist.Add(HEAD_INDEX, head);
-            var node = new Node() { Header = "Header", Val = "Val" };
+            var node = new Node(this) { Header = "Header", Val = "Val" };
             Nodelist.Add(0, node);
             ViewStl = new ViewStyle();
         }

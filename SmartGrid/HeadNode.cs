@@ -9,16 +9,12 @@ namespace SmartGrid
 {
     class HeadNode : Node
     {
-        private Tag _tag;
-        public HeadNode(Tag tag) : base()
-        {
-            _tag = tag;
-        }
+        public HeadNode(Tag tag) : base(tag) { }
 
         public void AddToTag()
         {
-            var newNode = new Node() {Header = Header};
-            _tag.Add(newNode);
+            var newNode = new Node(Tag) {Header = Header};
+            Tag.Add(newNode);
         }
     }
 }
