@@ -42,6 +42,8 @@ namespace SmartGrid
         {
             var data = (Node[])e.Data.GetData(typeof(Node[]));
             if (!data.Any()) return;
+            var tag = data.First().Tag;
+            if (tag == CurTag) return;
             if (CopyMode)
             {
                 var clones = data.Select(d => d.GetClone());
