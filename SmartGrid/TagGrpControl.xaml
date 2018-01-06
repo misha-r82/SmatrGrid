@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SmartGrid.TagControl"
+﻿<UserControl x:Class="SmartGrid.TagGrpControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -63,12 +63,12 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>    
             <TextBox Name="txtHeader" Text="{Binding Header}"/>
-            <Canvas Grid.Column="1" Width="8" Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
+            <Canvas Grid.Column="1" Width="10" Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
         </Grid>
         
-        <ListView Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" ItemTemplateSelector="{StaticResource TagTemplateSelector}"
-                  Drop="ListBox_Drop" AllowDrop="True" HorizontalContentAlignment="Stretch">
-            <ListView.Resources>
+        <ListBox Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" Drop="ListBox_Drop" 
+                  AllowDrop="True" HorizontalContentAlignment="Stretch">
+                <ListBox.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="TextWrapping" Value="Wrap"/>
                     <Setter Property="AcceptsReturn" Value="True"/>
@@ -76,52 +76,28 @@
                     <Setter Property="IsHitTestVisible" Value="False" />
                     <Style.Triggers>
                         <DataTrigger
-                    Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
-                AncestorType={x:Type ListViewItem}, AncestorLevel=1}}"
-                    Value="True">
+                            Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type ListViewItem}, AncestorLevel=1}}"
+                            Value="True">
                             <Setter Property="IsHitTestVisible" Value="True" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-                <DataTemplate x:Key="NodeTemplate">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Grid.ColumnSpan="2"/>
-                        <TextBox Name="txtVal" Text="{Binding Val}" Grid.Row="1" Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"  Grid.ColumnSpan="3"/>
-                        <Grid Name="gridRight"  Grid.Column="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Canvas Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
-                            <ToggleButton Name="btnExpand" Grid.Row="1" IsChecked="{Binding ViewStl.DetailsVisile}" 
-                            Style="{StaticResource ExpandBtnStyle}" Click="btnExpand_Click" />
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-                <DataTemplate x:Key="HeadNodeTemplate">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBox Text="{Binding Header}" Grid.Row="0"/>
-                        <Button Name ="btnAdd" Content="+"  Grid.Column="1" Click="BtnAdd_OnClick"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.Resources>
-
-        </ListView>
+                    <TextBox Text="{Binding Header}" Grid.Row="0"/>
+                    <Button Name ="btnAdd" Content="+"  Grid.Column="1" Click="BtnAdd_OnClick"/>
+                </Grid>
+                </DataTemplate>                   
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 
 </UserControl>

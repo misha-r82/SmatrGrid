@@ -16,7 +16,8 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
         <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch"/>
-        <local:TagControl x:Name="tag00" Grid.Column="0" Grid.Row="0"/>
+        <local:TagControl x:Name="tag00" Grid.Column="0"/>
+        <local:TagGrpControl x:Name="tagGrp" Grid.Column="4"/>
         <Grid Name="gridWrk" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
