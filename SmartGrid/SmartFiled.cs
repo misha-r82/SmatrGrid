@@ -10,7 +10,7 @@ namespace SmartGrid
     class SmartFiled
     {
         public Tag[,] Cells;
-
+        public Tag WorkTag { get; set;}
         public SmartFiled()
         {
             Cells = new Tag[3,3];
@@ -23,7 +23,9 @@ namespace SmartGrid
             {
                 node.ViewStl.DetailsVisile = true;
             }
-            
+            WorkTag = new Tag();
+            WorkTag.Header = "текущий";
+            WorkTag.ViewStl.DetailsVisile = true;
         }
        
     }

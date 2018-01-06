@@ -5,36 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartGrid"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="6"/>
-            <RowDefinition/>
-            <RowDefinition Height="6"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        Title="MainWindow" Height="800" Width="1200">
+    <Grid Name="gridMain">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="6"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="6"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Row="1" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
-        <GridSplitter Grid.Row="3" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
-        <GridSplitter Grid.Column="1" Grid.RowSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-    <GridSplitter Grid.Column="3" Grid.RowSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-    <local:TagControl x:Name="tag11" Grid.Column="0" Grid.Row="0"/>
-    <local:TagControl x:Name="tag12"  Grid.Column="2" Grid.Row="0"/>
-    <local:TagControl x:Name="tag13"  Grid.Column="4" Grid.Row="0"/>
-    <local:TagControl x:Name="tag21"  Grid.Column="0" Grid.Row="2"/>
-    <local:TagControl x:Name="tag22"  Grid.Column="2" Grid.Row="2"/>
-    <local:TagControl x:Name="tag23"  Grid.Column="4" Grid.Row="2"/>
-    <local:TagControl x:Name="tag31"  Grid.Column="0" Grid.Row="4"/>
-    <local:TagControl x:Name="tag32"  Grid.Column="2" Grid.Row="4"/>
-    <local:TagControl x:Name="tag33"  Grid.Column="4" Grid.Row="4"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch"/>
+        <local:TagControl x:Name="tag00" Grid.Column="0" Grid.Row="0"/>
+        <Grid Name="gridWrk" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="6"/>
+                <RowDefinition/>
+                <RowDefinition Height="6"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="6"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="6"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Row="1" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Row="3" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Column="1" Grid.RowSpan="5" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Column="3" Grid.RowSpan="5" HorizontalAlignment="Stretch"/>
+            <local:TagControl x:Name="tag11" Grid.Column="0" Grid.Row="0"/>
+            <local:TagControl x:Name="tag12"  Grid.Column="2" Grid.Row="0"/>
+            <local:TagControl x:Name="tag13"  Grid.Column="4" Grid.Row="0"/>
+            <local:TagControl x:Name="tag21"  Grid.Column="0" Grid.Row="2"/>
+            <local:TagControl x:Name="tag22"  Grid.Column="2" Grid.Row="2"/>
+            <local:TagControl x:Name="tag23"  Grid.Column="4" Grid.Row="2"/>
+            <local:TagControl x:Name="tag31"  Grid.Column="0" Grid.Row="4"/>
+            <local:TagControl x:Name="tag32"  Grid.Column="2" Grid.Row="4"/>
+            <local:TagControl x:Name="tag33"  Grid.Column="4" Grid.Row="4"/>
 
+        </Grid>
     </Grid>
+
     
 </Window>

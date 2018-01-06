@@ -25,6 +25,7 @@ namespace SmartGrid
         {
             InitializeComponent();
             _field = new SmartFiled();
+            tag00.DataContext = _field.WorkTag;
             tag11.DataContext = _field.Cells[0, 0];
             tag12.DataContext = _field.Cells[0, 1];
             tag13.DataContext = _field.Cells[0, 2];
