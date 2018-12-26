@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="SmartGrid.TagGrpControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartGrid"
+             xmlns:lib="clr-namespace:Lib;assembly=Lib"
+             xmlns:ctrl="clr-namespace:SmartGrid.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" >
+    <Grid Name="gridMain" AllowDrop="True" Drop="List_Drop">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <lib:TestConverter x:Key="TestConverter"/>
+                <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../Themes/Theme.xaml"/>
+                    <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.CommandBindings>
+            <CommandBinding Command="Delete" Executed="CommandBinding_OnExecuted"/>
+        </Grid.CommandBindings>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <!--пустая строка-->
+        </Grid.RowDefinitions>
+        <ListView Name="lstMain" ItemsSource="{Binding TagList}" HorizontalContentAlignment="Stretch" Grid.Row="0" Margin="0,11,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,-1,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Name="txtHeader" Text="{Binding Tag.Header}"/>
+                        <Border Name="canvTag" Grid.Column="1" Style="{StaticResource LvItemDragBorderStyle}" 
+                                MouseDown="CanvTag_OnMouseDown"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="2,7,2,2" HorizontalAlignment="Right"
+                    Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
+                    Converter={StaticResource BoolVisConverter}}" AllowDrop="True"  Drop="List_Drop">
+            <Button Command="Delete" Width="20" Height="20" ToolTip="Удалить выбранные элементы">
+                <Image Source="../img/delete.png" Margin="3" />
+            </Button>
+        </StackPanel>
+        <Canvas Grid.Row="2" Background="#FFFDFFFD" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                AllowDrop="True"  Drop="List_Drop"></Canvas>
+    </Grid>
+</UserControl>
+

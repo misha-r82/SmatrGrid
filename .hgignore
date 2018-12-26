@@ -1,0 +1,9 @@
+syntax: glob
+*.g.i.cs
+*.cache
+*.g.cs
+SmartGrid/obj/*
+.git/*
+*/obj/*
+*.pdb
+*.exe

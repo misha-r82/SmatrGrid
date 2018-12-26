@@ -1,0 +1,40 @@
+﻿<Window x:Class="SmartGrid.Editor.FrmHyperlink"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartGrid.Editor"
+        mc:Ignorable="d"
+        Title="Ссылка" Height="300" Width="300" Icon="../img/link.png">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="текст ссылки"/>
+            <TextBox Text="{Binding Text}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="ссылка"/>
+                <TextBox Name="txtUri" Text="{Binding Uri}" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+                    <Button Name="btnFile" Grid.Column="1" Click="BtnFile_OnClick" Width="20" Margin="1">
+                        <Image Source="../img/file.png"></Image>
+                    </Button> 
+                    <Button Name="btnFolder" Grid.Column="1" Click="BtnFolder_OnClick" Width="20" Margin="1">
+                        <Image Source="../img/folder.png"></Image>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+
+            <TextBlock Text="описание"/>
+            <TextBox Text="{Binding ToolTip}"/>
+            <Button Name="btnOk" IsDefault="True"  Content="OK" Click="BtnOk_OnClick" Width="80" Height="24"/>
+        </StackPanel>
+    </Grid>
+</Window>

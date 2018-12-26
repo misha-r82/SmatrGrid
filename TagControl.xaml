@@ -1,0 +1,160 @@
+﻿<UserControl x:Class="SmartGrid.TagControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartGrid"
+             xmlns:lib="clr-namespace:Lib;assembly=Lib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Drop="NodeList_Drop" AllowDrop="True" >
+        <Grid.Resources>
+            <local:TagTemplateSelector x:Key="TagTemplateSelector"/>
+            <lib:TestConverter x:Key="TestConverter"/>
+            <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+            <Style TargetType="ToggleButton" x:Key="ExpandBtnStyle">
+                <!--<Setter Property="Content">
+                   <Setter.Value>
+                        <Path Fill="Black" Stretch="Fill" Margin="1,0" Data="M 0 0 L 3 0 L 1.5 3 Z"/>
+                    </Setter.Value>
+                </Setter>-->
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="False">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <Path Fill="Black" Stretch="Fill" Margin="1,0" Data="M 0 0 L 3 0 L 1.5 3 Z"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <Path Fill="Green" Stretch="Fill" Margin="1,0" Data="M 0 3 L 3 3 L 1.5 0 Z"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="Border.CornerRadius" Value="15"/>
+                <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border CornerRadius="0" Background="{TemplateBinding Background}"
+                                    BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Drop="Tag_Drop" AllowDrop="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+            <TextBox Name="txtHeader" Text="{Binding Tag.Header}"  Drop="Tag_Drop" AllowDrop="True"/>
+            <Canvas Name="canvTag" Grid.Column="1" Width="8" Background="Aquamarine" PreviewMouseDown="CanvTag_OnPreviewMouseDown"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Text="{Binding Header}" Grid.Row="0"/>
+            <Button Name ="btnAdd" Content="+"  Grid.Column="1" Click="BtnAdd_OnClick"/>
+        </Grid>
+        <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding Tag}" ItemTemplateSelector="{StaticResource TagTemplateSelector}"
+                  HorizontalContentAlignment="Stretch">
+            <ListView.Resources>
+                <DataTemplate x:Key="ActiveNodeTemplate">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Grid.ColumnSpan="2"/>
+                        <TextBox Name="txtVal" Text="{Binding Val}" Grid.Row="1" Grid.ColumnSpan="3"
+                                 Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
+                        <Grid Name="gridRight"  Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Canvas Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
+                            <ToggleButton Name="btnExpand" Grid.Row="1" IsChecked="{Binding ViewStl.DetailsVisile}" 
+                                          Style="{StaticResource ExpandBtnStyle}" Click="btnExpand_Click" />
+
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+                <Style TargetType="TextBox">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="AcceptsReturn" Value="True"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Style.Triggers>
+                        <DataTrigger
+                    Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType={x:Type ListViewItem}, AncestorLevel=1}}"
+                    Value="True">
+                            <Setter Property="IsHitTestVisible" Value="True" />
+                        </DataTrigger>
+  
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected"  Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ActiveNodeTemplate}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <DataTemplate x:Key="NodeTemplate">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Grid.ColumnSpan="2"/>
+                        <TextBlock Name="txtVal" Text="{Binding Val}" Grid.Row="1" Grid.ColumnSpan="3"
+                                 Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
+                        <Grid Name="gridRight"  Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Canvas Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
+                            <ToggleButton Name="btnExpand" Grid.Row="1" IsChecked="{Binding ViewStl.DetailsVisile}" 
+                            Style="{StaticResource ExpandBtnStyle}" Click="btnExpand_Click" />
+
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.Resources>
+
+        </ListView>
+    </Grid>
+
+</UserControl>
+

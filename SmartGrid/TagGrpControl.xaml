@@ -7,97 +7,87 @@
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid >
+    <Grid Name="gridMain">
         <Grid.Resources>
-            <local:TagTemplateSelector x:Key="TagTemplateSelector"/>
             <lib:TestConverter x:Key="TestConverter"/>
             <lib:BoolVisConverter x:Key="BoolVisConverter"/>
-            <Style TargetType="ToggleButton" x:Key="ExpandBtnStyle">
-                <!-- <Setter Property="Content">
-                   <Setter.Value>
-                        <Path Fill="Black" Stretch="Fill" Margin="1,0" Data="M 0 0 L 3 0 L 1.5 3 Z"/>
-                    </Setter.Value>
-                </Setter>-->
-                <Style.Triggers>
-                    <Trigger Property="IsChecked" Value="False">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <Path Fill="Black" Stretch="Fill" Margin="1,0" Data="M 0 0 L 3 0 L 1.5 3 Z"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                    <Trigger Property="IsChecked" Value="True">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <Path Fill="Green" Stretch="Fill" Margin="1,0" Data="M 0 3 L 3 3 L 1.5 0 Z"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </Style.Triggers>
-                <Setter Property="Border.CornerRadius" Value="15"/>
-                <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="VerticalAlignment" Value="Bottom"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ToggleButton">
-                            <Border CornerRadius="0" Background="{TemplateBinding Background}"
-                                    BorderThickness="1">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                </ContentPresenter>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-
-            </Style>
         </Grid.Resources>
+        <Grid.CommandBindings>
+            <CommandBinding Command="Delete" Executed="CommandBinding_OnExecuted"/>
+        </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>    
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <TextBox Name="txtHeader" Text="{Binding Header}"/>
-            <Canvas Grid.Column="1" Width="10" Background="Aquamarine" PreviewMouseDown="Drag_OnPreviewMouseDown"/>
         </Grid>
-        
-        <ListBox Name="lstMain" Grid.Row="1" ItemsSource="{Binding}" Drop="ListBox_Drop" 
-                  AllowDrop="True" HorizontalContentAlignment="Stretch">
-                <ListBox.Resources>
+
+        <ListView Name="lstMain" ItemsSource="{Binding TagList}" AllowDrop="True" Drop="List_Drop"
+                   HorizontalContentAlignment="Stretch" Grid.Row="1">
+            <ListView.Resources>
+                <DataTemplate x:Key="ActiveTagTemplate">
+                    <Grid Margin="0,-1,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Name="txtHeader" Text="{Binding Tag.Header}"/>
+                        <Canvas Name="canvTag" Grid.Column="1" Width="8" Background="Green" 
+                                MouseDown="CanvTag_OnMouseDown"/>
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate x:Key="TagWrpTemplate">                    
+
+                    <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0,-1,0,0">
+                        <Grid AllowDrop="True" Drop="ListItemDrop" Margin="0,0,-1,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Name="txtHeader" Text="{Binding Tag.Header}"/>
+                            <Canvas Name="canvTag" Grid.Column="1" Width="8" Background="LimeGreen" 
+                                    MouseDown="CanvTag_OnMouseDown"/>
+                        </Grid>
+                    </Border>                    
+
+
+                </DataTemplate>
                 <Style TargetType="TextBox">
                     <Setter Property="TextWrapping" Value="Wrap"/>
                     <Setter Property="AcceptsReturn" Value="True"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="IsHitTestVisible" Value="False" />
+                
+
+                </Style>
+                <Style TargetType="ListViewItem">
                     <Style.Triggers>
-                        <DataTrigger
-                            Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type ListViewItem}, AncestorLevel=1}}"
-                            Value="True">
-                            <Setter Property="IsHitTestVisible" Value="True" />
-                        </DataTrigger>
+                        <Trigger Property="IsSelected"  Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource TagWrpTemplate}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"  Value="False">
+                            <Setter Property="ContentTemplate" Value="{StaticResource TagWrpTemplate}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ActiveTagTemplate}"/>
+                        </Trigger>
                     </Style.Triggers>
                 </Style>
-            </ListBox.Resources>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            </ListView.Resources>
 
-                    <TextBox Text="{Binding Header}" Grid.Row="0"/>
-                    <Button Name ="btnAdd" Content="+"  Grid.Column="1" Click="BtnAdd_OnClick"/>
-                </Grid>
-                </DataTemplate>                   
-            </ListBox.ItemTemplate>
-        </ListBox>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Margin="2" HorizontalAlignment="Right"
+                    Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
+                    Converter={StaticResource BoolVisConverter}}">
+            <Button Command="Delete" Width="20" Height="20" ToolTip="Удалить выбранные элементы">
+                <Image Source="img/delete.png" Margin="3"/>
+            </Button>
+        </StackPanel>
     </Grid>
 
 </UserControl>

@@ -14,7 +14,7 @@ namespace Lib
     public static class FileIO
     {
         public static Encoding FEncoding = Encoding.Default;
-        public static string StartupPath { get {return Application.StartupPath;}}
+        public static string StartupPath { get { return Application.StartupPath; } }
         public static void saveFile(string fileName, string path, string content)
         {
             try
@@ -63,8 +63,8 @@ namespace Lib
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(stream, obj);
             stream.Close();
-        }       
-        public static T deserializeBin<T>(string path)
+        }
+        public static T DeserializeBin<T>(string path)
         {
             FileStream fs = new FileStream(path, FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
@@ -78,9 +78,9 @@ namespace Lib
                 MessageBox.Show(ex.Message);
             }
             fs.Close();
-            return default (T);
+            return default(T);
         }
-        public static Exception serializeXML<T>(T obj, string path)
+        public static Exception SerializeXML<T>(T obj, string path)
         {
             try
             {
@@ -95,15 +95,15 @@ namespace Lib
             }
             return null;
         }
-        public static T deserializeXML<T>(string path)
+        public static T DeserializeXML<T>(string path)
         {
             T rez = default(T);
             StreamReader sr = null;
             try
             {
                 sr = new StreamReader(path);
-                XmlSerializer serializer = new XmlSerializer(typeof (T));
-                rez = (T) serializer.Deserialize(sr);
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                rez = (T)serializer.Deserialize(sr);
             }
             catch (Exception ex)
             {
@@ -112,13 +112,13 @@ namespace Lib
             }
             finally
             {
-                if (sr != null) sr.Close();       
+                if (sr != null) sr.Close();
             }
             return rez;
 
         }
         public static Exception DeserializeEx = null;
-        public static T deserializeDataContract<T>(string path)
+        public static T DeserializeDataContract<T>(string path)
         {
             DeserializeEx = null;
             T rez;
@@ -128,7 +128,7 @@ namespace Lib
             {
                 fs = new FileStream(path, FileMode.Open);
                 reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-                var serializer = new DataContractSerializer(typeof(T));
+                var serializer = new DataContractSerializer(typeof(T), new DataContractSerializerSettings() {});
                 rez = (T)serializer.ReadObject(reader);
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ namespace Lib
             }
             return rez;
         }
-        public static Exception serializeDataContract<T>(T obj, string path)
+        public static Exception SerializeDataContract<T>(T obj, string path)
         {
             FileStream fs;
             try
@@ -158,7 +158,8 @@ namespace Lib
             XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(fs);
             try
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+                DataContractSerializer serializer = new DataContractSerializer(typeof(T), 
+                    new DataContractSerializerSettings() {PreserveObjectReferences = true});
                 serializer.WriteObject(writer, obj);
             }
             catch (Exception ex) { return ex; }
@@ -177,8 +178,8 @@ namespace Lib
             T rez;
             byte[] bytes = FEncoding.GetBytes(str.ToCharArray());
             MemoryStream ms = new MemoryStream(bytes);
-            DataContractSerializer serializer = new DataContractSerializer(typeof (T));
-            try { rez = (T) serializer.ReadObject(ms); }
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+            try { rez = (T)serializer.ReadObject(ms); }
             catch (Exception) { return default(T); }
             finally { ms.Close(); }
             return rez;

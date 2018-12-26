@@ -1,0 +1,155 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lib="clr-namespace:Lib;assembly=Lib">
+    <lib:TestConverter x:Key="TestConverter"/>
+    <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+    <Color x:Key="BackgroundColor1">#9EC4AF8D</Color>
+    <Color x:Key="MouseOverBackgroundColor1">#9CBAC48D</Color>
+    <Color x:Key="MousePressedBackgroundColor1">#C3C4A78D</Color>
+    <Color x:Key="IsNotEnabledBackgroundColor1">#45C08DC4</Color>
+    <Style TargetType="ButtonBase" x:Key="RectBtnStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border x:Name="t"
+                            Margin="{TemplateBinding Margin}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border.Background>
+                            <SolidColorBrush x:Name="BorderColor"/>
+                        </Border.Background>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="DisabledAnimation">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource IsNotEnabledBackgroundColor1}"
+                                                        Duration="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="EnabledAnimation">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource BackgroundColor1}"
+                                                        Duration="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="MouseOverAnimation">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource MouseOverBackgroundColor1}"
+                                                        Duration="0:0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="MouseOutAnimation" FillBehavior="Stop">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource BackgroundColor1}"
+                                                        Duration="0:0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="MouseDownAnimation">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource MousePressedBackgroundColor1}"
+                                                        Duration="0:0:0:0.2" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="MouseUpAnimation" FillBehavior="Stop">
+                                        <ColorAnimation Storyboard.TargetName="BorderColor"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="{StaticResource MouseOverBackgroundColor1}"
+                                                        Duration="0:0:0:0.2" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="TextBox" x:Key="EditableTBStyle">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+    <Style TargetType="TextBox" BasedOn="{StaticResource EditableTBStyle}" x:Key="ListTBStyle">
+        <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected, Converter={StaticResource BoolVisConverter}}"/>
+         <!--<Setter Property="IsHitTestVisible" Value="False" />
+        <Style.Triggers>
+           <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType={x:Type ListViewItem}, AncestorLevel=1}}" Value="True">
+                    <Setter Property="IsHitTestVisible" Value="True" />
+            </DataTrigger>
+        </Style.Triggers>-->
+    </Style>
+    <Style TargetType="ButtonBase" x:Key="SmallBtnStyle" BasedOn="{StaticResource RectBtnStyle}">
+        <Setter Property="Margin" Value="1,1,0,1"/>
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Focusable" Value="False"/>
+    </Style>
+    <Style TargetType="ButtonBase" x:Key="BigBtnStyle" BasedOn="{StaticResource RectBtnStyle}">
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+    </Style>
+    <Style TargetType="ListViewItem">
+        <Setter Property="Padding" Value="0"></Setter>
+    </Style>
+    <Style TargetType="ListView">
+        <Setter Property="BorderThickness" Value="0.6"></Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="DragBorderBase">
+        <Setter Property="Background" Value="ForestGreen"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Width" Value="9"/>
+    </Style>
+    <Style TargetType="Border" x:Key="DragBorderStyle" BasedOn="{StaticResource DragBorderBase}">
+        <Setter Property="Margin" Value="0,1,0,0"/>
+    </Style>
+    <Style TargetType="Border" x:Key="LvItemDragBorderStyle" BasedOn="{StaticResource DragBorderBase}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Background" Value="LimeGreen"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

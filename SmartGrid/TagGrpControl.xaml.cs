@@ -25,56 +25,73 @@ namespace SmartGrid
         {
             InitializeComponent();
         }
+
+        private TagGroup TagGrp { get { return DataContext as TagGroup;} }
         private bool CopyMode { get { return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl); } }
-        private Tag[] SelectedTags
+        private bool ModeReplace { get { return !Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)
+            && !Keyboard.IsKeyDown(Key.LeftShift) && !Keyboard.IsKeyDown(Key.RightShift);} }
+        private bool SwapMode { get { return !CopyMode && !ModeReplace; } }
+        private TagWrap DragTo;
+        private Point _prewPt;
+        private TagWrap[] SelectedTags
         {
-            get { return lstMain.SelectedItems.OfType<Tag>().ToArray(); }
-        }
-        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
-        {
-            /*var element = sender as FrameworkElement;
-            var headNode = element.DataContext as HeadNode;
-            headNode.AddToTag();*/
+            get { return lstMain.SelectedItems.OfType<TagWrap>().ToArray(); }
         }
 
-        private void ListBox_Drop(object sender, DragEventArgs e)
+        private void List_Drop(object sender, DragEventArgs e)
         {
-            /*var data = (Node[])e.Data.GetData(typeof(Node[]));
-            if (!data.Any()) return;
-            if (CopyMode)
+            var pt = e.GetPosition(this);
+            if (Math.Abs(pt.Y - _prewPt.Y) < 10) return;
+            if (TagGrp == null) return;
+            var tagWrap = e.Data.GetData(typeof(TagWrap)) as TagWrap;
+            var mode = DragProcessor.GetDragMode(e);
+            if (tagWrap != null)
             {
-                var clones = data.Select(d => d.GetClone());
-                foreach (Node clone in clones)
-                    clone.Tag = CurTag;
-                CurTag.Add(data);
+                if (DragTo == null) // перетащили на пустое место
+                {
+                    TagGrp.TagList.Add(new TagWrap() {Tag = tagWrap.Tag});
+                    if (!CopyMode) tagWrap.Tag = new Tag();
+                }                 
+                else
+                {
+                    if (SwapMode) tagWrap.SwapWith(DragTo, mode);
+                    else
+                    {
+                        TagWrap newTag = new TagWrap();
+                        int pos = TagGrp.TagList.IndexOf(DragTo);
+                        if (pos == -1) pos = 0;
+                        newTag.SwapWith(tagWrap, mode);
+                        TagGrp.TagList.Insert(pos, newTag);
+                    }
+                }
             }
+               
             else
-            {
-                var oldTag = data.First().Tag;
-                foreach (Node node in data)
-                    node.Tag = CurTag;
-                CurTag.Add(data);
-                oldTag.Remove(data);
-            }*/
-
-            
+            DragProcessor.DragNodes(DragTo, e);
         }
 
-        private void Drag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void CanvTag_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var element = (FrameworkElement)sender;
-            var tag = (Tag) element.DataContext;
-            var data = SelectedTags.ToList();
-            if (!data.Any(d=>d.Header.Equals(tag.Header, StringComparison.OrdinalIgnoreCase)))
-                data.Add(tag);
-            //if (data.Length == 0) data = new[] {};
+            _prewPt = e.GetPosition(this);
+            var item = sender as FrameworkElement;
+            var tagWrp = item.DataContext as TagWrap;
+            if (tagWrp == null) return;
             var dragEfect = CopyMode ? DragDropEffects.Copy : DragDropEffects.Move;
-                DragDrop.DoDragDrop(element, data.ToArray(), dragEfect);
-            e.Handled = false;
+            DragDrop.DoDragDrop(item, tagWrp, dragEfect);
+            if (ModeReplace)
+                TagGrp.Remove(tagWrp);
+            e.Handled = false;           
         }
-        private void btnExpand_Click(object sender, RoutedEventArgs e)
+
+        private void ListItemDrop(object sender, DragEventArgs e)
         {
-            
+            DragTo = ((FrameworkElement)sender).DataContext as TagWrap;
+        }
+
+        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (TagWrap tag in SelectedTags)
+                TagGrp.Remove(tag);
         }
     }
 }

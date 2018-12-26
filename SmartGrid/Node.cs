@@ -1,34 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using SmartGrid.Annotations;
 using Test;
 
 namespace SmartGrid
 {
-    class Node : INoteElement, ICloneableEx<Node>
+    [DataContract]
+    public class Node : INoteElement, ICloneableEx<Node>, INotifyPropertyChanged
     {
-        private string _val;
-        private string _header;
+        [DataMember] private string _val;
+        [DataMember] private string _header;
 
-        public Node(Tag tag)
+        public Node()
         {
-            Tag = tag;
             ViewStl = new ViewStyle();
         }
-        public Tag Tag { get; set; }
         public string Val
         {
             get { return _val; }
-            set { _val = value; }
+            set
+            {
+                if (_val == value) return;
+                _val = value;
+                OnPropertyChanged();
+            }
         }
         public string Header
         {
             get { return _header; }
-            set { _header = value; }
+            set
+            {
+                if (_header == value) return;
+                _header = value;
+                OnPropertyChanged();
+            }
         }
-        public ViewStyle ViewStl { get; set; }
+        [DataMember] public ViewStyle ViewStl { get; set; }
         public object Clone()
         {
             var clone = (Node)MemberwiseClone();
@@ -36,13 +49,24 @@ namespace SmartGrid
             return clone;
         }
 
-        public void CloneRefs() { }
+        public void CloneRefs()
+        {
+            ViewStl = ViewStl.GetClone();
+        }
 
         public Node GetClone()
         {
             var clone = (Node)MemberwiseClone();
             clone.CloneRefs();
             return clone;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

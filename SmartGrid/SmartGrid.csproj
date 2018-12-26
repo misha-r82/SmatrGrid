@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>.\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>.\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,19 +64,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="HeadNode.cs" />
-    <Compile Include="INoteElement.cs" />
-    <Compile Include="SmartFiled.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="TagGrpControl.xaml.cs">
-      <DependentUpon>TagGrpControl.xaml</DependentUpon>
+    <Compile Include="Controls\ExpandButton.xaml.cs">
+      <DependentUpon>ExpandButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TagControl.xaml.cs">
+    <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TagGroup.cs" />
-    <Compile Include="TagTemplateSelector.cs" />
+    <Compile Include="Controls\TagGrpControl.xaml.cs">
+      <DependentUpon>TagGrpControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlFieldMan.xaml.cs">
+      <DependentUpon>CtrlFieldMan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Drag\DragHelper.cs" />
+    <Compile Include="Editor\NodeEditor.cs" />
+    <Compile Include="Editor\FrmHyperlink.xaml.cs">
+      <DependentUpon>FrmHyperlink.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\HyperlinkCreater.cs" />
+    <Compile Include="GridWidth\GridWidth.cs" />
+    <Compile Include="Items\INoteElement.cs" />
+    <Compile Include="Properties\Annotations2.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Items\SmartFiled.cs" />
+    <Compile Include="Items\Tag.cs" />
+    <Compile Include="Items\TagGroup.cs" />
+    <Compile Include="Drag\DragProcessor.cs" />
     <Compile Include="ViewStyle.cs" />
+    <Compile Include="Items\WorkSpace.cs" />
+    <Page Include="Controls\ExpandButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TagControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TagGrpControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CtrlFieldMan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editor\FrmHyperlink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,17 +124,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TagGrpControl.xaml">
+    <Page Include="Themes\StylesDic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TagControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Themes\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.cs" />
+    <Compile Include="Items\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,6 +166,36 @@
       <Project>{7b5fdddd-33c1-4211-b321-f3e588beb6fa}</Project>
       <Name>Lib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\ctrl-key.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\enter-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\file.png" />
+    <Resource Include="img\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\copy.png" />
+    <Resource Include="img\cut.png" />
+    <Resource Include="img\paste.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

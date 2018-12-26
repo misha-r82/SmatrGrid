@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="SmartGrid.CtrlFieldMan"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartGrid"
+             xmlns:lib="clr-namespace:Lib;assembly=Lib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="50">
+    <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+                <lib:InvBoolConverter x:Key="InvBoolConverter"/>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../Themes/Theme.xaml"/>
+                    <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView Name="lstMain" Grid.Row="0" ItemsSource="{Binding FieldList}" HorizontalContentAlignment="Stretch"
+                  SelectedItem="{Binding ActiveField}">
+            <ListView.Resources>
+
+                <DataTemplate x:Key="ItemTemplate">
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,-1,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid AllowDrop="True">
+                            <Grid.LayoutTransform>
+                                <RotateTransform Angle="-90"/>
+                            </Grid.LayoutTransform>
+                            <TextBlock Name="txtHeader" Text="{Binding Header}" MouseDown="TxtHeaderMouseDown" 
+                                       Margin="0" MinWidth="80" TextAlignment="Center" AllowDrop="True" Drop="TxtHeader_OnDrop"
+                                       PreviewMouseDown="TxtHeader_OnPreviewMouseDown" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+                <DataTemplate x:Key="ItemEditTemplate">
+                    <Border BorderThickness="1" BorderBrush="DarkSeaGreen" Margin="0,-1,0,0">
+                        <Grid AllowDrop="True">
+                            <Grid.LayoutTransform>
+                                <RotateTransform Angle="-90"/>
+                            </Grid.LayoutTransform>
+                            <TextBlock Name="txtHeader" Text="{Binding Header}" MouseDown="TxtHeaderMouseDown" 
+                                       Margin="0" MinWidth="80" TextAlignment="Center" AllowDrop="True" Drop="TxtHeader_OnDrop"
+                                       PreviewMouseDown="TxtHeader_OnPreviewMouseDown" />
+                            <TextBox Name="txtHeaderEdit" Text="{Binding Header}" 
+                                     Visibility="{Binding Path=IsEditMode, Converter={StaticResource BoolVisConverter}}"
+                                     VerticalAlignment="Stretch"
+                                     LostKeyboardFocus="TxtHeaderEditLostFocus"
+                                     GotFocus="TxtHeaderEdit_OnGotFocus"
+                                     PreviewMouseDown="TxtHeaderPreviewMouseDown" 
+                                     LostMouseCapture="TxtHeader_OnLostMouseCapture"
+                                     KeyDown="TxtHeaderEdit_OnKeyDown"/>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"></Setter>
+                    <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}"/>
+                    <Style.Triggers>
+                       <Trigger Property="IsSelected"  Value="False">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected"  Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ItemEditTemplate}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.CommandBindings>
+                <CommandBinding Command="Delete" Executed="CommandDelete_OnExecuted"></CommandBinding>
+            </ListView.CommandBindings>
+            <ListView.ContextMenu>
+                <ContextMenu Name="NodeMenu">
+                    <MenuItem Name="itmDel" Header="Delete" Command="Delete"/>
+                </ContextMenu>
+
+            </ListView.ContextMenu>
+        </ListView>
+        <Button Name="btnAddField" Grid.Row="1" Click="BtnAddField_OnClick" Style="{StaticResource BigBtnStyle}">
+            <Image Source="../img/plus.png" Margin="2"/>
+            <Button.ToolTip>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="*"/>
+                    
+                </Grid>
+            </Button.ToolTip>
+        </Button>
+    </Grid>
+</UserControl>

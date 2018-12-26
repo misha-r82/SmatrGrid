@@ -1,43 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGrid
 {
-    class TagGroup : INoteElement, INotifyPropertyChanged
+    [DataContract]
+    class TagGroup : /*INoteElement,*/ INotifyPropertyChanged
     {
         public TagGroup()
         {
-            TagList = new List<Tag>();
+            TagList = new ObservableCollection<TagWrap>();
         }
         private string _header;
-
         public string Header
         {
             get { return _header; }
-            set { _header = value; }
+            set
+            {
+                if (_header == value) return;
+                _header = value;
+                OnPropertyChanged(nameof(Header));
+            }
         }
-
-        public void Add(Tag tag)
+        public void Add(IEnumerable<TagWrap> tags)
         {
-            TagList.Add(tag);
+            foreach (var tag in tags)
+                TagList.Add(tag);
+        }
+        public void Remove(TagWrap tag)
+        {
+            TagList.Remove(tag);
             OnPropertyChanged(nameof(TagList));
         }
-
-        public void Add(IEnumerable<Tag> tags)
-        {
-            TagList.AddRange(tags);
-            OnPropertyChanged(nameof(TagList));
-        }
-        public void Remove(Tag tag)
-        {
-            OnPropertyChanged(nameof(TagList));
-        }
-        public List<Tag> TagList { get; }
-        public ViewStyle ViewStl { get; set; }
+        [DataMember] public ObservableCollection<TagWrap> TagList { get; private set; }
+        //public ViewStyle ViewStl { get; set; }
 
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
