@@ -33,11 +33,7 @@ namespace SmartGrid
         }
         private void List_Drop(object sender, DragEventArgs e)
         {
-            if (TagGrp == null) return;
-            var data = e.Data.GetData(typeof(DragProcessor.DragContent)) as DragProcessor.DragContent;
-            if (data == null) return;
-            data.Group = TagGrp;
-            DragProcessor.DoDrag(e);         
+             DragProcessor.DoDrag(sender, e);         
         }
         private void CanvTag_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -51,13 +47,6 @@ namespace SmartGrid
         {
             foreach (TagWrap tag in SelectedTags)
                 TagGrp.Remove(tag);
-        }
-
-        private void ItemDrop(object sender, DragEventArgs e)
-        {
-            var data = e.Data.GetData(typeof(DragProcessor.DragContent)) as DragProcessor.DragContent;
-            if (data == null) return;
-            data.DestTag = ((FrameworkElement)e.Source).DataContext as TagWrap;
         }
     }
 }

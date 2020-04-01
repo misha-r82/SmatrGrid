@@ -36,7 +36,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Name="txtHeader" Text="{Binding Tag.Header}"/>
+                        <TextBox Name="txtHeader" Text="{Binding Tag.Header}" Style="{StaticResource ListTBStyle}"/>
                         <Border Name="canvTag" Grid.Column="1" Style="{StaticResource LvItemDragBorderStyle}" 
                                 MouseDown="CanvTag_OnMouseDown"/>
                     </Grid>
@@ -45,13 +45,13 @@
         </ListView>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="2,7,2,2" HorizontalAlignment="Right"
                     Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
-                    Converter={StaticResource BoolVisConverter}}" AllowDrop="True"  Drop="List_Drop">
+                    Converter={StaticResource BoolVisConverter}}" AllowDrop="True" >
             <Button Command="Delete" Width="20" Height="20" ToolTip="Удалить выбранные элементы">
                 <Image Source="../img/delete.png" Margin="3" />
             </Button>
         </StackPanel>
         <Canvas Grid.Row="2" Background="#FFFDFFFD" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                AllowDrop="True"  Drop="List_Drop"></Canvas>
+                AllowDrop="True" ></Canvas>
     </Grid>
 </UserControl>
 

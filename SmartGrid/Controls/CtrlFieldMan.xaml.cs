@@ -80,9 +80,7 @@ namespace SmartGrid
 
         private void TxtHeader_OnDrop(object sender, DragEventArgs e)
         {
-            var data = e.Data.GetData(typeof(DragContent)) as DragContent;
-            data.DestField = ((FrameworkElement) sender).DataContext as SmartFiled;
-            DoDrag(e);
+            DoDrag(sender, e);
         }
 
         private void TxtHeader_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)

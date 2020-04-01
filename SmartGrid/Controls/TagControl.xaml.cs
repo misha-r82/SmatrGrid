@@ -79,10 +79,7 @@ namespace SmartGrid
         }
         private void Grid_Drop(object sender, DragEventArgs e)
         {
-            var data = e.Data.GetData(typeof(DragProcessor.DragContent)) as DragProcessor.DragContent;
-            if (data == null) return;
-            data.DestTag = CurTag;
-            DragProcessor.DoDrag(e);
+            DragProcessor.DoDrag(sender, e);
         }
         // нода
         private void Node_OnMouseDown(object sender, MouseButtonEventArgs e)

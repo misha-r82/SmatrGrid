@@ -31,6 +31,7 @@ namespace SmartGrid.Editor
                 var range = new TextRange(_rtb.Document.ContentStart, _rtb.Document.ContentEnd);
                 try
                 {
+                    if(_node.ValBin ==null) return;
                     MemoryStream stream = new MemoryStream(_node.ValBin);
                     range.Load(stream, DataFormats.XamlPackage);
                     stream.Close();
@@ -43,8 +44,6 @@ namespace SmartGrid.Editor
                 {
                     hyp.RequestNavigate += Hyperlink_RequestNavigate;
                 }
-                    
-                Debug.WriteLine("set rtb");
             }
         }
         public static string SelectedText

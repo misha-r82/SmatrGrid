@@ -80,7 +80,7 @@ namespace SmartGrid
             else
             {
                 data.DestTag.Tag.Add(data.Nodes, data.DestNode, false);
-                if (tagFrom != data.DestTag)
+                if (data.DestTag != data.SourceTag)
                     tagFrom.Tag.Remove(data.Nodes);
             }
         }
@@ -125,10 +125,17 @@ namespace SmartGrid
             WorkSpace.Instance.FieldList.Insert(pos, data.SourceField);
             WorkSpace.Instance.ActiveField = data.SourceField;
         }
-        public static void DoDrag(DragEventArgs e)
+        public static void DoDrag(object sender, DragEventArgs e)
         {
             DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
             if (data == null) return;
+            var elementTo = sender as FrameworkElement;
+            if (elementTo == null) return;
+            data.DestField = elementTo.DataContext as SmartFiled;
+            data.DestTag = elementTo.DataContext as TagWrap;
+            data.DestNode = ((FrameworkElement) e.OriginalSource).DataContext as Node;
+            data.Group = elementTo.DataContext as TagGroup;
+            
             if (data.DestField != null && data.Type != DargContentType.Field)
                 data.DestTag = data.DestField.WorkTag;
             data.Mode = GetDragMode(e);

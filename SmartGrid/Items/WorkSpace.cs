@@ -14,7 +14,7 @@ namespace SmartGrid
     [DataContract]
     public class WorkSpace : INotifyPropertyChanged
     {
-        [DataMember] private static SmartFiled _activeField;
+        [DataMember] private SmartFiled _activeField;
         [DataMember] private static WorkSpace _instance;
 
         public static WorkSpace Instance

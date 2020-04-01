@@ -81,6 +81,10 @@ namespace SmartGrid
             fileDialog.Filter = "Таблицы (*.grd)|*.grd";
             if (fileDialog.ShowDialog(this) != true) return;
             WorkSpace.Instance = Lib.FileIO.DeserializeDataContract<WorkSpace>(fileDialog.FileName);
+            WorkSpace.Instance.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == "ActiveField") SetTagsDataContext();
+            };
             SetTagsDataContext();
         }
 
