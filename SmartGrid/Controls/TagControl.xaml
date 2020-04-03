@@ -13,6 +13,7 @@
             <ResourceDictionary>
                 <lib:TestConverter x:Key="TestConverter"/>
                 <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+                <ctrls:EditableLable x:Key="EditableLabel"/>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="../Themes/Theme.xaml"/>
                     <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
@@ -52,7 +53,7 @@
         <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding Tag}" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="20"/>
                             <RowDefinition Height="Auto"/>
@@ -62,9 +63,9 @@
                             <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
                         <Border BorderThickness="0.5" BorderBrush="Gray" Grid.Row="0">
-                           <TextBlock Text="{Binding Header}" />
                         </Border>
-                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Style="{StaticResource ListTBStyle}"/>
+                        <!--                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Style="{StaticResource ListTBStyle}"/>-->
+                        <ctrls:EditableLable Text="{Binding Header}"/>
                         <RichTextBox Name="txtVal" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" LostKeyboardFocus="TxtVal_OnLostKeyboardFocus" SizeChanged="TxtVal_OnSizeChanged"
                                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
                         <Grid Name="gridRight"  Grid.Column="2">

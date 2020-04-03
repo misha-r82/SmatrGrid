@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -37,6 +38,7 @@ namespace SmartGrid
             set
             {
                 if (_header == value) return;
+                Debug.WriteLine($"{_header}=>{value}");
                 _header = value;
                 OnPropertyChanged();
             }
