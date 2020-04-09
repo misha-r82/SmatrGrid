@@ -25,7 +25,7 @@ namespace SmartGrid.Controls
         public EditableLable()
         {
             InitializeComponent();
-            label.DataContext =textBox.DataContext =Text;
+
         }
 
         static EditableLable()
@@ -107,6 +107,11 @@ namespace SmartGrid.Controls
         private void TextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter) textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
+
+        private void EditableLable_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
         }
     }
 }

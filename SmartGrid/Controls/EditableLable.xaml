@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="EditableLable_OnLoaded">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="EditableLable_OnLoaded" DataContextChanged="EditableLable_OnDataContextChanged">
     <Grid>
         <TextBlock Name="label" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditableLable}}, Path=Text}" 
                    IsEnabled="True"  Focusable="True" MouseDown="label_MouseDown" KeyDown="Label_OnKeyDown"/>

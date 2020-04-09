@@ -65,7 +65,11 @@ namespace SmartGrid
                 Nodelist.Remove(node);
             OnCollectionChanged();
         }
-
+        public void Remove(Node node)
+        {
+            Nodelist.Remove(node);
+            OnCollectionChanged();
+        }
         public Tag GetClone(TagWrap tWrap)
         {
             var clone = new Tag();

@@ -24,12 +24,6 @@ namespace SmartGrid
             public SmartFiled SourceField;
             public SmartFiled DestField;
 
-            public DragContent(TagGroup group, DragEventArgs e)
-            {
-                Group = group;
-                Mode = GetDragMode(e);
-                SourceTag = e.Data.GetData(typeof(TagWrap)) as TagWrap;                
-            }
             public DragContent(TagWrap sourceTag)
             {
                 Type = DargContentType.Tag;
@@ -46,16 +40,6 @@ namespace SmartGrid
             {
                 Type = DargContentType.Field;
                 SourceField = sourceField;
-            }
-            public static SwapMode GetDragMode(DragEventArgs e)
-            {
-                var mode = SwapMode.Replace;
-                switch (e.KeyStates)
-                {
-                    case DragDropKeyStates.ControlKey: mode = SwapMode.Copy; break;
-                    case DragDropKeyStates.ShiftKey: mode = SwapMode.Swap; break;
-                }
-                return mode;
             }
         }
 
@@ -75,14 +59,23 @@ namespace SmartGrid
         {
             if (data.Nodes == null || !data.Nodes.Any()) return;
             var tagFrom = data.SourceTag;
+            var tagTo = data.DestTag;
             if (data.Mode == SwapMode.Copy)
-                data.DestTag.Tag.Add(data.Nodes, data.DestNode, true);
+                tagTo.Tag.Add(data.Nodes, data.DestNode, true);
             else
             {
-                data.DestTag.Tag.Add(data.Nodes, data.DestNode, false);
-                if (data.DestTag != data.SourceTag)
+                if (tagTo == tagFrom) tagFrom.Tag.Remove(data.Nodes);
+                    tagTo.Tag.Add(data.Nodes, data.DestNode, false);
+                if (tagTo != tagFrom)
                     tagFrom.Tag.Remove(data.Nodes);
+                if (data.Mode == SwapMode.Swap && data.DestNode != null)
+                {
+                    tagFrom.Tag.Add(data.DestNode, data.Nodes.First());
+                    tagTo.Tag.Remove(data.DestNode);
+                }
+                    
             }
+
         }
 
         private static bool FromGroupToTag(DragContent data)// вытащили из группы 
