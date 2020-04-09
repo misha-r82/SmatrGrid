@@ -36,7 +36,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Name="txtHeader" Text="{Binding Tag.Header}" Style="{StaticResource ListTBStyle}"/>
+                        <ctrl:EditableLable Text="{Binding Tag.Header}"/>
+                        <!--<TextBox Name="txtHeader" Text="{Binding Tag.Header}" Style="{StaticResource ListTBStyle}"/>-->
                         <Border Name="canvTag" Grid.Column="1" Style="{StaticResource LvItemDragBorderStyle}" 
                                 MouseDown="CanvTag_OnMouseDown"/>
                     </Grid>

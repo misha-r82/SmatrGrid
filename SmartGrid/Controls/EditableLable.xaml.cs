@@ -52,6 +52,7 @@ namespace SmartGrid.Controls
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
+
         private bool _isEditing;
         public bool DoubleClick { get; set; } = true;
         public bool IsEditing
@@ -68,8 +69,8 @@ namespace SmartGrid.Controls
                 textBox.Visibility = _isEditing ? Visibility.Visible : Visibility.Collapsed;
                 if (_isEditing) Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
                             new Action(delegate () { Keyboard.Focus(textBox); }));
-                else Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
-                            new Action(delegate () { Keyboard.Focus(label); }));
+                /*else Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
+                            new Action(delegate () { Keyboard.Focus(label); }));*/
             }
         }
 
@@ -96,9 +97,11 @@ namespace SmartGrid.Controls
         private FrameworkElement _prewItem = null;
         private void EditableLable_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var item = VisualTreeHelpers.FindAncestor<ListViewItem>(Parent);
+            /*var item = VisualTreeHelpers.FindAncestor<ListViewItem>(Parent);
             if (item == null) return;
-            item.Focusable = false;
+            item.KeyDown += (s, args) =>
+            {
+            */
         }
 
         private void TextBox_OnKeyDown(object sender, KeyEventArgs e)

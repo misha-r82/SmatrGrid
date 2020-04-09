@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using SmartGrid.Controls;
 using SmartGrid.Drag;
 using static SmartGrid.DragProcessor;
 
@@ -27,36 +30,6 @@ namespace SmartGrid
             InitializeComponent();
         }
         private SmartFiled _field;
-        private void TxtHeaderMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var _field = ((FrameworkElement) sender).DataContext as SmartFiled;
-            if (_field == null) return;
-            if (e.ClickCount == 2)
-            {
-                _field.IsEditMode = true;
-                /*var txt = (TextBox)sender;
-                txt.CaptureMouse();
-                txt.MouseDown += (o, args) =>
-                {
-                    var second = o as TextBox;
-                    if (o == null || o != txt)
-                    {
-                        _field.IsEditMode = false;
-                        txt.ReleaseMouseCapture();
-                    }
-                };
-                Mouse.AddPreviewMouseDownOutsideCapturedElementHandler((FrameworkElement)sender, OnMouseDownOutsideElement);*/
-            }                
-            else
-                WorkSpace.Instance.ActiveField = _field;
-            e.Handled = false;
-        }
-        private void TxtHeaderEditLostFocus(object sender, RoutedEventArgs e)
-        {
-            var item = ((FrameworkElement)sender).DataContext as SmartFiled;
-            if (item == null) return;
-            item.IsEditMode = false;
-        }
 
         private void BtnAddField_OnClick(object sender, RoutedEventArgs e)
         {
@@ -66,6 +39,7 @@ namespace SmartGrid
             newItem.IsEditMode = true;
             newItem.Header = "Раздел";
             space.FieldList.Add(newItem);
+            SetIsEditing(newItem, true);
         }
 
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -90,48 +64,16 @@ namespace SmartGrid
             DragHelper.SetClick(new DragContent(_field), e);
             e.Handled = false;
         }
-        private void OnMouseDownOutsideElement(object sender, MouseButtonEventArgs e)
-        {
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, OnMouseDownOutsideElement);
-            ReleaseMouseCapture();
-            _field.IsEditMode = false;          
-        }
 
-        private void LstMain_OnLostFocus(object sender, RoutedEventArgs e)
+        private void SetIsEditing(SmartFiled item, bool value)
         {
-            _field.IsEditMode = false;
-        }
-
-
-        private void TxtHeaderEdit_OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            var txt = (TextBox)sender;       
-            txt.CaptureMouse();            
-        }
-
-        private void TxtHeaderPreviewMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            /*var second = sender as TextBox;
-            if (second == null)
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                _field.IsEditMode = false;
-            }*/
-            
-        }
-
-        private void TxtHeader_OnLostMouseCapture(object sender, MouseEventArgs e)
-        {
-            /*if (_field!=null)
-                _field.IsEditMode = false;*/
-        }
-
-        private void TxtHeaderEdit_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key != Key.Enter) return;
-            var tb = (TextBox)sender;
-            var item = (SmartFiled)tb.DataContext;
-            tb.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-            item.IsEditMode = false;
+                var newListItem = lstMain.ItemContainerGenerator.ContainerFromItem(item) as Control;
+                if (newListItem == null) return;
+                var ctrl = Lib.VisualTreeHelpers.FindChild<EditableLable>(newListItem, "ctrlHeader");
+                ctrl.IsEditing = value;
+            }), DispatcherPriority.Input);
         }
     }
 }
