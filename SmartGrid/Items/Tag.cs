@@ -19,6 +19,7 @@ namespace SmartGrid
         [DataMember] private List<Node> Nodelist;
         [DataMember] public ViewStyle ViewStl { get; set; }
         [DataMember] private string _header;
+        [DataMember] public FontStyle HeaderStyle { get; set; }
         public string Header
         {
             get { return _header; }
@@ -28,6 +29,7 @@ namespace SmartGrid
         {
             Nodelist = new List<Node>();
             ViewStl = new ViewStyle();
+            HeaderStyle = new FontStyle();
         }
         public void Add(Node node, Node insertAfter = null, bool notify = true)
         {

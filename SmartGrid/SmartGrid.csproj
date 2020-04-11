@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CtrlFontCommands.xaml.cs">
+      <DependentUpon>CtrlFontCommands.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EditableLable.xaml.cs">
       <DependentUpon>EditableLable.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
     <Compile Include="Drag\DragProcessor.cs" />
     <Compile Include="ViewStyle.cs" />
     <Compile Include="Items\WorkSpace.cs" />
+    <Page Include="Controls\CtrlFontCommands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\EditableLable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

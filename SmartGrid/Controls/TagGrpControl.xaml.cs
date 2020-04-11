@@ -48,5 +48,29 @@ namespace SmartGrid
             foreach (TagWrap tag in SelectedTags)
                 TagGrp.Remove(tag);
         }
+
+        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            if(!tags.Any()) return;
+            var value = !tags.First().HeaderStyle.Bold;
+            foreach (TagWrap tag in tags) tag.HeaderStyle.Bold = value;
+        }
+
+        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            if (!tags.Any()) return;
+            var value = !tags.First().HeaderStyle.Italic;
+            foreach (TagWrap tag in tags) tag.HeaderStyle.Italic = value;
+        }
+
+        private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            if (!tags.Any()) return;
+            var value = !tags.First().HeaderStyle.Underline;
+            foreach (TagWrap tag in tags) tag.HeaderStyle.Underline = value;
+        }
     }
 }

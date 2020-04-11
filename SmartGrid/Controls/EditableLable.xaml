@@ -8,6 +8,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="EditableLable_OnLoaded" DataContextChanged="EditableLable_OnDataContextChanged">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HeaderStyle.Bold}"  Value="true">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=HeaderStyle.Italic}"  Value="true">
+                        <Setter Property="FontStyle" Value="Italic"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=HeaderStyle.Underline}"  Value="true">
+                        <Setter Property="TextDecorations" Value="Underline"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
         <TextBlock Name="label" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditableLable}}, Path=Text}" 
                    IsEnabled="True"  Focusable="True" MouseDown="label_MouseDown" KeyDown="Label_OnKeyDown"/>
         <TextBox Name="textBox" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:EditableLable}}, Path=Text}"  

@@ -36,15 +36,16 @@ namespace SmartGrid.Controls
                     typeof(EditableLable),
                     new FrameworkPropertyMetadata(
                         string.Empty,
-                        FrameworkPropertyMetadataOptions.AffectsMeasure |
-                        FrameworkPropertyMetadataOptions.AffectsRender,
-                        new PropertyChangedCallback(OnTextChanged)));           
+                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            /*TextProperty = DependencyProperty.Register(
+                "HeaderStyle",
+                typeof(FontStyle),
+                typeof(EditableLable),
+                new FrameworkPropertyMetadata(
+                    null,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));*/
         }
 
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Debug.WriteLine(e.NewValue);
-        }
 
         public static readonly DependencyProperty TextProperty;
         public string Text
@@ -52,7 +53,12 @@ namespace SmartGrid.Controls
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
-
+       /* public static readonly DependencyProperty HeaderStyleProperty;
+        public FontStyle HeaderStyle
+        {
+            get => (FontStyle)GetValue(HeaderStyleProperty);
+            set => SetValue(HeaderStyleProperty, value);
+        }*/
         private bool _isEditing;
         public bool DoubleClick { get; set; } = true;
         public bool IsEditing

@@ -190,7 +190,33 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
+            if (!nodes.Any()) return;
+            var value = !nodes.First().HeaderStyle.Bold;
+            foreach (Node node in nodes) node.HeaderStyle.Bold = value;
+        }
 
+        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
+            if (!nodes.Any()) return;
+            var value = !nodes.First().HeaderStyle.Italic;
+            foreach (Node node in nodes) node.HeaderStyle.Italic = value;
+        }
 
+        private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
+            if (!nodes.Any()) return;
+            var value = !nodes.First().HeaderStyle.Underline;
+            foreach (Node node in nodes) node.HeaderStyle.Underline = value;
+        }
+
+        private void CommandBoldTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurTag.Tag.HeaderStyle.Bold = !CurTag.Tag.HeaderStyle.Bold;
+        }
     }
 }

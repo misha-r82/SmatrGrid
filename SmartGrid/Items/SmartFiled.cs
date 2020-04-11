@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,6 +102,7 @@ namespace SmartGrid
     public class TagWrap: INotifyPropertyChanged
     {
         [DataMember] private Tag _tag;
+        public FontStyle HeaderStyle => _tag.HeaderStyle;
 
         public TagWrap(string header = "")
         {

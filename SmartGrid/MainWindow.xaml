@@ -45,7 +45,7 @@
             <local:CtrlFieldMan/>
         </StackPanel>
         <local:TagControl x:Name="tag00" DataContext="{Binding ActiveField.WorkTag}" Grid.Column="1" Grid.RowSpan="2"/>
-        <local:TagGrpControl x:Name="tagGrp" Grid.Column="5" DataContext="{Binding ActiveField.TagGrp}" Grid.RowSpan="2" Height="770" VerticalAlignment="Bottom"/>
+        <local:TagGrpControl x:Name="tagGrp" Grid.Column="5" DataContext="{Binding ActiveField.TagGrp}" Grid.RowSpan="2" Height="770" VerticalAlignment="Top"/>
         <Grid Name="gridWrk" Grid.Column="3" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{Binding ActiveField.GridWidth.GH1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

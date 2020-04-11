@@ -14,6 +14,7 @@
                 <lib:TestConverter x:Key="TestConverter"/>
                 <lib:BoolVisConverter x:Key="BoolVisConverter"/>
                 <ctrls:EditableLable x:Key="EditableLabel"/>
+                <ctrls:CtrlFontCommands x:Key="CtrlFontCommands"/>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="../Themes/Theme.xaml"/>
                     <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
@@ -22,6 +23,9 @@
         </Grid.Resources>
         <Grid.CommandBindings>
             <CommandBinding Command="Delete" Executed="CommDell_Exec"/>
+            <CommandBinding Command="ToggleBold" Executed="CommandBoldTag_OnExecuted"/>
+            <!--<CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
+            <CommandBinding Command="ToggleUnderline" Executed="CommandUnderlineTag_OnExecuted"/>-->
         </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -30,13 +34,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Name="txtHeader" Text="{Binding Tag.Header}" Margin="0,1,0,0"/>
-            <Border Grid.Column="1" Style="{StaticResource DragBorderStyle}"
-                    PreviewMouseDown="CanvTag_OnPreviewMouseDown"/>
+            <ctrls:EditableLable Text="{Binding Tag.Header, Mode=TwoWay}" PreviewMouseDown="CanvTag_OnPreviewMouseDown" Margin="1"/>
         </Grid>
         <Grid Name="gridNewNode" Grid.Row="1" Margin="2">
             <Grid.ColumnDefinitions>
@@ -51,6 +49,11 @@
             </Button>
         </Grid>
         <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding Tag}" HorizontalContentAlignment="Stretch">
+            <ListView.CommandBindings>
+                <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
+                <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>
+                <CommandBinding Command="ToggleUnderline" Executed="CommandUnderline_OnExecuted"/>
+            </ListView.CommandBindings>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid >
@@ -65,7 +68,7 @@
                         <Border BorderThickness="0.5" BorderBrush="Gray" Grid.Row="0">
                         </Border>
                         <!--                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Style="{StaticResource ListTBStyle}"/>-->
-                        <ctrls:EditableLable Text="{Binding Header}"/>
+                        <ctrls:EditableLable Text="{Binding Header}"  PreviewMouseDown="Node_OnMouseDown"/>
                         <RichTextBox Name="txtVal" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" LostKeyboardFocus="TxtVal_OnLostKeyboardFocus" SizeChanged="TxtVal_OnSizeChanged"
                                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
                         <Grid Name="gridRight"  Grid.Column="2">
@@ -103,12 +106,9 @@
             <Button Name="btnPaste" ToolTip="Вставить" Click="BtnPaste_OnClick" Style="{StaticResource SmallBtnStyle}">
                 <Image Source="../img/paste.png"/>
             </Button>
+            <ctrls:CtrlFontCommands/>
             <ToolBar FontFamily="Times New Roman" Margin="0,-2"
                      Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
-                <Button FontWeight="Bold" Command="EditingCommands.ToggleBold" ToolTip="Полужирный" Style="{StaticResource SmallBtnStyle}">Ж</Button>
-                <Button FontStyle="Italic" Command="EditingCommands.ToggleItalic" ToolTip="Курсив" Style="{StaticResource SmallBtnStyle}">К</Button>
-                <Button Command="EditingCommands.ToggleUnderline" ToolTip="Подчеркнутый" Style="{StaticResource SmallBtnStyle}">
-                    <Run TextDecorations="Underline" >Ч</Run></Button>
                 <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/link.png" Margin="2"/>
                 </Button>

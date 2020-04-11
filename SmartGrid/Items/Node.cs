@@ -17,10 +17,20 @@ namespace SmartGrid
     {
         [DataMember] private string _val;
         [DataMember] private string _header;
-        [DataMember] private byte[] _valBin; 
+        [DataMember] private byte[] _valBin;
+        private FontStyle _headerStyle;
+
+        [DataMember]
+        public FontStyle HeaderStyle
+        {
+            get => _headerStyle;
+            set => _headerStyle = value;
+        }
+
         public Node()
         {
             ViewStl = new ViewStyle();
+            HeaderStyle = new FontStyle();
         }
         public string Val
         {
@@ -38,7 +48,6 @@ namespace SmartGrid
             set
             {
                 if (_header == value) return;
-                Debug.WriteLine($"{_header}=>{value}");
                 _header = value;
                 OnPropertyChanged();
             }
@@ -61,6 +70,7 @@ namespace SmartGrid
         public void CloneRefs()
         {
             ViewStl = ViewStl.GetClone();
+            HeaderStyle = HeaderStyle.GetClone();
         }
 
         public Node GetClone()
