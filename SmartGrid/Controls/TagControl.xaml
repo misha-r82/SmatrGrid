@@ -8,7 +8,7 @@
              xmlns:ctrls="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Name="gridMain" Drop="Grid_Drop" AllowDrop="True" >
+    <Grid Name="gridMain" Drop="Grid_Drop" AllowDrop="True"  Focusable="True">
         <Grid.Resources>
             <ResourceDictionary>
                 <lib:TestConverter x:Key="TestConverter"/>
@@ -24,8 +24,8 @@
         <Grid.CommandBindings>
             <CommandBinding Command="Delete" Executed="CommDell_Exec"/>
             <CommandBinding Command="ToggleBold" Executed="CommandBoldTag_OnExecuted"/>
-            <!--<CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
-            <CommandBinding Command="ToggleUnderline" Executed="CommandUnderlineTag_OnExecuted"/>-->
+            <CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
+            <CommandBinding Command="ToggleUnderline" Executed="CommandBindingUndelineTag_OnExecuted"/>
         </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -68,7 +68,7 @@
                         <Border BorderThickness="0.5" BorderBrush="Gray" Grid.Row="0">
                         </Border>
                         <!--                        <TextBox Name="txtHeader" Text="{Binding Header}" Grid.Row="0" Style="{StaticResource ListTBStyle}"/>-->
-                        <ctrls:EditableLable Text="{Binding Header}"  PreviewMouseDown="Node_OnMouseDown"/>
+                        <ctrls:EditableLable Text="{Binding Header}" CaptureFocus="True"  PreviewMouseDown="Node_OnMouseDown" TabIndex="0"/>
                         <RichTextBox Name="txtVal" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" LostKeyboardFocus="TxtVal_OnLostKeyboardFocus" SizeChanged="TxtVal_OnSizeChanged"
                                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
                         <Grid Name="gridRight"  Grid.Column="2">

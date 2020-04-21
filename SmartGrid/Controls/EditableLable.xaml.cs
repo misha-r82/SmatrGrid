@@ -37,13 +37,7 @@ namespace SmartGrid.Controls
                     new FrameworkPropertyMetadata(
                         string.Empty,
                         FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-            /*TextProperty = DependencyProperty.Register(
-                "HeaderStyle",
-                typeof(FontStyle),
-                typeof(EditableLable),
-                new FrameworkPropertyMetadata(
-                    null,
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));*/
+
         }
 
 
@@ -53,12 +47,7 @@ namespace SmartGrid.Controls
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
-       /* public static readonly DependencyProperty HeaderStyleProperty;
-        public FontStyle HeaderStyle
-        {
-            get => (FontStyle)GetValue(HeaderStyleProperty);
-            set => SetValue(HeaderStyleProperty, value);
-        }*/
+        public bool CaptureFocus { get; set; }
         private bool _isEditing;
         public bool DoubleClick { get; set; } = true;
         public bool IsEditing
@@ -75,8 +64,6 @@ namespace SmartGrid.Controls
                 textBox.Visibility = _isEditing ? Visibility.Visible : Visibility.Collapsed;
                 if (_isEditing) Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
                             new Action(delegate () { Keyboard.Focus(textBox); }));
-                /*else Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,
-                            new Action(delegate () { Keyboard.Focus(label); }));*/
             }
         }
 
@@ -99,17 +86,48 @@ namespace SmartGrid.Controls
                 IsEditing = true;
         }
 
-
+        private UIElement GetFirstFocusable(UIElement element)
+        {
+            DependencyObject current = VisualTreeHelper.GetParent(element);
+            while (current != null)
+            {
+                var ui = current as UIElement;
+                if (ui != null && ui.Focusable) return ui;
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
+        }
         private FrameworkElement _prewItem = null;
         private void EditableLable_OnLoaded(object sender, RoutedEventArgs e)
         {
-            /*var item = VisualTreeHelpers.FindAncestor<ListViewItem>(Parent);
+            if (!CaptureFocus) return;
+            var item = sender as UIElement;
             if (item == null) return;
-            item.KeyDown += (s, args) =>
+            var focusable = GetFirstFocusable(item);
+            if (focusable == null) return;
+            Debug.WriteLine("Focusable: "+ focusable);
+            bool capture = false;
+            focusable.GotKeyboardFocus += (o, args) =>
             {
-            */
-        }
+                if (args.OldFocus != null && !capture)
+                    
+                /*if (Equals(args.OldFocus, focusable))*/
+                {
+                    //IsEditing = true;
+                    capture = true;
+                    TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                    UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
 
+                    if (keyboardFocus != null)
+                    {
+                        keyboardFocus.MoveFocus(tRequest);
+                    }
+                    Debug.WriteLine(args.OldFocus + "->" + args.NewFocus);
+                }
+            };
+            focusable.LostKeyboardFocus += (o, args) => { capture = false; };
+
+        }
         private void TextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter) textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));

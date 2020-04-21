@@ -218,5 +218,15 @@ namespace SmartGrid
         {
             CurTag.Tag.HeaderStyle.Bold = !CurTag.Tag.HeaderStyle.Bold;
         }
+
+        private void CommandItalicTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurTag.Tag.HeaderStyle.Italic = !CurTag.Tag.HeaderStyle.Italic;
+        }
+
+        private void CommandBindingUndelineTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurTag.Tag.HeaderStyle.Underline = !CurTag.Tag.HeaderStyle.Underline;
+        }
     }
 }
