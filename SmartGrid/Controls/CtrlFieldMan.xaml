@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SmartGrid"
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              xmlns:controls="clr-namespace:SmartGrid.Controls"
+             xmlns:colorPiecker="clr-namespace:Lib.Controls.ColorPiecker;assembly=Lib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="50">
     <Grid>
@@ -44,6 +45,7 @@
             <ListView.ContextMenu>
                 <ContextMenu Name="NodeMenu">
                     <MenuItem Name="itmDel" Header="Delete" Command="Delete"/>
+                    <MenuItem Name="itmColor" Header="Delete" Click="ItmColor_OnClick"/>
                 </ContextMenu>
 
             </ListView.ContextMenu>

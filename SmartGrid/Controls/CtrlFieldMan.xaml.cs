@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Lib.ColorPiecker;
 using SmartGrid.Controls;
 using SmartGrid.Drag;
 using static SmartGrid.DragProcessor;
@@ -74,6 +75,12 @@ namespace SmartGrid
                 var ctrl = Lib.VisualTreeHelpers.FindChild<EditableLable>(newListItem, "ctrlHeader");
                 ctrl.IsEditing = value;
             }), DispatcherPriority.Input);
+        }
+
+        private void ItmColor_OnClick(object sender, RoutedEventArgs e)
+        {
+            var f = new ColorPickerDialog();
+            f.ShowDialog();
         }
     }
 }

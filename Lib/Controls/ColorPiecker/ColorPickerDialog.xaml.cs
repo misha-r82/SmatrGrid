@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Lib.UI
+namespace Lib.ColorPiecker
 {
     /// <summary>
     /// Interaction logic for ColorPickerDialog.xaml
@@ -22,6 +22,11 @@ namespace Lib.UI
         public ColorPickerDialog()
         {
             InitializeComponent();
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

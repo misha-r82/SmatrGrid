@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
@@ -66,6 +67,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Cloning\CloneHelper.cs" />
+    <Compile Include="Controls\ColorPiecker\CtrlColorPiecker.xaml.cs">
+      <DependentUpon>CtrlColorPiecker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CompactExpanderPrewiew.xaml.cs">
       <DependentUpon>CompactExpanderPrewiew.xaml</DependentUpon>
     </Compile>
@@ -111,13 +115,17 @@
     <Compile Include="Conv\Conv.cs" />
     <Compile Include="DB\StrPatt.cs" />
     <Compile Include="UI\ColorAlternater.cs" />
-    <Compile Include="UI\ColorPickerDialog.xaml.cs">
+    <Compile Include="Controls\ColorPiecker\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VisualTreeHelper.cs" />
     <Page Include="Compact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ColorPiecker\CtrlColorPiecker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,7 +169,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\ColorPickerDialog.xaml">
+    <Page Include="Controls\ColorPiecker\ColorPickerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
