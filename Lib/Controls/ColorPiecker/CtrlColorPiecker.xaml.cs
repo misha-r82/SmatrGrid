@@ -210,7 +210,50 @@ namespace Lib.Controls.ColorPiecker
             return i;
         }
 
+        public static Color HSLToRGB(double h, double s, double l)
+        {
+            byte r = 0;
+            byte g = 0;
+            byte b = 0;
 
+            if (s == 0)
+            {
+                r = g = b = (byte)(l * 255);
+            }
+            else
+            {
+                double v1, v2;
+                double hue = (float)h / 360;
+
+                v2 = (l < 0.5) ? (l * (1 + s)) : ((l + s) - (l * s));
+                v1 = 2 * l - v2;
+
+                r = (byte)(255 * HueToRGB(v1, v2, hue + (1.0 / 3)));
+                g = (byte)(255 * HueToRGB(v1, v2, hue));
+                b = (byte)(255 * HueToRGB(v1, v2, hue - (1.0 / 3)));
+            }
+
+            return Color.FromRgb(r, g, b);
+        }
+
+        private static double HueToRGB(double v1, double v2, double vH)
+        {
+            if (vH < 0)
+                vH += 1;
+
+            if (vH > 1)
+                vH -= 1;
+
+            if ((6 * vH) < 1)
+                return (v1 + (v2 - v1) * 6 * vH);
+
+            if ((2 * vH) < 1)
+                return v2;
+
+            if ((3 * vH) < 2)
+                return (v1 + (v2 - v1) * ((2.0f / 3) - vH) * 6);
+            return v1;
+        }
 
 
         public CustomColors()
@@ -219,14 +262,13 @@ namespace Lib.Controls.ColorPiecker
                 byte step = 20;
                 byte down = 0;
                 int up = 360;
-                for (double h = 0; h < up; h+=step)
-                for (double l = 0.6; l < 1; l += 0.2)
-                for (double s = 0.6; s < 1; s+=0.2)
-
+                for (double h = 0; h <= up; h+=step)
+                for (double s = 0.4; s <= 1; s+=0.2)
+                for (double l = 0.6; l <= 1; l += 0.2)
                 {
 
                     
-                    _SelectableColors.Add(HsvToRgb(h,s,l));
+                    _SelectableColors.Add(HSLToRGB(h, s,l));
                 }
 
             }
