@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,11 +26,11 @@ namespace Lib.Controls.ColorPiecker
         public CtrlColorPiecker()
         {
             InitializeComponent();
+            DataContext = this;
             InitialWork();
 
         }
 
-        private bool _shift = false;
         private Color _customColor = Colors.Transparent;
 
         public Color CustomColor
@@ -47,43 +48,18 @@ namespace Lib.Controls.ColorPiecker
         private void InitialWork()
         {
             DefaultPicker.Items.Clear();
-            CustomColors customColors = new CustomColors();
+            CustomColors customColors = new CustomColors(
+                new CustomColors.Range(0,360,27),
+                new CustomColors.Range(1,0.5,2),
+                new CustomColors.Range(0.6,0.9,3)
+                
+                );
             foreach (var item in customColors.SelectableColors)
             {
                 DefaultPicker.Items.Add(item);
             }
-            DefaultPicker.SelectionChanged += new SelectionChangedEventHandler(DefaultPicker_SelectionChanged);
         }
-
-        void DefaultPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DefaultPicker.SelectedValue != null)
-            {
-                _customColor = (Color)DefaultPicker.SelectedValue;
-            }
-            FrameworkElement frameworkElement = this;
-            while (true)
-            {
-                if (frameworkElement == null) break;
-                if (frameworkElement is ContextMenu)
-                {
-                    ((ContextMenu)frameworkElement).IsOpen = false;
-                    break;
-                }
-                if (frameworkElement.Parent != null)
-                    frameworkElement = (FrameworkElement)frameworkElement.Parent;
-                else
-                    break;
-            }
         }
-
-        private void TabItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-
-            }
 
         class CustomColors
         {
@@ -96,180 +72,45 @@ namespace Lib.Controls.ColorPiecker
             }
 
 
-        /// <summary>
-        /// Convert HSV to RGB
-        /// h is from 0-360
-        /// s,v values are 0-1
-        /// r,g,b values are 0-255
-        /// Based upon http://ilab.usc.edu/wiki/index.php/HSV_And_H2SV_Color_Space#HSV_Transformation_C_.2F_C.2B.2B_Code_2
-        /// </summary>
-        private Color HsvToRgb(double h, double S, double V)
+        public class Range
         {
-            // ######################################################################
-            // T. Nathan Mundhenk
-            // mundhenk@usc.edu
-            // C/C++ Macro HSV to RGB
-
-            double H = h;
-            while (H < 0) { H += 360; };
-            while (H >= 360) { H -= 360; };
-            double R, G, B;
-            if (V <= 0)
-            { R = G = B = 0; }
-            else if (S <= 0)
+            public Range(double start, double end, int count)
             {
-                R = G = B = V;
+                if (count < 0) throw new ArgumentException("Число интервалов CustomColors.Range должно быть > 0!");
+                this.start = start;
+                this.end = end;
+                this.count = count;
             }
-            else
+            public double start;
+            public double end;
+            public int count;
+            public double Step => count == 1 ? end - start : (end - start) / (count-1);
+            private bool Iterated(double cur)
             {
-                double hf = H / 60.0;
-                int i = (int)Math.Floor(hf);
-                double f = hf - i;
-                double pv = V * (1 - S);
-                double qv = V * (1 - S * f);
-                double tv = V * (1 - S * (1 - f));
-                switch (i)
+                if (start < end) return cur <= end;
+                return cur >= end;
+            }
+            public IEnumerable<double> Values
+            {
+                get
                 {
-
-                    // Red is the dominant color
-
-                    case 0:
-                        R = V;
-                        G = tv;
-                        B = pv;
-                        break;
-
-                    // Green is the dominant color
-
-                    case 1:
-                        R = qv;
-                        G = V;
-                        B = pv;
-                        break;
-                    case 2:
-                        R = pv;
-                        G = V;
-                        B = tv;
-                        break;
-
-                    // Blue is the dominant color
-
-                    case 3:
-                        R = pv;
-                        G = qv;
-                        B = V;
-                        break;
-                    case 4:
-                        R = tv;
-                        G = pv;
-                        B = V;
-                        break;
-
-                    // Red is the dominant color
-
-                    case 5:
-                        R = V;
-                        G = pv;
-                        B = qv;
-                        break;
-
-                    // Just in case we overshoot on our math by a little, we put these here. Since its a switch it won't slow us down at all to put these here.
-
-                    case 6:
-                        R = V;
-                        G = tv;
-                        B = pv;
-                        break;
-                    case -1:
-                        R = V;
-                        G = pv;
-                        B = qv;
-                        break;
-
-                    // The color is not defined, we should throw an error.
-
-                    default:
-                        //LFATAL("i Value error in Pixel conversion, Value is %d", i);
-                        R = G = B = V; // Just pretend its black/white
-                        break;
+                    if (count == 0) yield break;
+                    for (double cur = start; Iterated(cur); cur += Step)
+                        yield return cur;
                 }
             }
-            byte r = (byte)Clamp((int)(R * 255.0));
-            byte g = (byte)Clamp((int)(G * 255.0));
-            byte b = (byte)Clamp((int)(B * 255.0));
-            return Color.FromRgb(r,g,b);
         }
-
-        /// <summary>
-        /// Clamp a value to 0-255
-        /// </summary>
-        int Clamp(int i)
+        public CustomColors(Range hue, Range sat, Range light)
         {
-            if (i < 0) return 0;
-            if (i > 255) return 255;
-            return i;
-        }
-
-        public static Color HSLToRGB(double h, double s, double l)
-        {
-            byte r = 0;
-            byte g = 0;
-            byte b = 0;
-
-            if (s == 0)
+            var tmp1 = sat.Values.ToArray();
+            var tmp = light.Values.ToArray();
+            _SelectableColors = new List<Color>();
+            foreach (var h in hue.Values)
+            foreach (var s in sat.Values)
+            foreach (var l in light.Values)
             {
-                r = g = b = (byte)(l * 255);
+                _SelectableColors.Add(UI.ColorUtils.HSLToRGB(h, s, l));
             }
-            else
-            {
-                double v1, v2;
-                double hue = (float)h / 360;
-
-                v2 = (l < 0.5) ? (l * (1 + s)) : ((l + s) - (l * s));
-                v1 = 2 * l - v2;
-
-                r = (byte)(255 * HueToRGB(v1, v2, hue + (1.0 / 3)));
-                g = (byte)(255 * HueToRGB(v1, v2, hue));
-                b = (byte)(255 * HueToRGB(v1, v2, hue - (1.0 / 3)));
-            }
-
-            return Color.FromRgb(r, g, b);
-        }
-
-        private static double HueToRGB(double v1, double v2, double vH)
-        {
-            if (vH < 0)
-                vH += 1;
-
-            if (vH > 1)
-                vH -= 1;
-
-            if ((6 * vH) < 1)
-                return (v1 + (v2 - v1) * 6 * vH);
-
-            if ((2 * vH) < 1)
-                return v2;
-
-            if ((3 * vH) < 2)
-                return (v1 + (v2 - v1) * ((2.0f / 3) - vH) * 6);
-            return v1;
-        }
-
-
-        public CustomColors()
-            {
-                _SelectableColors = new List<Color>();
-                byte step = 20;
-                byte down = 0;
-                int up = 360;
-                for (double h = 0; h <= up; h+=step)
-                for (double s = 0.4; s <= 1; s+=0.2)
-                for (double l = 0.6; l <= 1; l += 0.2)
-                {
-
-                    
-                    _SelectableColors.Add(HSLToRGB(h, s,l));
-                }
 
             }
 

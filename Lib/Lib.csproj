@@ -118,6 +118,7 @@
     <Compile Include="Controls\ColorPiecker\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ColorUtils.cs" />
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VisualTreeHelper.cs" />

@@ -11,25 +11,12 @@
         <lib:ColorToSolidColorBrushConverter x:Key="FromColorToSolidColorBrushConverter"/>
     </UserControl.Resources>
     <StackPanel>
-        <TabControl>
+        <!--<TabControl>
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="Набор цветов"/>
                 </TabItem.Header>
-                <ListBox    x:Name="DefaultPicker"        
-                                SnapsToDevicePixels="True">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Rectangle Width="15" Height="15" Stroke="Black" HorizontalAlignment="Center"
-                        Fill="{Binding Converter={StaticResource FromColorToSolidColorBrushConverter}}" Margin="0 1 0 1"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel  Width="151" Margin="0 10 0 10"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
+
             </TabItem>
             <TabItem>
                 <TabItem.Header>
@@ -37,7 +24,19 @@
                 </TabItem.Header>
 
             </TabItem>
-        </TabControl>
-
+        </TabControl>-->
+        <ListBox x:Name="DefaultPicker" SelectedItem="{Binding CustomColor}" SnapsToDevicePixels="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="16" Height="16" Stroke="Black" HorizontalAlignment="Center"
+                Fill="{Binding Converter={StaticResource FromColorToSolidColorBrushConverter}}" Margin="0 1 0 1"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel  Width="157" Margin="0 2 0 2"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </StackPanel>
 </UserControl>
