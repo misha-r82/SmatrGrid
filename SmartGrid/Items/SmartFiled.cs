@@ -41,8 +41,9 @@ namespace SmartGrid
                 OnPropertyChanged();
             }
         }
-        public SmartFiled()
+        public SmartFiled(string header = "")
         {
+            Header = header;
             TagGrp = new TagGroup();
             GridWidth = new GridWidth();
             TagGrp.TagList.Add(new TagWrap("Корзина"));

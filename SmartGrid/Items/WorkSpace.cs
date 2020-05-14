@@ -47,6 +47,17 @@ namespace SmartGrid
             }
         }
 
+        public void Remove(SmartFiled field)
+        {
+            var pos = FieldList.IndexOf(field);
+            FieldList.RemoveAt(pos);
+            if (FieldList.Count == 0)
+            {
+                ActiveField = new SmartFiled("Новый раздел");
+                FieldList.Add(ActiveField);
+            } else if (!(pos < FieldList.Count)) pos--;
+            ActiveField = FieldList[pos];
+        }
         protected void FireActiveFieldChanged()
         {
             OnPropertyChanged(nameof(ActiveField));
