@@ -96,7 +96,6 @@
                                                         Storyboard.TargetProperty="Color"
                                                         To="{StaticResource MouseOverBackgroundColor1}"
                                                         Duration="0:0:0:0.2" />
-
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
@@ -106,24 +105,26 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="TextBox" x:Key="EditableTBStyle">
+
+   <!-- <Style TargetType="TextBox" BasedOn="{StaticResource EditableTBStyle}" x:Key="ListTBStyle">
+        <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}},  Path=IsSelected, Converter={StaticResource BoolVisConverter}}"/>
+    </Style>-->
+    <Style TargetType="TextBlock" >
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"></Setter>
+    </Style>
+    <Style TargetType="TextBox" x:Key="RegularTbStyle">
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+    </Style>
+    <Style TargetType="TextBox" x:Key="EditableTBStyle" BasedOn="{StaticResource RegularTbStyle}">
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
     </Style>
-    <Style TargetType="TextBox" BasedOn="{StaticResource EditableTBStyle}" x:Key="ListTBStyle">
-        <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected, Converter={StaticResource BoolVisConverter}}"/>
-         <!--<Setter Property="IsHitTestVisible" Value="False" />
-        <Style.Triggers>
-           <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, 
-                AncestorType={x:Type ListViewItem}, AncestorLevel=1}}" Value="True">
-                    <Setter Property="IsHitTestVisible" Value="True" />
-            </DataTrigger>
-        </Style.Triggers>-->
-    </Style>
+    <Style TargetType="TextBox" BasedOn="{StaticResource RegularTbStyle}"/>
     <Style TargetType="ButtonBase" x:Key="SmallBtnStyle" BasedOn="{StaticResource RectBtnStyle}">
-        <Setter Property="Margin" Value="1,1,0,1"/>
-        <Setter Property="Width" Value="22"/>
-        <Setter Property="Height" Value="22"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
         <Setter Property="Focusable" Value="False"/>
     </Style>
     <Style TargetType="ButtonBase" x:Key="BigBtnStyle" BasedOn="{StaticResource RectBtnStyle}">
@@ -135,7 +136,7 @@
         <Setter Property="Padding" Value="0"></Setter>
     </Style>
     <Style TargetType="ListView">
-        <Setter Property="BorderThickness" Value="0.6"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
     <Style TargetType="Border" x:Key="DragBorderBase">
         <Setter Property="Background" Value="ForestGreen"/>

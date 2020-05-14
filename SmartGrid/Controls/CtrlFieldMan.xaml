@@ -13,11 +13,9 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="../Themes/Theme.xaml"/>
                     <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
-
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition/>

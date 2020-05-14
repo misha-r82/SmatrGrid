@@ -105,7 +105,7 @@ namespace SmartGrid.Controls
             if (item == null) return;
             var focusable = GetFirstFocusable(item);
             if (focusable == null) return;
-            Debug.WriteLine("Focusable: "+ focusable);
+            //Debug.WriteLine("Focusable: "+ focusable);
             bool capture = false;
             focusable.GotKeyboardFocus += (o, args) =>
             {
@@ -120,9 +120,9 @@ namespace SmartGrid.Controls
 
                     if (keyboardFocus != null)
                     {
-                        keyboardFocus.MoveFocus(tRequest);
+                        //keyboardFocus.MoveFocus(tRequest);
                     }
-                    Debug.WriteLine(args.OldFocus + "->" + args.NewFocus);
+                    //Debug.WriteLine(args.OldFocus + "->" + args.NewFocus);
                 }
             };
             focusable.LostKeyboardFocus += (o, args) => { capture = false; };

@@ -228,5 +228,15 @@ namespace SmartGrid
         {
             CurTag.Tag.HeaderStyle.Underline = !CurTag.Tag.HeaderStyle.Underline;
         }
+
+        private void GridMain_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            //gridNewNode.Visibility = Visibility.Visible;
+        }
+
+        private void GridMain_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            //gridNewNode.Visibility = Visibility.Visible;
+        }
     }
 }
