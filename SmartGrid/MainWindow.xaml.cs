@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,5 +101,15 @@ namespace SmartGrid
         {
             DragHelper.Track(e);
         }
+        private void CommandUndo_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Debug.WriteLine("Undo!!!");
+        }
+        private void CommandRedo_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Debug.WriteLine("Redo!!!");
+        }
     }
+
 }
+

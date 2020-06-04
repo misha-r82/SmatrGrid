@@ -26,6 +26,7 @@
                 <CommandBinding Command="ToggleBold" Executed="CommandBoldTag_OnExecuted"/>
                 <CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
                 <CommandBinding Command="ToggleUnderline" Executed="CommandBindingUndelineTag_OnExecuted"/>
+
             </Grid.CommandBindings>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

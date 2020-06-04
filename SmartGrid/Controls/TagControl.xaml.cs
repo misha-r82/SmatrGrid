@@ -238,5 +238,6 @@ namespace SmartGrid
         {
             //gridNewNode.Visibility = Visibility.Visible;
         }
+
     }
 }

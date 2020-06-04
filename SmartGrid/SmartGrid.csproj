@@ -45,6 +45,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +97,9 @@
     <Compile Include="Items\Tag.cs" />
     <Compile Include="Items\TagGroup.cs" />
     <Compile Include="Drag\DragProcessor.cs" />
+    <Compile Include="Undo\NodeHeaderEditScope.cs" />
+    <Compile Include="Undo\UndoList.cs" />
+    <Compile Include="Undo\UndoScope.cs" />
     <Compile Include="ViewStyle.cs" />
     <Compile Include="Items\WorkSpace.cs" />
     <Page Include="Controls\CtrlFontCommands.xaml">
@@ -207,6 +211,13 @@
     <Resource Include="img\cut.png" />
     <Resource Include="img\paste.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\redo.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

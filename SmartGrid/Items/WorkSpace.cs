@@ -16,6 +16,7 @@ namespace SmartGrid
     {
         [DataMember] private SmartFiled _activeField;
         [DataMember] private static WorkSpace _instance;
+        public UndoData Undo { get; }
 
         public static WorkSpace Instance
         {
@@ -29,6 +30,7 @@ namespace SmartGrid
 
         public WorkSpace()
         {
+            Undo = new UndoData();
             FieldList = new ObservableCollection<SmartFiled>();   
             FieldList.Add(new SmartFiled() { Header = "Раздел1" });
             FieldList.Add(new SmartFiled() { Header = "Раздел2" });
