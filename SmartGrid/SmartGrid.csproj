@@ -74,6 +74,9 @@
     <Compile Include="Controls\ExpandButton.xaml.cs">
       <DependentUpon>ExpandButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NodeCotrol.xaml.cs">
+      <DependentUpon>NodeCotrol.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ExpandButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NodeCotrol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
