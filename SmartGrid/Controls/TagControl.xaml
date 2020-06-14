@@ -26,6 +26,9 @@
                 <CommandBinding Command="ToggleBold" Executed="CommandBoldTag_OnExecuted"/>
                 <CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
                 <CommandBinding Command="ToggleUnderline" Executed="CommandBindingUndelineTag_OnExecuted"/>
+                <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
+                <CommandBinding Command="Cut" Executed="CommandCut_OnExecuted"/>
+                <CommandBinding Command="Paste" Executed="CommandPaste_OnExecuted"/>
 
             </Grid.CommandBindings>
             <Grid.RowDefinitions>
@@ -35,7 +38,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid>
-                <ctrls:EditableLable Text="{Binding Tag.Header, Mode=TwoWay}" PreviewMouseDown="CanvTag_OnPreviewMouseDown" Margin="1"/>
+                <ctrls:EditableLable x:Name="ctrlHeader" Text="{Binding Tag.Header, Mode=TwoWay}" PreviewMouseDown="CanvTag_OnPreviewMouseDown" Margin="1"/>
             </Grid>
         <Grid Name="gridNewNode" Grid.Row="1" Margin="2"   Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
                     Converter={StaticResource BoolVisConverter}}">
@@ -58,34 +61,7 @@
                 </ListView.CommandBindings>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" MinHeight="20"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="10"/>
-                            </Grid.ColumnDefinitions>
-
-                            <ctrls:EditableLable Text="{Binding Header}" CaptureFocus="True"  PreviewMouseDown="Node_OnMouseDown" TabIndex="0"/>
-                            <RichTextBox Name="txtVal" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" LostKeyboardFocus="TxtVal_OnLostKeyboardFocus" SizeChanged="TxtVal_OnSizeChanged"
-                                     Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
-                            <Grid Name="gridRight"  Grid.Column="2">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Border PreviewMouseDown="Node_OnMouseDown" Style="{StaticResource LvItemDragBorderStyle}">
-                                    <Border.ContextMenu>
-                                        <ContextMenu Name="NodeMenu">
-                                            <MenuItem Name="itmDel" Header="Delete" Command="Delete"/>
-                                        </ContextMenu>
-                                    </Border.ContextMenu>
-                                </Border>
-                                <ctrls:ExpandButton Grid.Row="1" IsChecked="{Binding ViewStl.DetailsVisile}" Height="9" Width="9"/>
-                            </Grid>
-                        </Grid>
+                        <ctrls:NodeCotrol PreviewMouseDown="Node_OnMouseDown"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ContextMenu>
@@ -94,29 +70,28 @@
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>
-            <StackPanel Name="panelTools" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Margin="0.5" HorizontalAlignment="Right"
-                    Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
+            <ToolBar Name="panelTools"  Grid.ColumnSpan="2" Grid.Row="3" Margin="0.5" HorizontalAlignment="Right"
+                     Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
                     Converter={StaticResource BoolVisConverter}}" Focusable="False">
-                <Button Name="btnCut" ToolTip="Вырезать" Click="BtnCut_OnClick" Style="{StaticResource SmallBtnStyle}">
+                <Button Name="btnCut" ToolTip="Вырезать" Command="Cut" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/cut.png"/>
                 </Button>
-                <Button Name="btnCopy" ToolTip="Копировать" Click="BtnCopy_OnClick" Style="{StaticResource SmallBtnStyle}">
+                <Button Name="btnCopy" ToolTip="Копировать" Command="Copy" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/copy.png"/>
                 </Button>
-                <Button Name="btnPaste" ToolTip="Вставить" Click="BtnPaste_OnClick" Style="{StaticResource SmallBtnStyle}">
+                <Button Name="btnPaste" ToolTip="Вставить" Command="Paste" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/paste.png"/>
                 </Button>
                 <ctrls:CtrlFontCommands/>
-                <ToolBar FontFamily="Times New Roman" Margin="0,-2"
-                     Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
                     <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
                         <Image Source="../img/link.png" Margin="2"/>
                     </Button>
-                </ToolBar>
+                </StackPanel>
                 <Button Command="Delete" ToolTip="Удалить выбранные элементы" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/delete.png" Margin="3"/>
                 </Button>
-            </StackPanel>
+            </ToolBar>
         </Grid>
     </Border>
 

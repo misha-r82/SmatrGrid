@@ -4,9 +4,51 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SmartGrid.Controls"
+             xmlns:lib="clr-namespace:Lib;assembly=Lib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="300" Initialized="FrameworkElement_OnInitialized">
+    <Grid >
+        <Grid.Resources>
+            <ResourceDictionary>
+                <lib:TestConverter x:Key="TestConverter"/>
+                <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.CommandBindings>
             
+            <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
+            <CommandBinding Command="Cut" Executed="CommandCut_OnExecuted"/>
+            <CommandBinding Command="Paste" Executed="CommandPaste_OnExecuted"/>
+
+        </Grid.CommandBindings>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <local:EditableLable x:Name="ctrlHeader" Text="{Binding Header}" CaptureFocus="True" TabIndex="0"/>
+        <RichTextBox Name="txtBody" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" SizeChanged="TxtVal_OnSizeChanged"
+                                     Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
+        <Grid Name="gridRight"  Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{StaticResource LvItemDragBorderStyle}">
+                <Border.ContextMenu>
+                    <ContextMenu Name="NodeMenu">
+                        <MenuItem Name="itmDel" Header="Delete" Command="Delete"/>
+                    </ContextMenu>
+                </Border.ContextMenu>
+            </Border>
+            <local:ExpandButton Grid.Row="1" IsChecked="{Binding ViewStl.DetailsVisile}" Height="9" Width="9"/>
+        </Grid>
     </Grid>
 </UserControl>

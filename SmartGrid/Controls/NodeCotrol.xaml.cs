@@ -24,5 +24,59 @@ namespace SmartGrid.Controls
         {
             InitializeComponent();
         }
+        private bool isBodyEditionMode;
+        public bool IsBodyEditionMode
+        {
+            get { return txtBody.IsFocused; }
+        }
+
+        public bool IsDraEnable
+        {
+            get => !(IsBodyEditionMode || ctrlHeader.IsEditing);
+        }
+        private void TxtVal_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            SetEditorRtb(sender);
+        }
+
+        private void TxtVal_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SetEditorRtb(sender);
+        }
+        private void TxtVal_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var tb = sender as RichTextBox;
+            if (tb == null) return;
+            tb.Document.PageWidth = tb.ActualWidth;
+        }
+        private void SetEditorRtb(object rtb)
+        {
+            var tb = rtb as RichTextBox;
+            if (tb == null) return;
+            Editor.NodeEditor.Rtb = tb;
+        }
+        private void FrameworkElement_OnInitialized(object sender, EventArgs e)
+        {
+            SetEditorRtb(sender);
+        }
+
+        private void CommandCopy_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (IsBodyEditionMode)
+                Editor.NodeEditor.Rtb.Copy();
+        }
+
+        private void CommandCut_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (IsBodyEditionMode)
+                Editor.NodeEditor.Rtb.Cut();
+        }
+
+        private void CommandPaste_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (IsBodyEditionMode)
+                Editor.NodeEditor.Rtb.Paste();
+        }
+
     }
 }
