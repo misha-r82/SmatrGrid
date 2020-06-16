@@ -47,6 +47,7 @@ namespace SmartGrid
             get { return _header; }
             set
             {
+
                 if (_header == value) return;
                 _header = value;
                 OnPropertyChanged();

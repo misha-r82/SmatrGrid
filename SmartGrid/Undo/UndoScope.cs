@@ -8,9 +8,10 @@ namespace SmartGrid.Undo
 {
     public abstract class UndoScope
     {
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         public bool IsApplyed { get; set; }
         public abstract void Undo();
         public abstract void Rendo();
+        public abstract bool HasChanges { get; }
     }
 }

@@ -103,11 +103,21 @@ namespace SmartGrid
         }
         private void CommandUndo_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.WriteLine("Undo!!!");
+            WorkSpace.Instance.Undo.Undo();
         }
         private void CommandRedo_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.WriteLine("Redo!!!");
+            WorkSpace.Instance.Undo.Redo();
+        }
+
+        private void CommandUndo_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = WorkSpace.Instance.Undo.CanUndo;
+        }
+
+        private void CommandRedo_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = WorkSpace.Instance.Undo.CanRedo;
         }
     }
 

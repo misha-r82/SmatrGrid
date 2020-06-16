@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartGrid.Undo;
 
 namespace SmartGrid.Controls
 {
@@ -20,6 +21,7 @@ namespace SmartGrid.Controls
     /// </summary>
     public partial class NodeCotrol : UserControl
     {
+        private NodeHeaderScope _headerScope;
         public NodeCotrol()
         {
             InitializeComponent();
@@ -78,5 +80,14 @@ namespace SmartGrid.Controls
                 Editor.NodeEditor.Rtb.Paste();
         }
 
+        private void NodeCotrol_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            _headerScope = new NodeHeaderScope(DataContext as Node);
+        }
+
+        private void NodeCotrol_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_headerScope.HasChanges) WorkSpace.Instance.Undo.AddScope(_headerScope);
+        }
     }
 }
