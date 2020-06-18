@@ -45,19 +45,17 @@
                 <Image Source="img/save.png"/>
             </Button>
             <StackPanel Name="panelUndo"  Orientation="Horizontal" DataContext="{Binding Source={x:Static local:WorkSpace.Instance}, Path=Undo}">
-                <RibbonSplitButton SmallImageSource="img/redo.png" Command="Redo" IsEnabled="{Binding CanRedo}" DisplayMemberPath="Name">
-                    <ListView ItemsSource="{Binding RedoStack}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" KeyDown="UndoItem_OnKeyDown"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                <RibbonSplitButton SmallImageSource="img/redo.png" Command="Redo" IsEnabled="{Binding CanRedo}" ItemsSource="{Binding RedoStack}">
+                    <RibbonSplitButton.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" MouseLeftButtonUp="RedoToItem_OnMouseLeftButtonUp" />
+                        </DataTemplate>
+                    </RibbonSplitButton.ItemTemplate>
                 </RibbonSplitButton>
                 <RibbonSplitButton SmallImageSource="img/undo.png" Command="Undo" IsEnabled="{Binding CanUndo}" ItemsSource="{Binding UndoStack}">
                     <RibbonSplitButton.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" MouseLeftButtonUp="UIElement_OnMouseLeftButtonUp" />
+                            <TextBlock Text="{Binding Name}" MouseLeftButtonUp="UndoToItem_OnMouseLeftButtonUp" />
                         </DataTemplate>
                     </RibbonSplitButton.ItemTemplate>
                 </RibbonSplitButton>

@@ -28,6 +28,25 @@ namespace SmartGrid
             UndoStack.Push(scope);
             if (UndoStack.Count == 1) OnPropertyChanged(nameof(CanUndo));
         }
+
+        public void UndoToScope(UndoScope scopeTo)
+        {
+            UndoScope scope;
+            do
+            {
+                scope = UndoStack.Peek();
+                Undo();
+            } while (!scopeTo.Equals(scope));
+        }
+        public void RedoToScope(UndoScope scopeTo)
+        {
+            UndoScope scope;
+            do
+            {
+                scope = RedoStack.Peek();
+                Redo();
+            } while (!scopeTo.Equals(scope));
+        }
         public bool CanUndo => UndoStack.Count > 0;
         public bool CanRedo => RedoStack.Count > 0;
         public void Undo()

@@ -122,15 +122,16 @@ namespace SmartGrid
             e.CanExecute = WorkSpace.Instance.Undo.CanRedo;
         }
 
-        private void UndoItem_OnKeyDown(object sender, KeyEventArgs e)
+        private void RedoToItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
-            
+            var redoItem = ((FrameworkElement)sender).DataContext as UndoScope;
+            WorkSpace.Instance.Undo.RedoToScope(redoItem);
         }
 
-        private void UIElement_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void UndoToItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-             var undoItem = ((FrameworkElement) sender).DataContext as UndoScope;           
+             var undoItem = ((FrameworkElement) sender).DataContext as UndoScope;   
+             WorkSpace.Instance.Undo.UndoToScope(undoItem);
         }
     }
 
