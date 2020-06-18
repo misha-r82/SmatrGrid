@@ -39,12 +39,18 @@ namespace Lib
     }
     public class BoolVisConverter : IValueConverter
     {
+        
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            Visibility falseValue = parameter == (object) Visibility.Hidden ? Visibility.Hidden : Visibility.Collapsed;
+            if (parameter != null)
+            {
+
+            }
             bool rez = false;
             string str = value.ToString();
             if (!bool.TryParse(str, out rez)) return Visibility.Collapsed;
-            return rez ? Visibility.Visible : Visibility.Collapsed;
+            return rez ? Visibility.Visible : falseValue;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

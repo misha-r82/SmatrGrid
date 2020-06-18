@@ -96,6 +96,7 @@
     <Compile Include="Controls\PeriodControl.xaml.cs">
       <DependentUpon>PeriodControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ObservableStack.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="FastFilter\SearchControl.xaml.cs">
       <DependentUpon>SearchControl.xaml</DependentUpon>
