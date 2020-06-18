@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using SmartGrid.Drag;
+using SmartGrid.Undo;
 
 namespace SmartGrid
 {
@@ -27,13 +28,13 @@ namespace SmartGrid
 
         public MainWindow()
         {
-            InitializeComponent();
             WorkSpace.Instance = new WorkSpace();
-            SetTagsDataContext();
             WorkSpace.Instance.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == "ActiveField") SetTagsDataContext();
             };
+            InitializeComponent();
+            SetTagsDataContext();
         }
 
         private void SetTagsDataContext()
@@ -91,6 +92,7 @@ namespace SmartGrid
 
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
+
             var fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Таблицы (*.grd)|*.grd";
             if (fileDialog.ShowDialog(this) != true) return;
@@ -118,6 +120,17 @@ namespace SmartGrid
         private void CommandRedo_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = WorkSpace.Instance.Undo.CanRedo;
+        }
+
+        private void UndoItem_OnKeyDown(object sender, KeyEventArgs e)
+        {
+
+            
+        }
+
+        private void UIElement_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+             var undoItem = ((FrameworkElement) sender).DataContext as UndoScope;           
         }
     }
 

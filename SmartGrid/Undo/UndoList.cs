@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Lib;
 using SmartGrid.Annotations;
 using SmartGrid.Undo;
 
@@ -15,11 +16,11 @@ namespace SmartGrid
     {
         public UndoData()
         {
-            UndoStack = new Stack<UndoScope>();
-            RedoStack = new Stack<UndoScope>();
+            UndoStack = new ObservableStack<UndoScope>();
+            RedoStack = new ObservableStack<UndoScope>();
         }
-        public Stack<UndoScope> UndoStack { get; }
-        public Stack<UndoScope> RedoStack { get; }
+        public ObservableStack<UndoScope> UndoStack { get; }
+        public ObservableStack<UndoScope> RedoStack { get; }
 
         public void AddScope(UndoScope scope)
         {
@@ -35,12 +36,13 @@ namespace SmartGrid
             RedoStack.Push(undo);
             undo.Undo();
             if (UndoStack.Count > 0) OnPropertyChanged(nameof(CanUndo));
+            OnPropertyChanged(nameof(CanRedo));
         }
         public void Redo()
         {
-            var rendo = RedoStack.Pop();
-            UndoStack.Push(rendo);
-            rendo.Rendo();
+            var redo = RedoStack.Pop();
+            UndoStack.Push(redo);
+            redo.Rendo();
             if (RedoStack.Count > 0) OnPropertyChanged(nameof(CanRedo));
         }
 

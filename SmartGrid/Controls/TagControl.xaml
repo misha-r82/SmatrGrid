@@ -83,11 +83,12 @@
                     <Image Source="../img/paste.png"/>
                 </Button>
                 <ctrls:CtrlFontCommands/>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
-                    <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
+                <!--<StackPanel Orientation="Horizontal" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
+
+                </StackPanel>-->
+                <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
                         <Image Source="../img/link.png" Margin="2"/>
-                    </Button>
-                </StackPanel>
+                </Button>
                 <Button Command="Delete" ToolTip="Удалить выбранные элементы" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/delete.png" Margin="3"/>
                 </Button>
