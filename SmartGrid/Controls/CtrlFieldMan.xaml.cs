@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using Lib.ColorPiecker;
 using SmartGrid.Controls;
 using SmartGrid.Drag;
+using SmartGrid.Undo;
 using static SmartGrid.DragProcessor;
 
 namespace SmartGrid
@@ -31,7 +32,7 @@ namespace SmartGrid
             InitializeComponent();
         }
         private SmartFiled _field;
-
+        private FieldHeaderScope _headerScope;
         private void BtnAddField_OnClick(object sender, RoutedEventArgs e)
         {
             var space = ((FrameworkElement) sender).DataContext as WorkSpace;
@@ -81,6 +82,16 @@ namespace SmartGrid
         {
             var f = new ColorPickerDialog();
             f.ShowDialog();
+        }
+
+        private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            _headerScope= new FieldHeaderScope(_field);
+        }
+
+        private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkSpace.Instance.Undo.AddScope(_headerScope);
         }
     }
 }

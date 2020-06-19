@@ -20,6 +20,7 @@ using Lib;
 using SmartGrid.Annotations;
 using SmartGrid.Controls;
 using SmartGrid.Drag;
+using SmartGrid.Undo;
 
 namespace SmartGrid
 {
@@ -42,7 +43,7 @@ namespace SmartGrid
         }
         public Node NewNode { get; private set; }
         private Node _droppedNode;
-
+        private TagHeaderScope _headerUndoScope;
         private Node[] SelectedNodes
         {
             get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
@@ -52,7 +53,6 @@ namespace SmartGrid
         {
             CurTag.Tag.Add(NewNode.GetClone());
             NewNode.Header = "";
-            NewNode.Val = "";           
         }
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
@@ -201,5 +201,14 @@ namespace SmartGrid
         }
 
 
+        private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            _headerUndoScope = new TagHeaderScope(CurTag.Tag);
+        }
+
+        private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            WorkSpace.Instance.Undo.AddScope(_headerUndoScope);
+        }
     }
 }

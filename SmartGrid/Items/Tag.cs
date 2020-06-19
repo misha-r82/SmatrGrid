@@ -23,7 +23,12 @@ namespace SmartGrid
         public string Header
         {
             get { return _header; }
-            set { _header = value; }
+            set
+            {
+                if (_header == value) return;
+                _header = value;
+                OnPropertyChanged(nameof(Header));
+            }
         }
         public Tag()
         {

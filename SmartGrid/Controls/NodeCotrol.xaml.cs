@@ -22,6 +22,7 @@ namespace SmartGrid.Controls
     public partial class NodeCotrol : UserControl
     {
         private NodeHeaderScope _headerScope;
+        //private NodeContentScope _contentScope;
         public NodeCotrol()
         {
             InitializeComponent();
@@ -82,12 +83,15 @@ namespace SmartGrid.Controls
 
         private void NodeCotrol_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _headerScope = new NodeHeaderScope(DataContext as Node);
+            var node = DataContext as Node;
+            _headerScope = new NodeHeaderScope(node);
+
         }
 
         private void NodeCotrol_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if (_headerScope.HasChanges) WorkSpace.Instance.Undo.AddScope(_headerScope);
+            WorkSpace.Instance.Undo.AddScope(_headerScope);
+
         }
     }
 }

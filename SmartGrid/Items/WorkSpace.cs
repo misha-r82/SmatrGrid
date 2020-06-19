@@ -16,7 +16,7 @@ namespace SmartGrid
     {
         [DataMember] private SmartFiled _activeField;
         [DataMember] private static WorkSpace _instance;
-        public UndoData Undo { get; }
+        public UndoData Undo { get; private set; }
 
         public static WorkSpace Instance
         {
@@ -24,6 +24,7 @@ namespace SmartGrid
             set
             {
                 _instance = value;
+                if (_instance.Undo == null) _instance.Undo = new UndoData();
                 _instance.FireActiveFieldChanged();
             }
         }
@@ -71,5 +72,6 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

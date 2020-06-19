@@ -100,7 +100,7 @@
     <Compile Include="Items\Tag.cs" />
     <Compile Include="Items\TagGroup.cs" />
     <Compile Include="Drag\DragProcessor.cs" />
-    <Compile Include="Undo\StrScopes\NodeHeaderScope.cs" />
+    <Compile Include="Undo\StrScopes\HeaderScopes.cs" />
     <Compile Include="Undo\StrScopes\StrEditScope.cs" />
     <Compile Include="Undo\UndoList.cs" />
     <Compile Include="Undo\UndoScope.cs" />

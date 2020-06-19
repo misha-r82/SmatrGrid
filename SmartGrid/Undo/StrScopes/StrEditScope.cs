@@ -9,8 +9,9 @@ namespace SmartGrid.Undo
 {
     public abstract class StrEditScope<T> : UndoScope
     {
+        private const int MAX_LEN = 24;
         private string _oldValue;
-        private string scopeNamePatt;
+        protected string scopeNamePatt;
         private Func<T, string> _getter;
         private Action<T, string> _setter;
         private T _obj;
@@ -22,7 +23,16 @@ namespace SmartGrid.Undo
             _obj = obj;
             this.scopeNamePatt = scopeNamePatt;
         }
-        public override string Name => string.Format(scopeNamePatt, _oldValue);
+        public override string Name
+        {
+            get
+            {
+                var str = _oldValue.Length > MAX_LEN ? 
+                    _oldValue.Substring(0, MAX_LEN) + "..." : _oldValue;
+                return string.Format(scopeNamePatt, str);
+            }
+        }
+
         public override bool HasChanges => _oldValue != _getter(_obj);
 
         public override void Undo()

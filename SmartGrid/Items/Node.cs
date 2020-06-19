@@ -15,7 +15,7 @@ namespace SmartGrid
     [DataContract]
     public class Node : INoteElement, ICloneableEx<Node>, INotifyPropertyChanged
     {
-        [DataMember] private string _val;
+        
         [DataMember] private string _header;
         [DataMember] private byte[] _valBin;
         private FontStyle _headerStyle;
@@ -32,16 +32,7 @@ namespace SmartGrid
             ViewStl = new ViewStyle();
             HeaderStyle = new FontStyle();
         }
-        public string Val
-        {
-            get { return _val; }
-            set
-            {
-                if (_val == value) return;
-                _val = value;
-                OnPropertyChanged();
-            }
-        }
+
         public string Header
         {
             get { return _header; }
