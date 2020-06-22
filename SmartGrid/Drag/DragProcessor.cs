@@ -98,7 +98,24 @@ namespace SmartGrid
             }
 
         }
+        public static void SwapTagWith(TagWrap first, TagWrap second, SwapMode mode)
+        {
+            if (second == null) second = new TagWrap();
+            if (object.ReferenceEquals(first, second)) return;
+            switch (mode)
+            {
+                case SwapMode.Copy:
+                    first.Tag = second.Tag.GetClone(first); break;
+                case SwapMode.Swap:
+                    var tmpTag = second.Tag;
+                    second.Tag = first.Tag;
+                    first.Tag = tmpTag; break;
+                default:
+                    first.Tag = second.Tag;
+                    second.Tag = new Tag(); break;
+            }
 
+        }
         private static bool FromGroupToTag(DragContent data)// вытащили из группы 
         {
             if (data.DestTag == null) return false;
@@ -106,7 +123,7 @@ namespace SmartGrid
             if (data.Group.TagList.Contains(data.DestTag)) return false;            
             if (data.Mode == SwapMode.Replace)
                 data.Group.Remove(data.SourceTag);
-            data.DestTag.SwapWith(data.SourceTag, data.Mode);
+            SwapTagWith(data.DestTag, data.SourceTag, data.Mode);
             return true;
         }
 
@@ -127,7 +144,7 @@ namespace SmartGrid
             if (data.Mode == SwapMode.Swap || data.Group == null)
             {
                 if (data.DestTag == null) return;
-                data.DestTag.SwapWith(data.SourceTag, data.Mode);
+                SwapTagWith(data.DestTag, data.SourceTag, data.Mode);
                 return;
             }
             if (FromGroupToTag(data)) return;

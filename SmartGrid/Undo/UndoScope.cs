@@ -11,7 +11,7 @@ namespace SmartGrid.Undo
 {
     public abstract class UndoScope : INotifyPropertyChanged
     {
-        public virtual string Name { get; set; }
+        public virtual string Name { get; }
         public bool IsApplyed { get; }
         public abstract void Undo();
         public abstract void Rendo();

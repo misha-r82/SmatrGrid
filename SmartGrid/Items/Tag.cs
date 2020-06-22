@@ -36,6 +36,12 @@ namespace SmartGrid
             ViewStl = new ViewStyle();
             HeaderStyle = new FontStyle();
         }
+        public bool IsEmptyTag
+        {
+            get => !Nodelist.Any() && string.IsNullOrEmpty(Header);
+        }
+        public int Count => Nodelist.Count;
+
         public void Add(Node node, Node insertAfter = null, bool notify = true)
         {
             if (string.IsNullOrEmpty(node.Header)) return;
@@ -76,6 +82,12 @@ namespace SmartGrid
         {
             Nodelist.Remove(node);
             OnCollectionChanged();
+        }
+
+        public void Clear(bool notify = true)
+        {
+            Nodelist.Clear();
+            if (notify) OnCollectionChanged();
         }
         public Tag GetClone(TagWrap tWrap)
         {

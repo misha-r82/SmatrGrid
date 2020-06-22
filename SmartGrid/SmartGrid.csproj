@@ -94,14 +94,17 @@
     <Compile Include="Editor\HyperlinkCreater.cs" />
     <Compile Include="GridWidth\GridWidth.cs" />
     <Compile Include="Items\INoteElement.cs" />
+    <Compile Include="Items\TagWrap.cs" />
     <Compile Include="Properties\Annotations2.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Items\SmartFiled.cs" />
     <Compile Include="Items\Tag.cs" />
     <Compile Include="Items\TagGroup.cs" />
     <Compile Include="Drag\DragProcessor.cs" />
+    <Compile Include="Undo\NodeListScope.cs" />
     <Compile Include="Undo\StrScopes\HeaderScopes.cs" />
     <Compile Include="Undo\StrScopes\StrEditScope.cs" />
+    <Compile Include="Undo\TagUndoScope.cs" />
     <Compile Include="Undo\UndoList.cs" />
     <Compile Include="Undo\UndoScope.cs" />
     <Compile Include="ViewStyle.cs" />
