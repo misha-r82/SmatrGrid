@@ -101,10 +101,11 @@
     <Compile Include="Items\Tag.cs" />
     <Compile Include="Items\TagGroup.cs" />
     <Compile Include="Drag\DragProcessor.cs" />
-    <Compile Include="Undo\NodeListScope.cs" />
+    <Compile Include="Undo\Drag\NodeListScope.cs" />
+    <Compile Include="Undo\Drag\TagGroupScope.cs" />
     <Compile Include="Undo\StrScopes\HeaderScopes.cs" />
     <Compile Include="Undo\StrScopes\StrEditScope.cs" />
-    <Compile Include="Undo\TagUndoScope.cs" />
+    <Compile Include="Undo\Drag\TagUndoScope.cs" />
     <Compile Include="Undo\UndoList.cs" />
     <Compile Include="Undo\UndoScope.cs" />
     <Compile Include="ViewStyle.cs" />
