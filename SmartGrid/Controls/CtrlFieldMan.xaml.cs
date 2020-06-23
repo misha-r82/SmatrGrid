@@ -32,7 +32,7 @@ namespace SmartGrid
             InitializeComponent();
         }
         private SmartFiled _field;
-        private FieldHeaderScope _headerScope;
+        private HeaderUndoScope<SmartFiled> _headerScope;
         private void BtnAddField_OnClick(object sender, RoutedEventArgs e)
         {
             var space = ((FrameworkElement) sender).DataContext as WorkSpace;
@@ -86,7 +86,7 @@ namespace SmartGrid
 
         private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _headerScope= new FieldHeaderScope(_field);
+            _headerScope= new HeaderUndoScope<SmartFiled>(_field, "Изменение заголовка раздела {0}");
         }
 
         private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)

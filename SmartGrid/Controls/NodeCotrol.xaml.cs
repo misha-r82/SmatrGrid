@@ -21,7 +21,7 @@ namespace SmartGrid.Controls
     /// </summary>
     public partial class NodeCotrol : UserControl
     {
-        private NodeHeaderScope _headerScope;
+        private HeaderUndoScope<Node> _headerScope;
         //private NodeContentScope _contentScope;
         public NodeCotrol()
         {
@@ -84,7 +84,7 @@ namespace SmartGrid.Controls
         private void NodeCotrol_OnGotFocus(object sender, RoutedEventArgs e)
         {
             var node = DataContext as Node;
-            _headerScope = new NodeHeaderScope(node);
+            _headerScope = new HeaderUndoScope<Node>(node, "Изменение заголовка записи {0}");
 
         }
 

@@ -43,7 +43,7 @@ namespace SmartGrid
         }
         public Node NewNode { get; private set; }
         private Node _droppedNode;
-        private TagHeaderScope _headerUndoScope;
+        private HeaderUndoScope<Tag> _headerUndoScope;
         private Node[] SelectedNodes
         {
             get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
@@ -204,7 +204,7 @@ namespace SmartGrid
 
         private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _headerUndoScope = new TagHeaderScope(CurTag.Tag);
+            _headerUndoScope = new HeaderUndoScope<Tag>(CurTag.Tag, "Изменение заголовка набора {0}");
         }
 
         private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)
