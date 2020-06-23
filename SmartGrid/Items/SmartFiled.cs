@@ -13,24 +13,15 @@ using SmartGrid.Annotations;
 namespace SmartGrid
 {
     [DataContract]
-    public class SmartFiled : INotifyPropertyChanged
+    public class SmartFiled : INotifyPropertyChanged, IHasHeader
     {
         public TagWrap[,] Cells;
         [DataMember] public TagWrap WorkTag { get; set;}
         [DataMember] public TagGroup TagGrp { get; private set; }
         [DataMember] public GridWidth GridWidth { get; private set; }
-        [DataMember] private string _header;
         private bool _isEditMode;
-        public string Header
-        {
-            get { return _header; }
-            set
-            {
-                if (_header == value) return;
-                _header = value;
-                OnPropertyChanged();
-            }
-        }
+        [DataMember]public HeaderClass Header { get; private set; }
+
         public bool IsEditMode
         {
             get { return _isEditMode; }
@@ -43,7 +34,7 @@ namespace SmartGrid
         }
         public SmartFiled(string header = "")
         {
-            Header = header;
+            Header = new HeaderClass(header);
             TagGrp = new TagGroup();
             GridWidth = new GridWidth();
             TagGrp.TagList.Add(new TagWrap("Корзина"));

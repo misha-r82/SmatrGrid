@@ -13,37 +13,17 @@ using Test;
 namespace SmartGrid
 {
     [DataContract]
-    public class Node : INoteElement, ICloneableEx<Node>, INotifyPropertyChanged
+    public class Node : ICloneableEx<Node>, IHasHeader, INotifyPropertyChanged
     {
-        
-        [DataMember] private string _header;
         [DataMember] private byte[] _valBin;
-        private FontStyle _headerStyle;
-
-        [DataMember]
-        public FontStyle HeaderStyle
-        {
-            get => _headerStyle;
-            set => _headerStyle = value;
-        }
+        [DataMember] public HeaderClass Header { get; private set; }
 
         public Node()
         {
             ViewStl = new ViewStyle();
-            HeaderStyle = new FontStyle();
+            Header = new HeaderClass();
         }
 
-        public string Header
-        {
-            get { return _header; }
-            set
-            {
-
-                if (_header == value) return;
-                _header = value;
-                OnPropertyChanged();
-            }
-        }
         [DataMember] public ViewStyle ViewStl { get; set; }
 
         public byte[] ValBin
@@ -54,15 +34,13 @@ namespace SmartGrid
 
         public object Clone()
         {
-            var clone = (Node)MemberwiseClone();
-            clone.CloneRefs();
-            return clone;
+            return GetClone();
         }
 
         public void CloneRefs()
         {
             ViewStl = ViewStl.GetClone();
-            HeaderStyle = HeaderStyle.GetClone();
+            Header = Header.GetClone();
         }
 
         public Node GetClone()

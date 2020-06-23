@@ -14,37 +14,27 @@ using System.Windows.Documents;
 namespace SmartGrid
 {
     [DataContract]
-    public class Tag : INoteElement , IEnumerable<Node>, INotifyPropertyChanged, INotifyCollectionChanged
+    public class Tag : IEnumerable<Node>, INotifyPropertyChanged, INotifyCollectionChanged, IHasHeader
     {
         [DataMember] private List<Node> Nodelist;
         [DataMember] public ViewStyle ViewStl { get; set; }
-        [DataMember] private string _header;
-        [DataMember] public FontStyle HeaderStyle { get; set; }
-        public string Header
-        {
-            get { return _header; }
-            set
-            {
-                if (_header == value) return;
-                _header = value;
-                OnPropertyChanged(nameof(Header));
-            }
-        }
-        public Tag()
+        [DataMember] public HeaderClass Header { get; private set; }
+
+        public Tag(string header = "")
         {
             Nodelist = new List<Node>();
             ViewStl = new ViewStyle();
-            HeaderStyle = new FontStyle();
+            Header = new HeaderClass(header);
         }
         public bool IsEmptyTag
         {
-            get => !Nodelist.Any() && string.IsNullOrEmpty(Header);
+            get => !Nodelist.Any() && string.IsNullOrEmpty(Header.Header);
         }
         public int Count => Nodelist.Count;
 
         public void Add(Node node, Node insertAfter = null, bool notify = true)
         {
-            if (string.IsNullOrEmpty(node.Header)) return;
+            if (string.IsNullOrEmpty(node.Header.Header)) return;
 
             if (insertAfter == null) Nodelist.Add(node);
             else

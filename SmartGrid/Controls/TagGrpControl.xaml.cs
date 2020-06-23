@@ -53,24 +53,24 @@ namespace SmartGrid
         {
             var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
             if(!tags.Any()) return;
-            var value = !tags.First().HeaderStyle.Bold;
-            foreach (TagWrap tag in tags) tag.HeaderStyle.Bold = value;
+            var value = !tags.First().Header.Style.Bold;
+            foreach (TagWrap tw in tags) tw.Header.Style.Bold = value;
         }
 
         private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
             if (!tags.Any()) return;
-            var value = !tags.First().HeaderStyle.Italic;
-            foreach (TagWrap tag in tags) tag.HeaderStyle.Italic = value;
+            var value = !tags.First().Header.Style.Italic;
+            foreach (TagWrap tw in tags) tw.Header.Style.Italic = value;
         }
 
         private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
             if (!tags.Any()) return;
-            var value = !tags.First().HeaderStyle.Underline;
-            foreach (TagWrap tag in tags) tag.HeaderStyle.Underline = value;
+            var value = !tags.First().Header.Style.Underline;
+            foreach (TagWrap tw in tags) tw.Header.Style.Underline = value;
         }
     }
 }

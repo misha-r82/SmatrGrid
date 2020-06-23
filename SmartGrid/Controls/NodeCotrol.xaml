@@ -33,7 +33,7 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <local:EditableLable x:Name="ctrlHeader" Text="{Binding Header}" CaptureFocus="True" TabIndex="0"/>
+        <local:EditableLable x:Name="ctrlHeader" Text="{Binding Path=Header.Header}" CaptureFocus="True" TabIndex="0"/>
         <RichTextBox Name="txtBody" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" SizeChanged="TxtVal_OnSizeChanged"
                                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
         <Grid Name="gridRight"  Grid.Column="2">

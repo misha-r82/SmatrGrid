@@ -7,15 +7,14 @@ using SmartGrid.Undo;
 namespace SmartGrid
 {
     [DataContract]
-    public class TagWrap: INotifyPropertyChanged
+    public class TagWrap: INotifyPropertyChanged, IHasHeader
     {
         [DataMember] private Tag _tag;
-        public FontStyle HeaderStyle => _tag.HeaderStyle;
+        public HeaderClass Header => _tag.Header;
         public TagUndoScope TagUndoScope { get; private set; }
         public TagWrap(string header = "")
         {
-            _tag = new Tag();
-            _tag.Header = header;
+            _tag = new Tag(header);
         }
         public TagWrap(Tag tag)
         {
@@ -45,5 +44,7 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 }

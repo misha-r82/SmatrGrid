@@ -51,8 +51,9 @@ namespace SmartGrid
         private TagWrap CurTag { get; set; }
         private void AddNew()
         {
+            var tmp = txtNewNode.DataContext;
             CurTag.Tag.Add(NewNode.GetClone());
-            NewNode.Header = "";
+            NewNode.Header.Header = "";
         }
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
@@ -155,39 +156,39 @@ namespace SmartGrid
         {
             var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
             if (!nodes.Any()) return;
-            var value = !nodes.First().HeaderStyle.Bold;
-            foreach (Node node in nodes) node.HeaderStyle.Bold = value;
+            var value = !nodes.First().Header.Style.Bold;
+            foreach (Node node in nodes) node.Header.Style.Bold = value;
         }
 
         private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
             if (!nodes.Any()) return;
-            var value = !nodes.First().HeaderStyle.Italic;
-            foreach (Node node in nodes) node.HeaderStyle.Italic = value;
+            var value = !nodes.First().Header.Style.Italic;
+            foreach (Node node in nodes) node.Header.Style.Italic = value;
         }
 
         private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
             if (!nodes.Any()) return;
-            var value = !nodes.First().HeaderStyle.Underline;
-            foreach (Node node in nodes) node.HeaderStyle.Underline = value;
+            var value = !nodes.First().Header.Style.Underline;
+            foreach (Node node in nodes) node.Header.Style.Underline = value;
         }
 
         private void CommandBoldTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            CurTag.Tag.HeaderStyle.Bold = !CurTag.Tag.HeaderStyle.Bold;
+            CurTag.Header.Style.Bold = !CurTag.Header.Style.Bold;
         }
 
         private void CommandItalicTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            CurTag.Tag.HeaderStyle.Italic = !CurTag.Tag.HeaderStyle.Italic;
+            CurTag.Header.Style.Italic = !CurTag.Header.Style.Italic;
         }
 
         private void CommandBindingUndelineTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            CurTag.Tag.HeaderStyle.Underline = !CurTag.Tag.HeaderStyle.Underline;
+            CurTag.Header.Style.Underline = !CurTag.Header.Style.Underline;
         }
 
         private void GridMain_OnGotFocus(object sender, RoutedEventArgs e)

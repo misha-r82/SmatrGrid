@@ -62,7 +62,7 @@ namespace SmartGrid
             {
                 foreach (var node in data.Nodes)
                 {
-                   var newTag = new TagWrap(new Tag(){Header = node.Header});
+                   var newTag = new TagWrap(new Tag(node.Header.Header));
                    data.Group.Add(new []{newTag});
                    if (data.Mode == SwapMode.Replace) data.SourceTag.Tag.Remove(node);               
                 }
@@ -73,7 +73,7 @@ namespace SmartGrid
             {
                 foreach (var node in data.Nodes)
                 {
-                    var newField = new SmartFiled(node.Header);
+                    var newField = new SmartFiled(node.Header.Header);
                     WorkSpace.Instance.FieldList.Add(newField);
                     if (data.Mode == SwapMode.Replace) data.SourceTag.Tag.Remove(node);
                 }
@@ -133,7 +133,7 @@ namespace SmartGrid
             if (data.SourceTag == null) return;
             if (data.DestField != null)
             {
-                var newField = new SmartFiled(data.SourceTag.Tag.Header);
+                var newField = new SmartFiled(data.SourceTag.Header.Header);
                 WorkSpace.Instance.FieldList.Add(newField);
                 if (data.Mode == SwapMode.Replace)
                     if(data.Group != null)
@@ -164,7 +164,7 @@ namespace SmartGrid
             if (data.SourceField == data.DestField) return;
             if (data.DestTag != null)
             {
-                var newTag = new Tag() { Header = data.SourceField.Header };
+                var newTag = new Tag(data.SourceField.Header.Header);
                 data.DestTag.Tag = newTag;
                 if (data.Mode == SwapMode.Replace) WorkSpace.Instance.Remove(data.SourceField);
                 return;
@@ -172,7 +172,7 @@ namespace SmartGrid
 
             if (data.Group != null)
             {
-                var newTag = new TagWrap(new Tag() { Header = data.SourceField.Header });
+                var newTag = new TagWrap(new Tag(data.SourceField.Header.Header));
                 data.Group.Add(new[] { newTag });
                 if (data.Mode == SwapMode.Replace) WorkSpace.Instance.Remove(data.SourceField);
                 return;

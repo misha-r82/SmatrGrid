@@ -10,13 +10,13 @@
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=HeaderStyle.Bold}"  Value="true">
+                <DataTrigger Binding="{Binding Path=Header.Style.Bold}"  Value="true">
                     <Setter Property="FontWeight" Value="Bold"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=HeaderStyle.Italic}"  Value="true">
+                <DataTrigger Binding="{Binding Path=Header.Style.Italic}"  Value="true">
                     <Setter Property="FontStyle" Value="Italic"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=HeaderStyle.Underline}"  Value="true">
+                <DataTrigger Binding="{Binding Path=Header.Style.Underline}"  Value="true">
                     <Setter Property="TextDecorations" Value="Underline"/>
                 </DataTrigger>
             </Style.Triggers>
