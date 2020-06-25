@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Editor\HyperlinkCreater.cs" />
     <Compile Include="GridWidth\GridWidth.cs" />
+    <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />
     <Compile Include="Items\TagWrap.cs" />
     <Compile Include="Properties\Annotations2.cs" />
