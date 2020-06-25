@@ -18,10 +18,10 @@ namespace SmartGrid
         [DataMember] private byte[] _valBin;
         [DataMember] public HeaderClass Header { get; private set; }
 
-        public Node()
+        public Node(string header = "")
         {
             ViewStl = new ViewStyle();
-            Header = new HeaderClass();
+            Header = new HeaderClass(header);
         }
 
         [DataMember] public ViewStyle ViewStl { get; set; }
