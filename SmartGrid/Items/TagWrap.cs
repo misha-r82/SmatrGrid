@@ -34,7 +34,7 @@ namespace SmartGrid
         public TagWrap GetClone()
         {
             var clone = (TagWrap)MemberwiseClone();
-            clone._tag = _tag.GetClone(clone);
+            clone._tag = _tag.GetClone();
             return clone;
         }
         public event PropertyChangedEventHandler PropertyChanged;

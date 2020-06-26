@@ -10,106 +10,46 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using SmartGrid.Items;
+using Test;
 
 namespace SmartGrid
 {
     [DataContract]
-    public class Tag : IEnumerable<Node>, INotifyPropertyChanged, INotifyCollectionChanged, IHasHeader
+    public class Tag : HeaderableList<Node>, INotifyPropertyChanged, ICloneableEx<Tag>
     {
-        [DataMember] private List<Node> Nodelist;
         [DataMember] public ViewStyle ViewStl { get; set; }
-        [DataMember] public HeaderClass Header { get; private set; }
 
-        public Tag(string header = "")
+        public Tag(string header = "") : base(header)
         {
-            Nodelist = new List<Node>();
             ViewStl = new ViewStyle();
-            Header = new HeaderClass(header);
         }
         public bool IsEmptyTag
         {
-            get => !Nodelist.Any() && string.IsNullOrEmpty(Header.Header);
+            get => !this.Any() && string.IsNullOrEmpty(Header.Header);
         }
-        public int Count => Nodelist.Count;
-
-        public void Add(Node node, Node insertAfter = null, bool notify = true)
-        {
-            if (string.IsNullOrEmpty(node.Header.Header)) return;
-
-            if (insertAfter == null) Nodelist.Add(node);
-            else
-            {
-                int pos = Nodelist.IndexOf(insertAfter);
-                if (pos == -1) pos = Nodelist.Count - 1;
-                if (Nodelist.Any(n => object.ReferenceEquals(n, node)))
-                {
-                    int posExist = Nodelist.IndexOf(insertAfter);
-                    if (posExist < pos) pos--;
-                    Nodelist.Remove(node);
-                }
-                    
-                Nodelist.Insert(pos, node);
-            }
-            if (notify) OnCollectionChanged();
-        }
-        public void Add(IEnumerable<Node> nodes, Node insertAfter = null, bool cloneNodes = false)
-        {
-            foreach (Node node in nodes)
-            {
-                var added = cloneNodes ? node.GetClone() : node;
-                Add(added, insertAfter, cloneNodes);
-            }              
-            OnCollectionChanged();
-        }
-
-        public void Remove(IEnumerable<Node> nodes)
-        {
-            foreach (Node node in nodes)
-                Nodelist.Remove(node);
-            OnCollectionChanged();
-        }
-        public void Remove(Node node)
-        {
-            Nodelist.Remove(node);
-            OnCollectionChanged();
-        }
-
-        public void Clear(bool notify = true)
-        {
-            Nodelist.Clear();
-            if (notify) OnCollectionChanged();
-        }
-        public Tag GetClone(TagWrap tWrap)
-        {
-            var clone = new Tag();
-            clone.Header = Header;
-            foreach (Node node in Nodelist)
-                clone.Nodelist.Add(node);
-            return clone;
-        }
-        public IEnumerator<Node> GetEnumerator()
-        {
-            return Nodelist.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return Nodelist.GetEnumerator();
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-        public void OnCollectionChanged()
+        public object Clone()
         {
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            return GetClone();
         }
-
-
+        public void CloneRefs()
+        {
+            var tmp = this.ToList();
+            Clear();
+            foreach (Node node in tmp)
+                Add(node);
+            Header.CloneRefs();
+        }
+        public Tag GetClone()
+        {
+            var clone = (Tag)MemberwiseClone();
+            clone.CloneRefs();
+            return clone;
+        }
     }
 }

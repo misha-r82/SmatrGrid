@@ -34,8 +34,8 @@ namespace SmartGrid
             Undo = new UndoData();
             FieldList = new ObservableCollection<SmartFiled>();   
             FieldList.Add(new SmartFiled("Раздел1"));
+            FieldList.Add(new SmartFiled("Раздел2"));
             FieldList.Add(new SmartFiled("Раздел3"));
-            FieldList.Add(new SmartFiled("Раздел4"));
             ActiveField = FieldList[0];
         }
         [DataMember] public ObservableCollection<SmartFiled> FieldList { get; set; }

@@ -37,8 +37,8 @@ namespace SmartGrid
             Header = new HeaderClass(header);
             TagGrp = new TagGroup();
             GridWidth = new GridWidth();
-            TagGrp.TagList.Add(new TagWrap("Корзина"));
-            TagGrp.TagList.Add(new TagWrap("Важное"));
+            TagGrp.Add(new TagWrap("Корзина"));
+            TagGrp.Add(new TagWrap("Важное"));
             Cells = new TagWrap[3,3];
             for (int i = 0; i<Cells.GetLength(0); i++)
                 for (int j = 0; j < Cells.GetLength(1); j++)

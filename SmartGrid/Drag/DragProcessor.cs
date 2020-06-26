@@ -82,11 +82,11 @@ namespace SmartGrid
             var tagFrom = data.SourceTag;
             var tagTo = data.DestTag;
             if (data.Mode == SwapMode.Copy)
-                tagTo.Tag.Add(data.Nodes, data.DestNode, true);
+                tagTo.Tag.Add(data.Nodes, data.DestNode);
             else
             {
                 if (tagTo == tagFrom) tagFrom.Tag.Remove(data.Nodes);
-                    tagTo.Tag.Add(data.Nodes, data.DestNode, false);
+                    tagTo.Tag.Add(data.Nodes, data.DestNode);
                 if (tagTo != tagFrom)
                     tagFrom.Tag.Remove(data.Nodes);
                 if (data.Mode == SwapMode.Swap && data.DestNode != null)
@@ -105,7 +105,7 @@ namespace SmartGrid
             switch (mode)
             {
                 case SwapMode.Copy:
-                    first.Tag = second.Tag.GetClone(first); break;
+                    first.Tag = second.Tag.GetClone(); break;
                 case SwapMode.Swap:
                     var tmpTag = second.Tag;
                     second.Tag = first.Tag;
@@ -119,8 +119,8 @@ namespace SmartGrid
         private static bool FromGroupToTag(DragContent data)// вытащили из группы 
         {
             if (data.DestTag == null) return false;
-            if (!data.Group.TagList.Contains(data.SourceTag)) return false;
-            if (data.Group.TagList.Contains(data.DestTag)) return false;            
+            if (!data.Group.Contains(data.SourceTag)) return false;
+            if (data.Group.Contains(data.DestTag)) return false;            
             if (data.Mode == SwapMode.Replace)
                 data.Group.Remove(data.SourceTag);
             SwapTagWith(data.DestTag, data.SourceTag, data.Mode);
@@ -149,12 +149,12 @@ namespace SmartGrid
             }
             if (FromGroupToTag(data)) return;
             // нужно добавлять в группу
-            int pos = data.DestTag == null ? -1 : data.Group.TagList.IndexOf(data.DestTag);
-            if (pos == -1) pos = data.Group.TagList.Count;
+            int pos = data.DestTag == null ? -1 : data.Group.IndexOf(data.DestTag);
+            if (pos == -1) pos = data.Group.Count;
             var added = data.SourceTag.GetClone();
-            data.Group.TagList.Insert(pos, added);
+            data.Group.Insert(pos, added);
             if (data.Mode == SwapMode.Replace)
-                if (data.DestTag != null && data.Group.TagList.Contains(data.SourceTag))
+                if (data.DestTag != null && data.Group.Contains(data.SourceTag))
                     data.Group.Remove(data.SourceTag);
                 else
                     data.SourceTag.Tag = new Tag();

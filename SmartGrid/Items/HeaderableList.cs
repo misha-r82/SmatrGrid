@@ -25,9 +25,18 @@ namespace SmartGrid.Items
         }
         public T this[int index] { get => _list[index]; set => _list[index] = value; }
 
-        public HeaderClass Header { get; }
+        public HeaderClass Header
+        {
+            get => _header;
+            set
+            {
+                if (_header == value) return;
+                _header = value;
+                OnPropertyChanged(nameof(Header));
+            }
+        }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _list.Count;
 
         public bool IsReadOnly => false;
 
@@ -44,7 +53,8 @@ namespace SmartGrid.Items
                 if (item.Equals(addItem))
                     return;
             _list.Add(addItem);
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, _list.Count-1));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, addItem, _list.Count-1));
+            OnPropertyChanged(nameof(Count));
         }
         public void Add(T added, T insertAfter)
         {
@@ -69,11 +79,31 @@ namespace SmartGrid.Items
                 if (item.Equals(insertItem))
                     return;
             _list.Insert(index, insertItem);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, insertItem, index));
+            OnPropertyChanged(nameof(Count));
+        }
+        public bool Remove(T item)
+        {
+
+            int index = _list.IndexOf(item);
+            if (_list.Remove(item))
+            {
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+                OnPropertyChanged(nameof(Count));
+                return true;
+            }
+            return false;
+        }
+
+        public void Remove(IEnumerable<T> items)
+        {
+            foreach (T item in items) Remove(item);
         }
         public void Clear()
         {
             _list.Clear();
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            OnPropertyChanged(nameof(Count));
         }
 
         public bool Contains(T item)
@@ -90,26 +120,9 @@ namespace SmartGrid.Items
             return _list.IndexOf(item);
         }
 
-
-
-        public bool Remove(T item)
-        {
-
-            int index = _list.IndexOf(item);
-            if (_list.Remove(item))
-            {
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
-                OnPropertyChanged(nameof(Count));
-                return true;
-            }
-
-            return false;
-        }
-
         public void RemoveAt(int index)
         {
             throw new NotImplementedException();
-
         }
         public IEnumerator<T> GetEnumerator()
         {

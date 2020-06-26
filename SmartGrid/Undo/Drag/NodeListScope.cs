@@ -19,7 +19,7 @@ namespace SmartGrid.Undo
         private void Swap()
         {
             var tmp = _tag.ToArray();
-            _tag.Clear(false);
+            _tag.Clear();
             _tag.Add(_oldList);
             _oldList = tmp;
         }
