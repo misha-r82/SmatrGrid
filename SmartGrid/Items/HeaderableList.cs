@@ -59,6 +59,11 @@ namespace SmartGrid.Items
         public void Add(T added, T insertAfter)
         {
             if (string.IsNullOrEmpty(added.Header.Header)) return;
+            if (insertAfter == null)
+            {
+                Add(added);
+                return;
+            }
             int pos = _list.IndexOf(insertAfter);
             if (pos == -1) pos = _list.Count - 1;
             if (_list.Any(n => object.ReferenceEquals(n, added)))
