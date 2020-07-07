@@ -191,14 +191,14 @@ namespace SmartGrid
             CurTag.Header.Style.Underline = !CurTag.Header.Style.Underline;
         }
 
-        private void GridMain_OnGotFocus(object sender, RoutedEventArgs e)
+        private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            //gridNewNode.Visibility = Visibility.Visible;
+            Debug.WriteLine($"GotFocus{CurTag.Header.Header}");
         }
 
-        private void GridMain_OnLostFocus(object sender, RoutedEventArgs e)
+        private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            //gridNewNode.Visibility = Visibility.Visible;
+            Debug.WriteLine($"LostFocus{CurTag.Header.Header}");
         }
 
 

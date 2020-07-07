@@ -87,6 +87,7 @@
       <DependentUpon>CtrlFieldMan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Drag\DragHelper.cs" />
+    <Compile Include="Drag\DragContent.cs" />
     <Compile Include="Editor\NodeEditor.cs" />
     <Compile Include="Editor\FrmHyperlink.xaml.cs">
       <DependentUpon>FrmHyperlink.xaml</DependentUpon>

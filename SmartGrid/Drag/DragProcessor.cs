@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,39 +8,9 @@ using Lib;
 
 namespace SmartGrid
 {
-    public class DragProcessor
+    public partial class DragProcessor
     {
         public enum DargContentType { Tag, TagToGroup, Nodes, Field}
-        public class DragContent
-        {
-            public SwapMode Mode;
-            public DargContentType Type;
-            public TagWrap SourceTag;
-            public TagWrap DestTag;
-            public TagGroup Group;
-            public IEnumerable<Node> Nodes;
-            public Node DestNode;
-            public SmartFiled SourceField;
-            public SmartFiled DestField;
-
-            public DragContent(TagWrap sourceTag)
-            {
-                Type = DargContentType.Tag;
-                SourceTag = sourceTag;
-            }
-
-            public DragContent(IEnumerable<Node> nodes, TagWrap sourceTag)
-            {
-                Type = DargContentType.Nodes;
-                Nodes = nodes;
-                SourceTag = sourceTag;
-            }
-            public DragContent(SmartFiled sourceField)
-            {
-                Type = DargContentType.Field;
-                SourceField = sourceField;
-            }
-        }
 
         public enum SwapMode { Swap, Copy, Replace }
         public static SwapMode GetDragMode(DragEventArgs e)
