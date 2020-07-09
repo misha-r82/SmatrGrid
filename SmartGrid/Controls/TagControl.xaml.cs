@@ -83,6 +83,7 @@ namespace SmartGrid
                 var nodes = new List<Node>(SelectedNodes);
                 var node = ((FrameworkElement) sender).DataContext as Node;
                 if (!nodes.Contains(node)) nodes.Add(node);
+                var data = new DragProcessor.DragElement<Node>(node, CurTag.Tag);
                 DragHelper.SetClick(new DragProcessor.DragContent(nodes, CurTag), e);
             }
 

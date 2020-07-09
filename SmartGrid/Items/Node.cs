@@ -24,6 +24,8 @@ namespace SmartGrid
             Header = new HeaderClass(header);
         }
 
+        public Node() :this("") { }
+
         [DataMember] public ViewStyle ViewStl { get; set; }
 
         public byte[] ValBin

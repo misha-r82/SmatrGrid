@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using SmartGrid.Annotations;
@@ -7,7 +8,7 @@ using SmartGrid.Undo;
 namespace SmartGrid
 {
     [DataContract]
-    public class TagWrap: INotifyPropertyChanged, IHasHeader
+    public class TagWrap: INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer<Tag>
     {
         [DataMember] private Tag _tag;
         public HeaderClass Header => _tag.Header;
@@ -44,7 +45,14 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public void Add(Tag[] items, Tag insertBefore)
+        {
+            Tag = items.First();
+        }
 
-
+        public void Remove(Tag[] item)
+        {
+            Tag = new Tag();            
+        }
     }
 }

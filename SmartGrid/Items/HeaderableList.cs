@@ -13,7 +13,7 @@ using SmartGrid.Annotations;
 namespace SmartGrid.Items
 {
     [DataContract]
-    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IHasHeader where T:IHasHeader
+    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer<T> where T:IHasHeader
     {
         [DataMember] private List<T> _list;
         [DataMember] private HeaderClass _header;
@@ -74,6 +74,12 @@ namespace SmartGrid.Items
             }
             Insert(pos, added);
         }
+
+        void DragProcessor.IContainer<T>.Remove(T item)
+        {
+            Remove(item);
+        }
+
         public void Add(IEnumerable<T> items, T insertAfter = default(T))
         {
             foreach (T item in items) Add(item, insertAfter);
