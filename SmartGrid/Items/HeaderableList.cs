@@ -78,6 +78,11 @@ namespace SmartGrid.Items
             foreach (T item in _list)
                 if (item.Equals(insertItem))
                     return;
+            if(index < 0) 
+            {
+                Add(insertItem);
+                return;
+            }
             _list.Insert(index, insertItem);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, insertItem, index));
             OnPropertyChanged(nameof(Count));

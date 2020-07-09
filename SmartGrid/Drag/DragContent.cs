@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.RightsManagement;
+using SmartGrid.Items;
 
 namespace SmartGrid
 {
@@ -8,38 +9,92 @@ namespace SmartGrid
     {
         public interface IDraElement
         {
-            void DragToMe(IDraElement second);
+            void DragToMe(IHasHeader second);
         } 
-        private static class ElementFactory
+
+        public class NodeElement : IDraElement
         {
-            public static IHasHeader CreateElement(IHasHeader prototype)
+            private Node _node;
+            private Tag _tag;
+            public NodeElement(Node node, Tag tag)
             {
-                var type = prototype.GetType();
-                if (type == typeof(Node)) return new Node(prototype.Header.Header);
-                if (type == typeof(Tag)) return new Tag(prototype.Header.Header);
-                throw new Exception("Ошибка создания элемента");
+                _node = node;
+                _tag = tag;
+            }
+
+            public Node Node => _node;
+
+            public Tag Tag => _tag;
+
+            public void DragToMe(IHasHeader second)
+            {
+                var node2 = second as Node;
+                if (node2 == null) node2 = new Node(second.Header.Header);
+                _tag.Add(node2, _node);
             }
         }
-        public class DragElement
+        public class TagElement : IDraElement
         {
-            private IHasHeader _coteiner;
-            private IHasHeader _element;
+            private readonly TagWrap tWrap;
 
-            public DragElement(IHasHeader element)
+            public TagElement(TagWrap tWrap)
             {
-                _element = element;
+                this.tWrap = tWrap;
             }
-            public void DragToMe(IEnumerable<IHasHeader> elements)
+            public TagWrap TWrap => tWrap;
+
+            public void DragToMe(IHasHeader second)
             {
+                var tag2 = second as Tag;
+                if (tag2 == null) tag2 = new Tag(second.Header.Header);
+                tWrap.Tag = tag2;
+            }
+        }
+        public class TagGroupElement : IDraElement
+        {
+            private readonly TagGroup _tagGroup;
+
+            public TagGroupElement(TagGroup tagGroup)
+            {
+                this._tagGroup = tagGroup;
+            }
+
+            public TagGroup TagGroup => _tagGroup;
+
+            public void DragToMe(IHasHeader second)
+            {
+                var tag2 = second as TagWrap;
+                if (tag2 == null) tag2 = new TagWrap(second.Header.Header);
+                tWrap.Tag = tag2;
+            }
+        }
+        //public abstract class DragElement
+        //{
+        //    private IHasHeader _coteiner;
+        //    private IHasHeader _element;
+
+        //    public DragElement(IHasHeader element)
+        //    {
+        //        _element = element;
+        //    }
+
+        //    public void DragToMe(IHasHeader element)
+        //    {
+        //       /* var t = element.GetType().;
+        //        Convert.
+        //        var contayner = Convert.ChangeType(_element, HeaderableList<t>)  */
+        //    }
+        //    public void DragToMe(IEnumerable<IHasHeader> elements)
+        //    {
                 
-            }
+        //    }
 
-            public void Remove(IEnumerable<IHasHeader> elements)
-            {
+        //    public void Remove(IEnumerable<IHasHeader> elements)
+        //    {
 
-            }
+        //    }
 
-        }
+        //}
 
 
 

@@ -193,12 +193,12 @@ namespace SmartGrid
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine($"GotFocus{CurTag.Header.Header}");
+           // Debug.WriteLine($"GotFocus{CurTag.Header.Header}");
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine($"LostFocus{CurTag.Header.Header}");
+            //Debug.WriteLine($"LostFocus{CurTag.Header.Header}");
         }
 
 
