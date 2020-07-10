@@ -40,7 +40,7 @@ namespace SmartGrid
             var newItem = new SmartFiled();
             newItem.IsEditMode = true;
             newItem.Header.Header = "Раздел";
-            space.FieldList.Add(newItem);
+            space.Add(newItem);
             SetIsEditing(newItem, true);
         }
 

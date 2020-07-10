@@ -23,7 +23,7 @@ namespace SmartGrid
             }
             return mode;
         }
-
+        /*
         private static void DragNodes(DragContent data)
         {
             if (data.Nodes == null || !data.Nodes.Any()) return;
@@ -43,7 +43,7 @@ namespace SmartGrid
                 foreach (var node in data.Nodes)
                 {
                     var newField = new SmartFiled(node.Header.Header);
-                    WorkSpace.Instance.FieldList.Add(newField);
+                    WorkSpace.Instance.Add(newField);
                     if (data.Mode == SwapMode.Replace) data.SourceTag.Tag.Remove(node);
                 }
                 return;
@@ -70,7 +70,7 @@ namespace SmartGrid
         public static void SwapTagWith(TagWrap first, TagWrap second, SwapMode mode)
         {
             if (second == null) second = new TagWrap();
-            if (object.ReferenceEquals(first, second)) return;
+            if (ReferenceEquals(first, second)) return;
             switch (mode)
             {
                 case SwapMode.Copy:
@@ -103,7 +103,7 @@ namespace SmartGrid
             if (data.DestField != null)
             {
                 var newField = new SmartFiled(data.SourceTag.Header.Header);
-                WorkSpace.Instance.FieldList.Add(newField);
+                WorkSpace.Instance.Add(newField);
                 if (data.Mode == SwapMode.Replace)
                     if(data.Group != null)
                         data.Group.Remove(data.SourceTag);
@@ -146,13 +146,37 @@ namespace SmartGrid
                 if (data.Mode == SwapMode.Replace) WorkSpace.Instance.Remove(data.SourceField);
                 return;
             }
-            WorkSpace.Instance.FieldList.Remove(data.SourceField);
-            var pos = WorkSpace.Instance.FieldList.IndexOf(data.DestField);
-            WorkSpace.Instance.FieldList.Insert(pos, data.SourceField);
+            WorkSpace.Instance.Remove(data.SourceField);
+            var pos = WorkSpace.Instance.IndexOf(data.DestField);
+            WorkSpace.Instance.Insert(pos, data.SourceField);
             WorkSpace.Instance.ActiveField = data.SourceField;
+        }*/
+
+        public static void DoDrag<T1, T2>(DragData<T1, T2> data) where T2 : IHasHeader, new() where T1 : IHasHeader, new()
+        {
+            data.to.Add(data.from.Elements as IHasHeader[]);
+            switch (data.Mode)
+            {
+                case SwapMode.Replace:
+                {
+                    data.@from.Remove(data.from.Elements);
+                    break;
+                }
+                case SwapMode.Swap:
+                {
+                    data.@from.Add(data.to.Elements as IHasHeader[]);
+                    data.to.Remove(data.to.Elements);
+                    data.from.Remove(data.@from.Elements);
+                        break;
+                }
+                
+            }
         }
+        
         public static void DoDrag(object sender, DragEventArgs e)
         {
+            var d = new DragData<IHasHeader, IHasHeader>(new Node(), new Tag());
+            /*
             DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
             if (data == null) return;
             var elementTo = sender as FrameworkElement;
@@ -173,7 +197,7 @@ namespace SmartGrid
                     DragNodes(data); break;
                 case DargContentType.Field:
                     DragToField(data); break;
-            }
+            }*/
         }
     }
 }

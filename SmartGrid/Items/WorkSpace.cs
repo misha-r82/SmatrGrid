@@ -8,11 +8,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using SmartGrid.Annotations;
+using SmartGrid.Items;
 
 namespace SmartGrid
 {
     [DataContract]
-    public class WorkSpace : INotifyPropertyChanged
+    public class WorkSpace : HeaderableList<SmartFiled>
     {
         [DataMember] private SmartFiled _activeField;
         [DataMember] private static WorkSpace _instance;
@@ -32,13 +33,11 @@ namespace SmartGrid
         public WorkSpace()
         {
             Undo = new UndoData();
-            FieldList = new ObservableCollection<SmartFiled>();   
-            FieldList.Add(new SmartFiled("Раздел1"));
-            FieldList.Add(new SmartFiled("Раздел2"));
-            FieldList.Add(new SmartFiled("Раздел3"));
-            ActiveField = FieldList[0];
+            Add(new SmartFiled("Раздел1"));
+            Add(new SmartFiled("Раздел2"));
+            Add(new SmartFiled("Раздел3"));
+            ActiveField = this[0];
         }
-        [DataMember] public ObservableCollection<SmartFiled> FieldList { get; set; }
 
         public SmartFiled ActiveField
         {
@@ -50,28 +49,20 @@ namespace SmartGrid
             }
         }
 
-        public void Remove(SmartFiled field)
+        public new void Remove(SmartFiled field)
         {
-            var pos = FieldList.IndexOf(field);
-            FieldList.RemoveAt(pos);
-            if (FieldList.Count == 0)
+            var pos = IndexOf(field);
+            RemoveAt(pos);
+            if (Count == 0)
             {
                 ActiveField = new SmartFiled("Новый раздел");
-                FieldList.Add(ActiveField);
-            } else if (!(pos < FieldList.Count)) pos--;
-            ActiveField = FieldList[pos];
+                Add(ActiveField);
+            } else if (!(pos < Count)) pos--;
+            ActiveField = this[pos];
         }
         protected void FireActiveFieldChanged()
         {
             OnPropertyChanged(nameof(ActiveField));
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-    }
+ }
 }

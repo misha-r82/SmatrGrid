@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -45,7 +46,7 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public void Add(Tag[] items, Tag insertBefore)
+        public void Add(IEnumerable<Tag> items, Tag insertBefore)
         {
             Tag = items.First();
         }

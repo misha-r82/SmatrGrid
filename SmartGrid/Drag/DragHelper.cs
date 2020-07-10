@@ -11,7 +11,7 @@ namespace SmartGrid.Drag
     class DragHelper
     {
         private static Point _pt;
-        private static DragProcessor.DragContent _data;
+        private static DragProcessor.DragData<IHasHeader, IHasHeader> _data;
 
         private static bool CopyMode { get { return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl); } }
         private static DragDropEffects DragEffect

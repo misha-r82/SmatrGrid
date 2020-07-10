@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.RightsManagement;
+using System.Windows;
 using SmartGrid.Items;
 
 namespace SmartGrid
 {
     public partial class DragProcessor
     {
-        public interface IDraElement
-        {
-            void DragToMe(IHasHeader second);
-        }
         public interface IContainer<T>
         {
-            void Add(T[] items, T insertBefore);
+            void Add(IEnumerable<T> items, T insertBefore);
             void Remove(T[] item);
         }
-
+        
         public class DragElement<T> 
-            where T : IHasHeader, new()
-
+            where T : IHasHeader
         {
             private T[] _elements;
             private IContainer<T> _container;
+            public T[] Elements => _elements;
+            public IContainer<T> Container => _container;
+
+            private IHasHeader CreateElement(IHasHeader proto)
+            {
+                string header = proto.Header.Header;
+                if (typeof(T) == typeof(Node)) new Node(header);
+                if (typeof(T) == typeof(Tag)) new Tag(header);
+                if (typeof(T) == typeof(TagWrap)) new TagWrap(header);
+                if (typeof(T) == typeof(SmartFiled)) new SmartFiled(header);
+                throw new Exception($"Error Creating element {typeof(T)}");
+            }
             public DragElement(T element, IContainer<T> container)
             {
                 _elements = new []{element};
@@ -41,7 +49,7 @@ namespace SmartGrid
                 if (first.GetType() == typeof(T)) _container.Add(second as T[], _elements.First());
                 else
                 {
-                    var added = new T();
+                    var added = (T)CreateElement(first);
                     added.Header.Header = first.Header.Header;
                     _container.Add(new[] {added}, _elements.First());
                 }
@@ -52,85 +60,44 @@ namespace SmartGrid
                 _container.Remove(items);
             }
         }
-        public class NodeElement : IDraElement
-        {
-            private Node _node;
-            private Tag _tag;
-            public NodeElement(Node node, Tag tag)
-            {
-                _node = node;
-                _tag = tag;
-            }
-
-            public Node Node => _node;
-
-            public Tag Tag => _tag;
-
-            public void DragToMe(IHasHeader second)
-            {
-                var node2 = second as Node;
-                if (node2 == null) node2 = new Node(second.Header.Header);
-                _tag.Add(node2, _node);
-            }
-        }
-        public class TagElement : IDraElement
-        {
-            private readonly TagWrap tWrap;
-
-            public TagElement(TagWrap tWrap)
-            {
-                this.tWrap = tWrap;
-            }
-            public TagWrap TWrap => tWrap;
-
-            public void DragToMe(IHasHeader second)
-            {
-                var tag2 = second as TagWrap;
-                if (tag2 == null) tag2 = new TagWrap(second.Header.Header);
-                tWrap.Tag = tag2.Tag;
-            }
-        }
-        /*public class TagGroupElement : IDraElement
-        {
-            private readonly TagGroup _tagGroup;
-
-            public TagGroupElement(TagGroup tagGroup)
-            {
-                this._tagGroup = tagGroup;
-            }
-
-            public TagGroup TagGroup => _tagGroup;
-
-            public void DragToMe(IHasHeader second)
-            {
-                var tag2 = second as TagWrap;
-                if (tag2 == null) tag2 = new TagWrap(second.Header.Header);
-                tWrap.Tag = tag2;
-            }
-        }*/
-
-        public class DragData<T1, T2> where T2 : IHasHeader, new() where T1 : IHasHeader, new()
+        public class DragData<T1, T2> where T2 : IHasHeader where T1 : IHasHeader
         {
             public DragElement<T1> from;
             public DragElement<T2> to;
+            private DragProcessor.SwapMode _mode;
+            public DragProcessor.SwapMode Mode => _mode;
 
-            DragData(T1 element, IContainer<T1> contayner)
+            public DragData(T1 element, IHasHeader contayner)
             {
-                @from = new DragElement<T1>(element, contayner);
+                from = new DragElement<T1>(element, contayner as IContainer<T1>);
             }
-
-            public void SetTarget(T2 element, IContainer<T2> contayner)
+            public void SetTarget(object sender, DragEventArgs e)
             {
-                to = new DragElement<T2>(element, contayner);
+                var d = new DragData<Node, T2>(new Node(""), null);
+                _mode = GetDragMode(e);
+                /*DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
+                if (data == null) return;
+                var elementTo = sender as FrameworkElement;
+                if (elementTo == null) return;
+                data.DestField = elementTo.DataContext as SmartFiled;
+                data.DestTag = elementTo.DataContext as TagWrap;
+                data.DestNode = ((FrameworkElement)e.OriginalSource).DataContext as Node;
+                if (data.Group == null) data.Group = elementTo.DataContext as TagGroup;
+
+                if (data.DestField != null && data.Type != DargContentType.Field)
+                    data.DestTag = data.DestField.WorkTag;*/
+
+                //to = new DragElement<T2>(element, contayner);
+
             }
         }
 
 
 
-        public class DragContent
+      /*  public class DragContent
         {
-            public SwapMode Mode;
-            public DargContentType Type;
+            public DragProcessor.SwapMode Mode;
+            public DragProcessor.DargContentType Type;
             public TagWrap SourceTag;
             public TagWrap DestTag;
             public TagGroup Group;
@@ -141,27 +108,23 @@ namespace SmartGrid
 
             public DragContent(TagWrap sourceTag)
             {
-                Type = DargContentType.Tag;
+                Type = DragProcessor.DargContentType.Tag;
                 SourceTag = sourceTag;
             }
 
             public DragContent(IEnumerable<Node> nodes, TagWrap sourceTag)
             {
-                Type = DargContentType.Nodes;
+                Type = DragProcessor.DargContentType.Nodes;
                 Nodes = nodes;
                 SourceTag = sourceTag;
 
             }
             public DragContent(SmartFiled sourceField)
             {
-                Type = DargContentType.Field;
+                Type = DragProcessor.DargContentType.Field;
                 SourceField = sourceField;
             }
 
-            public DragContent(IEnumerable<IHasHeader> elements, IHasHeader conteier)
-            {
-
-            }
-        }
+        }*/
     }
 }

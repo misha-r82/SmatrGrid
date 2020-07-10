@@ -75,9 +75,9 @@ namespace SmartGrid.Items
             Insert(pos, added);
         }
 
-        void DragProcessor.IContainer<T>.Remove(T item)
+        void DragProcessor.IContainer<T>.Remove(T[] items)
         {
-            Remove(item);
+            Remove(items);
         }
 
         public void Add(IEnumerable<T> items, T insertAfter = default(T))
