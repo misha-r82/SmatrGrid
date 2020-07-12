@@ -4,7 +4,9 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Security.RightsManagement;
 using System.Windows;
+using System.Windows.Forms;
 using SmartGrid.Items;
+using DragEventArgs = System.Windows.DragEventArgs;
 
 namespace SmartGrid
 {
@@ -33,16 +35,15 @@ namespace SmartGrid
                 if (typeof(T) == typeof(SmartFiled)) new SmartFiled(header);
                 throw new Exception($"Error Creating element {typeof(T)}");
             }
-            public DragElement(T element, IContainer<T> container)
-            {
-                _elements = new []{element};
-                _container = container;
-            }
-            public DragElement(IEnumerable<T> elements, IContainer<T> container)
+
+            public DragElement(IEnumerable<T> elements, IHasHeader container)
             {
                 _elements = elements.ToArray();
-                _container = container;
+                _container = container as IContainer<T>;
             }
+            public DragElement(T element, IHasHeader container) : this(new []{element}, container)
+            { }
+
             public void Add(IHasHeader[] second)
             {
                 var first = second.First();
@@ -60,25 +61,40 @@ namespace SmartGrid
                 _container.Remove(items);
             }
         }
-        public class DragData<T1, T2> where T2 : IHasHeader where T1 : IHasHeader
+        public class DragData
         {
-            public DragElement<T1> from;
-            public DragElement<T2> to;
+            public DragElement<IHasHeader> from;
+            public DragElement<IHasHeader> to;
             private DragProcessor.SwapMode _mode;
             public DragProcessor.SwapMode Mode => _mode;
-
-            public DragData(T1 element, IHasHeader contayner)
+            
+            public DragData(DragElement<IHasHeader> from)
             {
-                from = new DragElement<T1>(element, contayner as IContainer<T1>);
+                this.from = from;
+            }
+
+            private DragElement<IHasHeader> GetElementTo(object sourceContext, object originalContext)
+            {
+                var node = sourceContext as Node;
+                if (node != null)
+                    return new DragElement<IHasHeader>(node, originalContext as Tag);
+                var tagWrap = sourceContext as TagWrap;
+                if (tagWrap != null)
+                    return new DragElement<IHasHeader>(tagWrap, originalContext as TagGroup);
+                throw new ArgumentException($@"Не удалось распознать элемент перетаскиваня {sourceContext}");
+
             }
             public void SetTarget(object sender, DragEventArgs e)
             {
-                var d = new DragData<Node, T2>(new Node(""), null);
                 _mode = GetDragMode(e);
+                if (@from == null) return;
+                var elementTo = sender as FrameworkElement;
+                to = GetElementTo(((FrameworkElement) sender).DataContext,
+                    ((FrameworkElement) e.OriginalSource).DataContext);
+
                 /*DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
                 if (data == null) return;
-                var elementTo = sender as FrameworkElement;
-                if (elementTo == null) return;
+
                 data.DestField = elementTo.DataContext as SmartFiled;
                 data.DestTag = elementTo.DataContext as TagWrap;
                 data.DestNode = ((FrameworkElement)e.OriginalSource).DataContext as Node;

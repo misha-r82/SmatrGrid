@@ -8,33 +8,33 @@ using System.Windows.Input;
 
 namespace SmartGrid.Drag
 {
-    class DragHelper
+    class DragHelper 
     {
         private static Point _pt;
-        private static DragProcessor.DragData<IHasHeader, IHasHeader> _data;
+        private static DragProcessor.DragElement<IHasHeader> _dragElement;
 
         private static bool CopyMode { get { return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl); } }
         private static DragDropEffects DragEffect
         {
             get { return CopyMode ? DragDropEffects.Copy : DragDropEffects.Move; }
         }
-        public static void SetClick(DragProcessor.DragContent data, MouseButtonEventArgs e)
+        public static void SetClick(DragProcessor.DragElement<IHasHeader> dragElement, MouseButtonEventArgs e)
         {
             _pt = e.GetPosition(null);
-            _data = data;
+            _dragElement = dragElement;
         }
         public static void Track(MouseEventArgs e)
         {
-            if (_data == null) return;
+            if (_dragElement == null) return;
             if (e.LeftButton != MouseButtonState.Pressed)
             {
-                _data = null;
+                _dragElement = null;
                 return;
             }
             var diff = e.GetPosition(null) - _pt;
             if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance &&
                 Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance) return;
-            DragDrop.DoDragDrop((FrameworkElement)e.Source, _data, DragEffect);
+            DragDrop.DoDragDrop((FrameworkElement)e.Source, _dragElement, DragEffect);
         }
     }
 }

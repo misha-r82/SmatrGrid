@@ -152,9 +152,9 @@ namespace SmartGrid
             WorkSpace.Instance.ActiveField = data.SourceField;
         }*/
 
-        public static void DoDrag<T1, T2>(DragData<T1, T2> data) where T2 : IHasHeader, new() where T1 : IHasHeader, new()
+        public static void DoDrag(DragData data)
         {
-            data.to.Add(data.from.Elements as IHasHeader[]);
+            data.to.Add(data.@from.Elements);
             switch (data.Mode)
             {
                 case SwapMode.Replace:
@@ -164,7 +164,7 @@ namespace SmartGrid
                 }
                 case SwapMode.Swap:
                 {
-                    data.@from.Add(data.to.Elements as IHasHeader[]);
+                    data.@from.Add(data.to.Elements);
                     data.to.Remove(data.to.Elements);
                     data.from.Remove(data.@from.Elements);
                         break;
@@ -175,7 +175,7 @@ namespace SmartGrid
         
         public static void DoDrag(object sender, DragEventArgs e)
         {
-            var d = new DragData<IHasHeader, IHasHeader>(new Node(), new Tag());
+
             /*
             DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
             if (data == null) return;

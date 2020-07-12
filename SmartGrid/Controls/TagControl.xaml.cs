@@ -83,8 +83,8 @@ namespace SmartGrid
                 var nodes = new List<Node>(SelectedNodes);
                 var node = ((FrameworkElement) sender).DataContext as Node;
                 if (!nodes.Contains(node)) nodes.Add(node);
-                var data = new DragProcessor.DragElement<Node>(node, CurTag.Tag);
-                DragHelper.SetClick(new DragProcessor.DragContent(nodes, CurTag), e);
+                var data = new DragProcessor.DragElement<IHasHeader>(node as IHasHeader, CurTag.Tag);
+                DragHelper.SetClick(data, e);
             }
 
             e.Handled = false;
@@ -95,9 +95,10 @@ namespace SmartGrid
             if (!ctrlHeader.IsEditing)
             {
                 var element = (FrameworkElement)sender;
-                var tag = element.DataContext as TagWrap;
+                TagWrap tag = element.DataContext as TagWrap;
                 if (tag == null) return;
-                DragHelper.SetClick(new DragProcessor.DragContent(tag), e);
+                var dragElement = new DragProcessor.DragElement<IHasHeader>((IHasHeader) tag.Tag, tag);
+                DragHelper.SetClick(dragElement, e);
             }
 
             e.Handled = false;
@@ -143,7 +144,6 @@ namespace SmartGrid
                         node.ViewStl.DetailsVisile = false;
                     CurTag.Tag.Add(nodes);
                 }
-
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

@@ -40,7 +40,7 @@ namespace SmartGrid
             var item = (FrameworkElement) sender;
             var tagWrp = item.DataContext as TagWrap;
             if (tagWrp == null) return;
-            DragHelper.SetClick(new DragProcessor.DragContent(tagWrp) {Group = TagGrp}, e);
+            //DragHelper.SetClick(new DragProcessor.DragContent(tagWrp) {Group = TagGrp}, e);
             e.Handled = false;           
         }
         private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
