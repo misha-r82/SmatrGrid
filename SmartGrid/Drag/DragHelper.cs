@@ -11,14 +11,14 @@ namespace SmartGrid.Drag
     class DragHelper 
     {
         private static Point _pt;
-        private static DragProcessor.DragElement<IHasHeader> _dragElement;
+        private static DragProcessor.DragElement _dragElement;
 
         private static bool CopyMode { get { return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl); } }
         private static DragDropEffects DragEffect
         {
             get { return CopyMode ? DragDropEffects.Copy : DragDropEffects.Move; }
         }
-        public static void SetClick(DragProcessor.DragElement<IHasHeader> dragElement, MouseButtonEventArgs e)
+        public static void SetClick(DragProcessor.DragElement dragElement, MouseButtonEventArgs e)
         {
             _pt = e.GetPosition(null);
             _dragElement = dragElement;

@@ -83,7 +83,7 @@ namespace SmartGrid
                 var nodes = new List<Node>(SelectedNodes);
                 var node = ((FrameworkElement) sender).DataContext as Node;
                 if (!nodes.Contains(node)) nodes.Add(node);
-                var data = new DragProcessor.DragElement<IHasHeader>(node as IHasHeader, CurTag.Tag);
+                var data = new DragProcessor.DragElement( nodes, CurTag);
                 DragHelper.SetClick(data, e);
             }
 
@@ -97,7 +97,7 @@ namespace SmartGrid
                 var element = (FrameworkElement)sender;
                 TagWrap tag = element.DataContext as TagWrap;
                 if (tag == null) return;
-                var dragElement = new DragProcessor.DragElement<IHasHeader>((IHasHeader) tag.Tag, tag);
+                var dragElement = new DragProcessor.DragElement(tag, tag);
                 DragHelper.SetClick(dragElement, e);
             }
 

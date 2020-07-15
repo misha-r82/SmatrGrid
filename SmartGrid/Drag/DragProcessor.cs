@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Lib;
+using SmartGrid.Drag;
 
 namespace SmartGrid
 {
@@ -23,135 +25,7 @@ namespace SmartGrid
             }
             return mode;
         }
-        /*
-        private static void DragNodes(DragContent data)
-        {
-            if (data.Nodes == null || !data.Nodes.Any()) return;
-            if (data.Group != null)
-            {
-                foreach (var node in data.Nodes)
-                {
-                   var newTag = new TagWrap(new Tag(node.Header.Header));
-                   data.Group.Add(new []{newTag});
-                   if (data.Mode == SwapMode.Replace) data.SourceTag.Tag.Remove(node);               
-                }
-                return;
-            }
-
-            if (data.DestField != null)
-            {
-                foreach (var node in data.Nodes)
-                {
-                    var newField = new SmartFiled(node.Header.Header);
-                    WorkSpace.Instance.Add(newField);
-                    if (data.Mode == SwapMode.Replace) data.SourceTag.Tag.Remove(node);
-                }
-                return;
-            }
-            var tagFrom = data.SourceTag;
-            var tagTo = data.DestTag;
-            if (data.Mode == SwapMode.Copy)
-                tagTo.Tag.Add(data.Nodes, data.DestNode);
-            else
-            {
-                if (tagTo == tagFrom) tagFrom.Tag.Remove(data.Nodes);
-                    tagTo.Tag.Add(data.Nodes, data.DestNode);
-                if (tagTo != tagFrom)
-                    tagFrom.Tag.Remove(data.Nodes);
-                if (data.Mode == SwapMode.Swap && data.DestNode != null)
-                {
-                    tagFrom.Tag.Add(data.DestNode, data.Nodes.First());
-                    tagTo.Tag.Remove(data.DestNode);
-                }
-                    
-            }
-
-        }
-        public static void SwapTagWith(TagWrap first, TagWrap second, SwapMode mode)
-        {
-            if (second == null) second = new TagWrap();
-            if (ReferenceEquals(first, second)) return;
-            switch (mode)
-            {
-                case SwapMode.Copy:
-                    first.Tag = second.Tag.GetClone(); break;
-                case SwapMode.Swap:
-                    var tmpTag = second.Tag;
-                    second.Tag = first.Tag;
-                    first.Tag = tmpTag; break;
-                default:
-                    first.Tag = second.Tag;
-                    second.Tag = new Tag(); break;
-            }
-
-        }
-        private static bool FromGroupToTag(DragContent data)// вытащили из группы 
-        {
-            if (data.DestTag == null) return false;
-            if (!data.Group.Contains(data.SourceTag)) return false;
-            if (data.Group.Contains(data.DestTag)) return false;            
-            if (data.Mode == SwapMode.Replace)
-                data.Group.Remove(data.SourceTag);
-            SwapTagWith(data.DestTag, data.SourceTag, data.Mode);
-            return true;
-        }
-
-        private static void DragTag(DragContent data)
-        {
-
-            if (data.SourceTag == null) return;
-            if (data.DestField != null)
-            {
-                var newField = new SmartFiled(data.SourceTag.Header.Header);
-                WorkSpace.Instance.Add(newField);
-                if (data.Mode == SwapMode.Replace)
-                    if(data.Group != null)
-                        data.Group.Remove(data.SourceTag);
-                    else data.SourceTag.Tag = new Tag();
-                return;
-            }
-            if (data.Mode == SwapMode.Swap || data.Group == null)
-            {
-                if (data.DestTag == null) return;
-                SwapTagWith(data.DestTag, data.SourceTag, data.Mode);
-                return;
-            }
-            if (FromGroupToTag(data)) return;
-            // нужно добавлять в группу
-            int pos = data.DestTag == null ? -1 : data.Group.IndexOf(data.DestTag);
-            if (pos == -1) pos = data.Group.Count;
-            var added = data.SourceTag.GetClone();
-            data.Group.Insert(pos, added);
-            if (data.Mode == SwapMode.Replace)
-                if (data.DestTag != null && data.Group.Contains(data.SourceTag))
-                    data.Group.Remove(data.SourceTag);
-                else
-                    data.SourceTag.Tag = new Tag();
-        }
-        private static void DragToField(DragContent data)
-        {
-            if (data.SourceField == data.DestField) return;
-            if (data.DestTag != null)
-            {
-                var newTag = new Tag(data.SourceField.Header.Header);
-                data.DestTag.Tag = newTag;
-                if (data.Mode == SwapMode.Replace) WorkSpace.Instance.Remove(data.SourceField);
-                return;
-            }
-
-            if (data.Group != null)
-            {
-                var newTag = new TagWrap(new Tag(data.SourceField.Header.Header));
-                data.Group.Add(new[] { newTag });
-                if (data.Mode == SwapMode.Replace) WorkSpace.Instance.Remove(data.SourceField);
-                return;
-            }
-            WorkSpace.Instance.Remove(data.SourceField);
-            var pos = WorkSpace.Instance.IndexOf(data.DestField);
-            WorkSpace.Instance.Insert(pos, data.SourceField);
-            WorkSpace.Instance.ActiveField = data.SourceField;
-        }*/
-
+ 
         public static void DoDrag(DragData data)
         {
             data.to.Add(data.@from.Elements);
@@ -175,7 +49,8 @@ namespace SmartGrid
         
         public static void DoDrag(object sender, DragEventArgs e)
         {
-
+            var dragData = new DragData(sender, e);
+            DoDrag(dragData);
             /*
             DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
             if (data == null) return;

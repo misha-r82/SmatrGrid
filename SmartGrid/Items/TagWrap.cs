@@ -9,7 +9,7 @@ using SmartGrid.Undo;
 namespace SmartGrid
 {
     [DataContract]
-    public class TagWrap: INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer<Tag>
+    public class TagWrap: INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer
     {
         [DataMember] private Tag _tag;
         public HeaderClass Header => _tag.Header;
@@ -46,14 +46,23 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public void Add(IEnumerable<Tag> items, Tag insertBefore)
+        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore)
         {
-            Tag = items.First();
+            var tag = items.First() as TagWrap;
+            if (tag != null)
+                Tag = tag.Tag;
+            else
+            {
+                var nodes = items.Cast<Node>();
+                Tag.Add(nodes, insertBefore);
+            }
         }
 
-        public void Remove(Tag[] item)
+        public void Remove(IEnumerable<IHasHeader> items)
         {
-            Tag = new Tag();            
+            if (items.First() is TagWrap)
+                Tag = new Tag();
+            else Tag.Remove(items.Cast<Node>());
         }
     }
 }
