@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -47,54 +48,25 @@ namespace SmartGrid.Items
             CollectionChanged(this, args);
         }
 
+        private bool CheckItem(T item)
+        {
+            if (string.IsNullOrEmpty(item.Header.Header)) return false;
+            foreach (T listItem  in _list)
+                if (listItem.Equals(item))
+                    return false;
+            return true;
+        }
         public void Add(T addItem)
         {
-            foreach (T item  in _list)
-                if (item.Equals(addItem))
-                    return;
+            if (!CheckItem(addItem)) return;
             _list.Add(addItem);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, addItem, _list.Count-1));
             OnPropertyChanged(nameof(Count));
         }
-        public void Add(T added, T insertAfter)
-        {
-            if (string.IsNullOrEmpty(added.Header.Header)) return;
-            if (insertAfter == null)
-            {
-                Add(added);
-                return;
-            }
-            int pos = _list.IndexOf(insertAfter);
-            if (pos == -1) pos = _list.Count - 1;
-            if (_list.Any(n => object.ReferenceEquals(n, added)))
-            {
-                int posExist = _list.IndexOf(insertAfter);
-                if (posExist < pos) pos--;
-                Remove(added);
-            }
-            Insert(pos, added);
-        }
-
-        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore)
-        {
-            Add(items as IEnumerable<T>, insertBefore as T);
-        }
-
-        void DragProcessor.IContainer.Remove(IEnumerable<IHasHeader> items)
-        {
-            Remove(items as IEnumerable<T>);
-        }
-
-        public void Add(IEnumerable<T> items, T insertAfter = default(T))
-        {
-            foreach (T item in items) Add(item, insertAfter);
-        }
         public void Insert(int index, T insertItem)
         {
-            foreach (T item in _list)
-                if (item.Equals(insertItem))
-                    return;
-            if(index < 0) 
+            if (!CheckItem(insertItem)) return;
+            if (index < 0)
             {
                 Add(insertItem);
                 return;
@@ -103,6 +75,47 @@ namespace SmartGrid.Items
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, insertItem, index));
             OnPropertyChanged(nameof(Count));
         }
+        public void Add(T added, T insertBefore)
+        {
+            if (string.IsNullOrEmpty(added.Header.Header)) return;
+            if (insertBefore == null)
+            {
+                Add(added);
+                return;
+            }
+            if (insertBefore == added) return;
+            int pos = _list.IndexOf(insertBefore);
+            if (pos == -1) pos = _list.Count - 1;
+            if (_list.Any(n => object.ReferenceEquals(n, added)))
+            {
+                int posExist = _list.IndexOf(added);
+                if (posExist < pos) pos--;
+                Remove(added);
+            }
+            Insert(pos, added);
+        }
+
+        public void Add(IEnumerable<T> items, T insertBefore)
+        {
+            foreach (T item in items.Reverse()) Add(item, insertBefore);
+        }
+
+        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
+        {
+            Add(items.OfType<T>(), insertBefore as T);
+        }
+
+        void DragProcessor.IContainer.Remove(IEnumerable<IHasHeader> items)
+        {
+            Remove(items.OfType<T>());
+        }
+
+        public bool AcceptType(Type type)
+        {
+            return type == typeof(T);
+        }
+
+
         public bool Remove(T item)
         {
 
@@ -132,15 +145,15 @@ namespace SmartGrid.Items
             return _list.Contains(item);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
+
         public int IndexOf(T item)
         {
             return _list.IndexOf(item);
         }
-
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            _list.CopyTo(array, arrayIndex);
+        }
         public void RemoveAt(int index)
         {
             throw new NotImplementedException();
@@ -162,4 +175,5 @@ namespace SmartGrid.Items
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }

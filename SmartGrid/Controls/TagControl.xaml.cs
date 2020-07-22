@@ -32,6 +32,8 @@ namespace SmartGrid
         public TagControl()
         {
             InitializeComponent();
+             Drop += Grid_Drop;
+             Debug.WriteLine($@"DropSet {(DataContext as TagWrap)?.Header.Header}");
             DataContextChanged += (sender, args) =>
             {
                 CurTag = DataContext as TagWrap;
@@ -72,6 +74,7 @@ namespace SmartGrid
         }
         private void Grid_Drop(object sender, DragEventArgs e)
         {
+            //Debug.WriteLine("GridDrop");
             DragProcessor.DoDrag(sender, e);
         }
         // нода
@@ -85,13 +88,15 @@ namespace SmartGrid
                 if (!nodes.Contains(node)) nodes.Add(node);
                 var data = new DragProcessor.DragElement( nodes, CurTag);
                 DragHelper.SetClick(data, e);
+                //e.Handled = true;
             }
-
-            e.Handled = false;
+            else
+                e.Handled = false;
         }
         //тэг
         private void CanvTag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            
             if (!ctrlHeader.IsEditing)
             {
                 var element = (FrameworkElement)sender;
@@ -99,9 +104,9 @@ namespace SmartGrid
                 if (tag == null) return;
                 var dragElement = new DragProcessor.DragElement(tag, tag);
                 DragHelper.SetClick(dragElement, e);
+                e.Handled = false;
             }
-
-            e.Handled = false;
+            else e.Handled = false;
         }
         private void CommDell_Exec(object sender, ExecutedRoutedEventArgs e)
         {

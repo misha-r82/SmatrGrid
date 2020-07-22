@@ -13,7 +13,7 @@ using SmartGrid.Annotations;
 namespace SmartGrid
 {
     [DataContract]
-    public class SmartFiled : INotifyPropertyChanged, IHasHeader
+    public class SmartFiled : INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer
     {
         public TagWrap[,] Cells;
         [DataMember] public TagWrap WorkTag { get; set;}
@@ -88,6 +88,21 @@ namespace SmartGrid
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(IEnumerable<IHasHeader> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AcceptType(Type type)
+        {
+            throw new NotImplementedException();
         }
     }
 }

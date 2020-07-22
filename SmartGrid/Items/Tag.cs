@@ -28,6 +28,7 @@ namespace SmartGrid
         {
             get => !this.Any() && string.IsNullOrEmpty(Header.Header);
         }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

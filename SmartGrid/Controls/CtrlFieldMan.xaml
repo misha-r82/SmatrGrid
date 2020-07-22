@@ -21,11 +21,11 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView Name="lstMain" Grid.Row="0" ItemsSource="{Binding FieldList}" HorizontalContentAlignment="Stretch"
+        <ListView Name="lstMain" Grid.Row="0" ItemsSource="{Binding }" HorizontalContentAlignment="Stretch"
                   SelectedItem="{Binding ActiveField, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,-1,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Grid AllowDrop="True">
                             <Grid.LayoutTransform>
                                 <RotateTransform Angle="-90"/>

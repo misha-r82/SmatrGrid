@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -46,7 +47,7 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore)
+        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
         {
             var tag = items.First() as TagWrap;
             if (tag != null)
@@ -58,11 +59,26 @@ namespace SmartGrid
             }
         }
 
+        public void SwapWith(IHasHeader element, DragProcessor.IContainer coteiner)
+        {
+            var origTag = GetClone();
+            Add(new[]{element}); 
+            coteiner.Add(new IHasHeader[]{origTag});
+            if (coteiner.GetType() != typeof(TagWrap))
+                coteiner.Remove(new []{element});
+            
+        }
         public void Remove(IEnumerable<IHasHeader> items)
         {
-            if (items.First() is TagWrap)
+            var tagWrap = items.First() as TagWrap;
+            if (tagWrap !=null && tagWrap.Tag == Tag)
                 Tag = new Tag();
             else Tag.Remove(items.Cast<Node>());
+        }
+
+        public bool AcceptType(Type type)
+        {
+            return type == typeof(TagWrap) || type == typeof(Node);
         }
     }
 }

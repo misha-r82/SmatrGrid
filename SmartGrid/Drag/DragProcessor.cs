@@ -25,23 +25,53 @@ namespace SmartGrid
             }
             return mode;
         }
- 
+
+        private static bool SwapTag(DragData data)
+        {
+            var tagWrap = data.@from.FirstElement as TagWrap;
+            if (tagWrap != null) 
+            {
+                tagWrap.SwapWith(data.to.FirstElement, data.to.Container);
+                return true;
+            }
+            tagWrap = data.to.FirstElement as TagWrap;            
+            if (tagWrap != null)
+            {
+                tagWrap.SwapWith(data.@from.FirstElement, data.@from.Container);
+                return true;
+            }
+                
+            return false;
+        }
+
+        
         public static void DoDrag(DragData data)
         {
-            data.to.Add(data.@from.Elements);
             switch (data.Mode)
             {
+                case SwapMode.Copy:
+                {
+                    data.to.Add(data.@from.Elements);
+                    break;
+                }
                 case SwapMode.Replace:
                 {
-                    data.@from.Remove(data.from.Elements);
+                    //if (data.to.Container.)
+
+                    data.to.Add(data.@from.Elements);
+                    if (data.@from.Container != data.to.Container)
+                        data.@from.Remove(data.from.Elements);
                     break;
                 }
                 case SwapMode.Swap:
                 {
+                    if (data.@from.Container == data.to.Container) return;
+                    if (SwapTag(data)) return;
+                    data.to.Add(data.@from.Elements);
                     data.@from.Add(data.to.Elements);
                     data.to.Remove(data.to.Elements);
                     data.from.Remove(data.@from.Elements);
-                        break;
+                    break;
                 }
                 
             }
@@ -51,6 +81,10 @@ namespace SmartGrid
         {
             var dragData = new DragData(sender, e);
             DoDrag(dragData);
+            if (dragData.@from.FirstElement.GetType() == typeof(TagWrap) && dragData.Mode == SwapMode.Replace)
+            {
+
+            }
             /*
             DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
             if (data == null) return;
