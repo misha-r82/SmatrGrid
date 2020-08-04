@@ -25,25 +25,6 @@ namespace SmartGrid
             }
             return mode;
         }
-
-        private static bool SwapTag(DragData data)
-        {
-            var tagWrap = data.@from.FirstElement as TagWrap;
-            if (tagWrap != null) 
-            {
-                tagWrap.SwapWith(data.to.FirstElement, data.to.Container);
-                return true;
-            }
-            tagWrap = data.to.FirstElement as TagWrap;            
-            if (tagWrap != null)
-            {
-                tagWrap.SwapWith(data.@from.FirstElement, data.@from.Container);
-                return true;
-            }
-                
-            return false;
-        }
-
         
         public static void DoDrag(DragData data)
         {
@@ -51,26 +32,24 @@ namespace SmartGrid
             {
                 case SwapMode.Copy:
                 {
-                    data.to.Add(data.@from.Elements);
+                    var clone = data.@from.Elements.Select(e => e.GetClone());
+                    data.to.Add(clone);
                     break;
                 }
                 case SwapMode.Replace:
                 {
-                    //if (data.to.Container.)
-
+                    data.@from.Remove(data.from.Elements);
                     data.to.Add(data.@from.Elements);
-                    if (data.@from.Container != data.to.Container)
-                        data.@from.Remove(data.from.Elements);
                     break;
                 }
                 case SwapMode.Swap:
                 {
-                    if (data.@from.Container == data.to.Container) return;
-                    if (SwapTag(data)) return;
+                    if (data.to.FirstElement.GetType()!= typeof(Tag) || data.to.Container.GetType() != typeof(SmartFiled))
+                        data.to.Remove(data.to.Elements);
+                    if (data.@from.FirstElement.GetType() != typeof(Tag) || data.@from.Container.GetType() != typeof(SmartFiled))
+                            data.from.Remove(data.@from.Elements);
                     data.to.Add(data.@from.Elements);
                     data.@from.Add(data.to.Elements);
-                    data.to.Remove(data.to.Elements);
-                    data.from.Remove(data.@from.Elements);
                     break;
                 }
                 
@@ -81,32 +60,6 @@ namespace SmartGrid
         {
             var dragData = new DragData(sender, e);
             DoDrag(dragData);
-            if (dragData.@from.FirstElement.GetType() == typeof(TagWrap) && dragData.Mode == SwapMode.Replace)
-            {
-
-            }
-            /*
-            DragContent data = e.Data.GetData(typeof(DragContent)) as DragContent;
-            if (data == null) return;
-            var elementTo = sender as FrameworkElement;
-            if (elementTo == null) return;
-            data.DestField = elementTo.DataContext as SmartFiled;
-            data.DestTag = elementTo.DataContext as TagWrap;
-            data.DestNode = ((FrameworkElement) e.OriginalSource).DataContext as Node;
-            if (data.Group == null) data.Group = elementTo.DataContext as TagGroup;
-            
-            if (data.DestField != null && data.Type != DargContentType.Field)
-                data.DestTag = data.DestField.WorkTag;
-            data.Mode = GetDragMode(e);
-            switch (data.Type)
-            {
-                case DargContentType.Tag:
-                    DragTag(data); break;
-                case DargContentType.Nodes:
-                    DragNodes(data); break;
-                case DargContentType.Field:
-                    DragToField(data); break;
-            }*/
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SmartGrid.Undo
 {
-    public class TagUndoScope : UndoScope
+ /*   public class TagUndoScope : UndoScope
     {
         private TagWrap _tagWrap;
         private Tag _oldValue;
@@ -34,5 +34,5 @@ namespace SmartGrid.Undo
         }
 
         public override bool HasChanges => _oldValue.Equals(_tagWrap.Tag);
-    }
+    }*/
 }

@@ -49,17 +49,23 @@ namespace SmartGrid
             }
         }
 
-        public new void Remove(SmartFiled field)
+        public override void Remove(IEnumerable<IHasHeader> items)
         {
-            var pos = IndexOf(field);
-            RemoveAt(pos);
+            var field = (SmartFiled)items.First();
+            base.Remove(field);
             if (Count == 0)
             {
                 ActiveField = new SmartFiled("Новый раздел");
                 Add(ActiveField);
-            } else if (!(pos < Count)) pos--;
-            ActiveField = this[pos];
+            }
         }
+
+        public override void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
+        {
+            base.Add(items, insertBefore);
+            ActiveField = items.First() as SmartFiled;
+        }
+
         protected void FireActiveFieldChanged()
         {
             OnPropertyChanged(nameof(ActiveField));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,18 +10,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using SmartGrid.Annotations;
+using Test;
+using static SmartGrid.DragProcessor;
 
 namespace SmartGrid
 {
     [DataContract]
-    public class SmartFiled : INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer
+    public class SmartFiled : INotifyPropertyChanged, ICloneableEx<SmartFiled>, DragProcessor.IContainer
     {
-        public TagWrap[,] Cells;
-        [DataMember] public TagWrap WorkTag { get; set;}
+        [DataMember]
+        public Tag WorkTag
+        {
+            get => Cells[9];
+            set
+            {
+                if (Cells[9] == value) return;
+                Cells[0] = value;
+                OnPropertyChanged(nameof(WorkTag));
+            }
+        }
+
         [DataMember] public TagGroup TagGrp { get; private set; }
         [DataMember] public GridWidth GridWidth { get; private set; }
         private bool _isEditMode;
         [DataMember]public HeaderClass Header { get; private set; }
+        public ObservableCollection<Tag> Cells { get; private set; }
+        private Tag _workTag;
 
         public bool IsEditMode
         {
@@ -37,50 +52,12 @@ namespace SmartGrid
             Header = new HeaderClass(header);
             TagGrp = new TagGroup();
             GridWidth = new GridWidth();
-            TagGrp.Add(new TagWrap("Корзина"));
-            TagGrp.Add(new TagWrap("Важное"));
-            Cells = new TagWrap[3,3];
-            for (int i = 0; i<Cells.GetLength(0); i++)
-                for (int j = 0; j < Cells.GetLength(1); j++)
-                {
-                    Cells[i, j] = new TagWrap(i.ToString() + j);
-                }
-            foreach (var node in Cells[0,0].Tag)
-            {
-                node.ViewStl.DetailsVisile = true;
-            }
-            WorkTag = new TagWrap("текущий");
-            WorkTag.Tag.ViewStl.DetailsVisile = true;
+            TagGrp.Add(new Tag("Корзина"));
+            TagGrp.Add(new Tag("Важное"));
+            Cells = new ObservableCollection<Tag>();
+            for (int i = 0; i < 9; i++) Cells.Add(new Tag((i + 1).ToString()));
+            Cells.Add(new Tag("текущий"));
         }
-        [DataMember]
-        private TagWrap[][] CellsXml
-        {
-            get
-            {
-                var tmp = new TagWrap[Cells.GetLength(0)][];
-                for (int r = 0; r < Cells.GetLength(0); r++)
-                {
-                    tmp[r] = new TagWrap[Cells.GetLength(1)];
-                    for (int c = 0; c < Cells.GetLength(1); c++)
-                        tmp[r][c] = Cells[r, c];
-                }
-                return tmp;
-            }
-            set
-            {
-                if (!value.Any())
-                {
-                     Cells = new TagWrap[0,0];
-                    return;
-                }
-                Cells = new TagWrap[value.Length, value[0].Length];
-                for (int r = 0; r < value.GetLength(0); r++)
-                    for (int c = 0; c < value[0].Length; c++)
-                        Cells[r, c] = value[r][c];
-            }
-        }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -92,17 +69,44 @@ namespace SmartGrid
 
         public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
         {
-            throw new NotImplementedException();
+            var pos = Cells.IndexOf(insertBefore as Tag);
+            Cells[pos] = (Tag)items.First();
         }
 
-        public void Remove(IEnumerable<IHasHeader> item)
+        public void Remove(IEnumerable<IHasHeader> items)
         {
-            throw new NotImplementedException();
-        }
+            var pos = Cells.IndexOf(items.First() as Tag);
+            if (pos <0) return;
+            Cells[pos] = new Tag();
+         }
 
         public bool AcceptType(Type type)
         {
-            throw new NotImplementedException();
+            return type == typeof(Tag);
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public void CloneRefs()
+        {
+
+            Cells = new ObservableCollection<Tag>(Cells.Select(cell=>cell.GetClone()));
+            Header = Header.GetClone();
+        }
+
+        IDragElement ICloneableEx<IDragElement>.GetClone()
+        {
+            return GetClone();
+        }
+
+        public SmartFiled GetClone()
+        {
+            var clone = (SmartFiled)MemberwiseClone();
+            clone.CloneRefs();
+            return clone;
         }
     }
 }

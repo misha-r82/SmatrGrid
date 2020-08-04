@@ -65,6 +65,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CtrlField.xaml.cs">
+      <DependentUpon>CtrlField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CtrlFontCommands.xaml.cs">
       <DependentUpon>CtrlFontCommands.xaml</DependentUpon>
     </Compile>
@@ -97,7 +100,6 @@
     <Compile Include="GridWidth\GridWidth.cs" />
     <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />
-    <Compile Include="Items\TagWrap.cs" />
     <Compile Include="Properties\Annotations2.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Items\SmartFiled.cs" />
@@ -113,6 +115,10 @@
     <Compile Include="Undo\UndoScope.cs" />
     <Compile Include="ViewStyle.cs" />
     <Compile Include="Items\WorkSpace.cs" />
+    <Page Include="Controls\CtrlField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CtrlFontCommands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

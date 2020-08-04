@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:SmartGrid.Controls"
              xmlns:colorPiecker="clr-namespace:Lib.Controls.ColorPiecker;assembly=Lib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="50">
+             d:DesignHeight="300" d:DesignWidth="50" AllowDrop="True" Drop="OnDrop">
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions> 
         <ListView Name="lstMain" Grid.Row="0" ItemsSource="{Binding }" HorizontalContentAlignment="Stretch"
                   SelectedItem="{Binding ActiveField, Mode=TwoWay}">
             <ListView.ItemTemplate>
@@ -31,7 +31,6 @@
                                 <RotateTransform Angle="-90"/>
                             </Grid.LayoutTransform>
                             <controls:EditableLable x:Name="ctrlHeader" Text="{Binding Header.Header, Mode=TwoWay}" MinWidth="80" 
-                                                    AllowDrop="True" Drop="TxtHeader_OnDrop"
                                                     PreviewMouseDown="TxtHeader_OnPreviewMouseDown"
                                                     GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus"/>
                         </Grid>

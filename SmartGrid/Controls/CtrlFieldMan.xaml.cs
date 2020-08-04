@@ -54,7 +54,7 @@ namespace SmartGrid
                     list.Remove(item);
         }
 
-        private void TxtHeader_OnDrop(object sender, DragEventArgs e)
+        private void OnDrop(object sender, DragEventArgs e)
         {
             DoDrag(sender, e);
         }
@@ -63,7 +63,7 @@ namespace SmartGrid
         {
             var element = (FrameworkElement) sender;
             _field = (SmartFiled)element.DataContext;
-            //DragHelper.SetClick(new DragContent(_field), e);
+            DragHelper.SetClick(new DragElement(_field, WorkSpace.Instance), e);
             e.Handled = false;
         }
 

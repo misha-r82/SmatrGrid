@@ -7,7 +7,7 @@
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              xmlns:ctrls="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Focusable="True" GotFocus="OnGotFocus" LostFocus="OnLostFocus" AllowDrop="True" >
+             d:DesignHeight="300" d:DesignWidth="300" Focusable="True" GotFocus="OnGotFocus" LostFocus="OnLostFocus" AllowDrop="True" Drop="On_Drop">
     <Border BorderBrush="#757575" BorderThickness="0">
         <Grid Name="gridMain"  >
             <Grid.Resources>
@@ -38,7 +38,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid>
-                <ctrls:EditableLable x:Name="ctrlHeader" Text="{Binding Tag.Header.Header, Mode=TwoWay}" PreviewMouseDown="CanvTag_OnPreviewMouseDown" Margin="1"
+                <ctrls:EditableLable x:Name="ctrlHeader" Text="{Binding Header.Header, Mode=TwoWay}" Margin="1"
                                      GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus"/>
             </Grid>
         <Grid Name="gridNewNode" Grid.Row="1" Margin="2"   Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
@@ -54,7 +54,7 @@
                     <Image Source="../img/plus.png" Margin="3"/>
                 </Button>
             </Grid>
-            <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding Tag}" HorizontalContentAlignment="Stretch" BorderThickness="0">
+            <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" BorderThickness="0">
                 <ListView.CommandBindings>
                     <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
                     <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>
@@ -62,7 +62,7 @@
                 </ListView.CommandBindings>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ctrls:NodeCotrol PreviewMouseDown="Node_OnMouseDown"/>
+                        <ctrls:NodeCotrol PreviewMouseDown="Node_OnPreviewMouseDown"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ContextMenu>

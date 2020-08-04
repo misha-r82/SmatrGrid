@@ -32,11 +32,9 @@ namespace SmartGrid
         public TagControl()
         {
             InitializeComponent();
-             Drop += Grid_Drop;
-             Debug.WriteLine($@"DropSet {(DataContext as TagWrap)?.Header.Header}");
             DataContextChanged += (sender, args) =>
             {
-                CurTag = DataContext as TagWrap;
+                CurTag = DataContext as Tag;
                 NewNode = new Node();
                 gridNewNode.DataContext = NewNode;
             };
@@ -50,11 +48,11 @@ namespace SmartGrid
         {
             get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
         }
-        private TagWrap CurTag { get; set; }
+        private Tag CurTag { get; set; }
         private void AddNew()
         {
             var tmp = txtNewNode.DataContext;
-            CurTag.Tag.Add(NewNode.GetClone());
+            CurTag.Add(NewNode.GetClone());
             NewNode.Header.Header = "";
         }
 
@@ -72,13 +70,17 @@ namespace SmartGrid
                     AddNew();                               
             }
         }
-        private void Grid_Drop(object sender, DragEventArgs e)
+        private void On_Drop(object sender, DragEventArgs e)
         {
-            //Debug.WriteLine("GridDrop");
-            DragProcessor.DoDrag(sender, e);
+            var data = e.Data.GetData(typeof(DragProcessor.DragElement)) as DragProcessor.DragElement;
+            if (data == null || data.FirstElement == null) return;
+            if (data.FirstElement.GetType() == typeof(Node))
+            {
+                DragProcessor.DoDrag(sender, e);
+                e.Handled = true;
+            }
         }
-        // нода
-        private void Node_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void Node_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var nodeCtrl = sender as NodeCotrol;
             if (nodeCtrl != null && nodeCtrl.IsDraEnable)
@@ -88,29 +90,14 @@ namespace SmartGrid
                 if (!nodes.Contains(node)) nodes.Add(node);
                 var data = new DragProcessor.DragElement( nodes, CurTag);
                 DragHelper.SetClick(data, e);
-                //e.Handled = true;
-            }
-            else
-                e.Handled = false;
-        }
-        //тэг
-        private void CanvTag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-            if (!ctrlHeader.IsEditing)
-            {
-                var element = (FrameworkElement)sender;
-                TagWrap tag = element.DataContext as TagWrap;
-                if (tag == null) return;
-                var dragElement = new DragProcessor.DragElement(tag, tag);
-                DragHelper.SetClick(dragElement, e);
                 e.Handled = false;
             }
-            else e.Handled = false;
         }
+
+
         private void CommDell_Exec(object sender, ExecutedRoutedEventArgs e)
         {
-            CurTag.Tag.Remove(SelectedNodes);
+            CurTag.Remove(SelectedNodes);
         }
 
 
@@ -133,7 +120,7 @@ namespace SmartGrid
         private void CommandCut_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var selected = SelectedNodes.ToArray();
-            CurTag.Tag.Remove(selected);
+            CurTag.Remove(selected);
             CopyNodesToClipboard(selected);
         }
 
@@ -143,12 +130,7 @@ namespace SmartGrid
             {
                 var serialized = Clipboard.GetData(DragProcessor.DargContentType.Nodes.ToString()).ToString();
                 var nodes = FileIO.deserializeXMLFromString<IEnumerable<Node>>(serialized);
-                if (nodes != null)
-                {
-                    foreach (Node node in nodes)
-                        node.ViewStl.DetailsVisile = false;
-                    CurTag.Tag.Add(nodes);
-                }
+                if (nodes != null) CurTag.Add(nodes);
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -210,7 +192,7 @@ namespace SmartGrid
 
         private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _headerUndoScope = new HeaderUndoScope<Tag>(CurTag.Tag, "Изменение заголовка набора {0}");
+            _headerUndoScope = new HeaderUndoScope<Tag>(CurTag, "Изменение заголовка набора {0}");
         }
 
         private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)

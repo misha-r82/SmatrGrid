@@ -14,17 +14,17 @@ namespace SmartGrid
             public DragData(object sender, DragEventArgs e)
             {
                 from = e.Data.GetData(typeof(DragElement)) as DragElement;
-                if (from == null) throw new ArgumentException("Drag incorect type from");
                 _mode = GetDragMode(e);
-                var senderElement = ((FrameworkElement) sender).DataContext as IHasHeader;
-                var conteiner = ((FrameworkElement) e.OriginalSource).DataContext as IHasHeader;
-                if (conteiner.GetType() == @from.FirstElement.GetType())
+                var senderElement = ((FrameworkElement) sender).DataContext as IDragElement;
+                var conteiner = ((FrameworkElement) e.OriginalSource).DataContext as IDragElement;
+                if (conteiner is IContainer && ((IContainer) conteiner).AcceptType(senderElement.GetType()))
                 {
-                    to = new DragElement(conteiner,senderElement);
+                    to = new DragElement(senderElement, conteiner);
                 }
                 else
                 {
-                    to = new DragElement(senderElement, conteiner);
+                    
+                    to = new DragElement(conteiner, senderElement);
                 }
                 
             }

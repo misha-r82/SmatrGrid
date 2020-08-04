@@ -23,6 +23,8 @@ namespace SmartGrid.Drag
         {
             _pt = e.GetPosition(null);
             _dragElement = dragElement;
+            //if (dragElement == null) Debug.WriteLine("null");
+            //else Debug.WriteLine(dragElement.FirstElement.Header.Header);
         }
         public static void Track(MouseEventArgs e)
         {
@@ -35,8 +37,6 @@ namespace SmartGrid.Drag
             var diff = e.GetPosition(null) - _pt;
             if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance &&
                 Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance) return;
-
-            //Debug.WriteLine($"Drag {(_dragElement.Container as IHasHeader)?.Header.Header}");
             DragDrop.DoDragDrop((FrameworkElement)e.Source, _dragElement, DragEffect);
         }
     }

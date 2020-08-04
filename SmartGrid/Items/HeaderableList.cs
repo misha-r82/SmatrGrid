@@ -14,7 +14,7 @@ using SmartGrid.Annotations;
 namespace SmartGrid.Items
 {
     [DataContract]
-    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, IHasHeader, DragProcessor.IContainer where T: class, IHasHeader
+    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, DragProcessor.IContainer where T: class, DragProcessor.IDragElement
     {
         [DataMember] private List<T> _list;
         [DataMember] private HeaderClass _header;
@@ -100,12 +100,12 @@ namespace SmartGrid.Items
             foreach (T item in items.Reverse()) Add(item, insertBefore);
         }
 
-        public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
+        public virtual void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
         {
             Add(items.OfType<T>(), insertBefore as T);
         }
 
-        void DragProcessor.IContainer.Remove(IEnumerable<IHasHeader> items)
+        public virtual void Remove(IEnumerable<IHasHeader> items)
         {
             Remove(items.OfType<T>());
         }
@@ -173,6 +173,24 @@ namespace SmartGrid.Items
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public object Clone()
+        {
+            var clone = (HeaderableList<T>) MemberwiseClone();
+            clone.CloneRefs();
+            return clone;
+        }
+
+        public void CloneRefs()
+        {
+             _list = new List<T>(_list.Select(item=>item.Clone() as T));
+            _header = _header.GetClone();           
+        }
+
+        public DragProcessor.IDragElement GetClone()
+        {
+            return (HeaderableList<T>) Clone();
         }
     }
 

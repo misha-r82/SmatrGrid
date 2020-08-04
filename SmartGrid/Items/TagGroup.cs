@@ -11,7 +11,7 @@ using SmartGrid.Items;
 namespace SmartGrid
 {
     [DataContract]
-    public class TagGroup : HeaderableList<TagWrap>, INotifyPropertyChanged
+    public class TagGroup : HeaderableList<Tag>, DragProcessor.IDragElement
     {
         public TagGroup() : base()
         {

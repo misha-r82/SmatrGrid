@@ -41,40 +41,8 @@ namespace SmartGrid
         {
             var space = WorkSpace.Instance;
             DataContext = space;
-            if (space.ActiveField == null) return;
-            tag11.DataContext = space.ActiveField.Cells[0, 0];
-            tag12.DataContext = space.ActiveField.Cells[0, 1];
-            tag13.DataContext = space.ActiveField.Cells[0, 2];
-            tag21.DataContext = space.ActiveField.Cells[1, 0];
-            tag22.DataContext = space.ActiveField.Cells[1, 1];
-            tag23.DataContext = space.ActiveField.Cells[1, 2];
-            tag31.DataContext = space.ActiveField.Cells[2, 0];
-            tag32.DataContext = space.ActiveField.Cells[2, 1];
-            tag33.DataContext = space.ActiveField.Cells[2, 2];
-        }
-        private void SpltH1_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.H1 + WorkSpace.Instance.ActiveField.GridWidth.H2;
-            WorkSpace.Instance.ActiveField.GridWidth.H1 = WorkSpace.Instance.ActiveField.GridWidth.H2 = all/2;
         }
 
-        private void SpltH2_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.H2 + WorkSpace.Instance.ActiveField.GridWidth.H3;
-            WorkSpace.Instance.ActiveField.GridWidth.H2 = WorkSpace.Instance.ActiveField.GridWidth.H3 = all / 2;
-        }
-
-        private void SpltW1_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.W1 + WorkSpace.Instance.ActiveField.GridWidth.W2;
-            WorkSpace.Instance.ActiveField.GridWidth.W1 = WorkSpace.Instance.ActiveField.GridWidth.W2 = all / 2;
-        }
-
-        private void SpltW2_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.W2 + WorkSpace.Instance.ActiveField.GridWidth.W3;
-            WorkSpace.Instance.ActiveField.GridWidth.W2 = WorkSpace.Instance.ActiveField.GridWidth.W3 = all / 2;
-        }
 
         private void BtnLoad_OnClick(object sender, RoutedEventArgs e)
         {

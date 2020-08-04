@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartGrid.Drag;
+using static SmartGrid.DragProcessor;
 
 namespace SmartGrid
 {
@@ -27,50 +28,50 @@ namespace SmartGrid
             InitializeComponent();
         }
         private TagGroup TagGrp { get { return DataContext as TagGroup;} }
-        private TagWrap[] SelectedTags
+        private Tag[] SelectedTags
         {
-            get { return lstMain.SelectedItems.OfType<TagWrap>().ToArray(); }
+            get { return lstMain.SelectedItems.OfType<Tag>().ToArray(); }
         }
         private void List_Drop(object sender, DragEventArgs e)
         {
-             DragProcessor.DoDrag(sender, e);         
+             DoDrag(sender, e);         
         }
-        private void CanvTag_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void CanvTag_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item = (FrameworkElement) sender;
-            var tagWrp = item.DataContext as TagWrap;
-            if (tagWrp == null) return;
-            DragHelper.SetClick(new DragProcessor.DragElement(tagWrp, TagGrp), e);
+            var tag = item.DataContext as Tag;
+            if (tag == null) return;
+            DragHelper.SetClick(new DragElement((IDragElement)tag, TagGrp), e);
             e.Handled = false;           
         }
         private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach (TagWrap tag in SelectedTags)
+            foreach (Tag tag in SelectedTags)
                 TagGrp.Remove(tag);
         }
 
         private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
             if(!tags.Any()) return;
             var value = !tags.First().Header.Style.Bold;
-            foreach (TagWrap tw in tags) tw.Header.Style.Bold = value;
+            foreach (Tag tw in tags) tw.Header.Style.Bold = value;
         }
 
         private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
             if (!tags.Any()) return;
             var value = !tags.First().Header.Style.Italic;
-            foreach (TagWrap tw in tags) tw.Header.Style.Italic = value;
+            foreach (Tag tw in tags) tw.Header.Style.Italic = value;
         }
 
         private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var tags = lstMain.SelectedItems.OfType<TagWrap>().ToArray();
+            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
             if (!tags.Any()) return;
             var value = !tags.First().Header.Style.Underline;
-            foreach (TagWrap tw in tags) tw.Header.Style.Underline = value;
+            foreach (Tag tw in tags) tw.Header.Style.Underline = value;
         }
     }
 }

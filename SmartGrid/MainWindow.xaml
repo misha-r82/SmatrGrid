@@ -21,7 +21,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="298*"/>
-            <RowDefinition Height="87*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -63,43 +62,11 @@
 
         </ToolBar>
         <StackPanel Grid.RowSpan="2" Grid.Row="1">
-            <!--<ToggleButton Name="btnCtrl" IsChecked="{Binding Source={x:Static local:Sett.Settings}, Path=CtrlEnter}" Style="{StaticResource BigBtnStyle}">
-                <Image Source="img/enter-arrow.png" Margin="2"/>
-            </ToggleButton>-->
             <local:CtrlFieldMan/>
         </StackPanel>
         <local:TagControl x:Name="tag00" DataContext="{Binding ActiveField.WorkTag}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
         <local:TagGrpControl x:Name="tagGrp" Grid.Column="5" DataContext="{Binding ActiveField.TagGrp}" Grid.RowSpan="2" Grid.Row="1" Height="770" VerticalAlignment="Top"/>
-        <Grid Name="gridWrk" Grid.Column="3" Grid.RowSpan="2" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding ActiveField.GridWidth.GH1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="6"/>
-                <RowDefinition  Height="{Binding ActiveField.GridWidth.GH2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="6"/>
-                <RowDefinition  Height="{Binding ActiveField.GridWidth.GH3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="{Binding ActiveField.GridWidth.GW1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <ColumnDefinition Width="6"/>
-                <ColumnDefinition Width="{Binding ActiveField.GridWidth.GW2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <ColumnDefinition Width="6"/>
-                <ColumnDefinition Width="{Binding ActiveField.GridWidth.GW3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Grid.ColumnDefinitions>
-            <GridSplitter Name="spltH1" Grid.Row="1" Grid.ColumnSpan="5" MouseDoubleClick="SpltH1_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
-            <GridSplitter Name="spltH2" Grid.Row="3" Grid.ColumnSpan="5" MouseDoubleClick="SpltH2_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
-            <GridSplitter Name="spltW1" Grid.Column="1" Grid.RowSpan="5" MouseDoubleClick="SpltW1_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
-            <GridSplitter Name="spltW2" Grid.Column="3" Grid.RowSpan="5" MouseDoubleClick="SpltW2_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
-            <local:TagControl x:Name="tag11" Grid.Column="0" Grid.Row="0"/>
-            <local:TagControl x:Name="tag12"  Grid.Column="2" Grid.Row="0"/>
-            <local:TagControl x:Name="tag13"  Grid.Column="4" Grid.Row="0"/>
-            <local:TagControl x:Name="tag21"  Grid.Column="0" Grid.Row="2"/>
-            <local:TagControl x:Name="tag22"  Grid.Column="2" Grid.Row="2"/>
-            <local:TagControl x:Name="tag23"  Grid.Column="4" Grid.Row="2"/>
-            <local:TagControl x:Name="tag31"  Grid.Column="0" Grid.Row="4"/>
-            <local:TagControl x:Name="tag32"  Grid.Column="2" Grid.Row="4"/>
-            <local:TagControl x:Name="tag33"  Grid.Column="4" Grid.Row="4"/>
-        </Grid>
+        <controls:CtrlField Grid.Row="1" Grid.Column="3" DataContext="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField }"/>
     </Grid>
 
 

@@ -13,7 +13,7 @@ using Test;
 namespace SmartGrid
 {
     [DataContract]
-    public class Node : ICloneableEx<Node>, IHasHeader, INotifyPropertyChanged
+    public class Node : ICloneableEx<Node>, DragProcessor.IDragElement, INotifyPropertyChanged
     {
         [DataMember] private byte[] _valBin;
         [DataMember] public HeaderClass Header { get; private set; }
@@ -43,6 +43,11 @@ namespace SmartGrid
         {
             ViewStl = ViewStl.GetClone();
             Header = Header.GetClone();
+        }
+
+        DragProcessor.IDragElement ICloneableEx<DragProcessor.IDragElement>.GetClone()
+        {
+            return GetClone();
         }
 
         public Node GetClone()
