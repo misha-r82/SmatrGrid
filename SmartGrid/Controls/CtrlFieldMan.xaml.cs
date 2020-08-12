@@ -63,7 +63,7 @@ namespace SmartGrid
         {
             var element = (FrameworkElement) sender;
             _field = (SmartFiled)element.DataContext;
-            DragHelper.SetClick(new DragElement(_field, WorkSpace.Instance), e);
+            DragHelper.SetClick(new DragElement((IDragElement) _field, WorkSpace.Instance), e);
             e.Handled = false;
         }
 

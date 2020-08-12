@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using Lib;
 using SmartGrid.Drag;
+using SmartGrid.Undo;
+
 
 namespace SmartGrid
 {
@@ -25,9 +27,30 @@ namespace SmartGrid
             }
             return mode;
         }
-        
+
+        private static string GetOperaionName(SwapMode mode)
+        {
+            switch (mode)
+            {
+                case SwapMode.Copy: return "копировать";
+                case SwapMode.Swap: return "поменять местами";
+                default: return "перемещение";
+            }
+        }
+
+        private static void CreateUndoScope(DragData data)
+
+        {
+
+
+        }
         public static void DoDrag(DragData data)
         {
+            var name =
+                $"{GetOperaionName(data.Mode)} {data.@from.FirstElement.Header.Header} -> {data.to.Container.Header.Header}";
+            var undoChain = new UndoChain(name);
+            undoChain.Add(UndoCollectionScopeFactory.CreateScope(data.@from.Container));
+            undoChain.Add(UndoCollectionScopeFactory.CreateScope(data.to.Container));
             switch (data.Mode)
             {
                 case SwapMode.Copy:
@@ -52,10 +75,9 @@ namespace SmartGrid
                     data.@from.Add(data.to.Elements);
                     break;
                 }
-                
             }
+            WorkSpace.Instance.Undo.AddScope(undoChain);
         }
-        
         public static void DoDrag(object sender, DragEventArgs e)
         {
             var dragData = new DragData(sender, e);

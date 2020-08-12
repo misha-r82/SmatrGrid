@@ -16,7 +16,7 @@ using Test;
 namespace SmartGrid
 {
     [DataContract]
-    public class Tag : HeaderableList<Node>, INotifyPropertyChanged, ICloneableEx<Tag>
+    public class Tag : HeaderableList<Node>, ICloneableEx<Tag>
     {
         [DataMember] public ViewStyle ViewStl { get; set; }
 

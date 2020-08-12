@@ -7,20 +7,13 @@ using Microsoft.SqlServer.Server;
 
 namespace SmartGrid.Undo
 {
-    public abstract class StrEditScope<T> : UndoScope
+    public abstract class StrEditScope<T> : ObjFieldEditScope<T, string>
     {
         private const int MAX_LEN = 24;
-        private string _oldValue;
-        protected string scopeNamePatt;
-        private Func<T, string> _getter;
-        private Action<T, string> _setter;
-        private T _obj;
-        public StrEditScope(string scopeNamePatt, Func<T, string> getter, Action<T, string> setter, T obj)
+        private string scopeNamePatt;
+
+        public StrEditScope(string scopeNamePatt, Func<T, string> getter, Action<T, string> setter, T obj) : base("", getter, setter, obj)
         {
-            _oldValue = getter(obj);
-            _getter = getter;
-            _setter = setter;
-            _obj = obj;
             this.scopeNamePatt = scopeNamePatt;
         }
         public override string Name
@@ -32,25 +25,6 @@ namespace SmartGrid.Undo
                 return string.Format(scopeNamePatt, str);
             }
         }
-
         public override bool HasChanges => _oldValue != _getter(_obj);
-
-        public override void Undo()
-        {
-            Swap();
-        }
-
-        public override void Rendo()
-        {
-            Swap();
-        }
-
-        private void Swap()
-        {
-            var tmp = _oldValue;
-            _oldValue = _getter(_obj);
-            _setter(_obj, tmp);
-
-        }
     }
 }

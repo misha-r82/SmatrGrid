@@ -9,19 +9,15 @@ using SmartGrid.Annotations;
 
 namespace SmartGrid.Undo
 {
-    public abstract class UndoScope : INotifyPropertyChanged
+    public abstract class UndoScope
     {
-        public virtual string Name { get; }
-        public bool IsApplyed { get; }
-        public abstract void Undo();
-        public abstract void Rendo();
-        public abstract bool HasChanges { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public UndoScope(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Name = name;
         }
+        public virtual string Name { get; }
+        public abstract void Undo();
+        public abstract void Redo();
+        public abstract bool HasChanges { get; }
     }
 }

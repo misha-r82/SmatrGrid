@@ -23,8 +23,6 @@ namespace SmartGrid.Drag
         {
             _pt = e.GetPosition(null);
             _dragElement = dragElement;
-            //if (dragElement == null) Debug.WriteLine("null");
-            //else Debug.WriteLine(dragElement.FirstElement.Header.Header);
         }
         public static void Track(MouseEventArgs e)
         {

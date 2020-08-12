@@ -10,11 +10,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using SmartGrid.Annotations;
+using static SmartGrid.DragProcessor;
 
 namespace SmartGrid.Items
 {
     [DataContract]
-    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, DragProcessor.IContainer where T: class, DragProcessor.IDragElement
+    public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, DragProcessor.IContainer, IResetCollection<T> where T: class, IDragElement
     {
         [DataMember] private List<T> _list;
         [DataMember] private HeaderClass _header;
@@ -158,6 +159,14 @@ namespace SmartGrid.Items
         {
             throw new NotImplementedException();
         }
+        public void Reset(IEnumerable<T> newElements)
+        {
+            _list.Clear();
+            _list.AddRange(newElements);
+            OnPropertyChanged(nameof(Count));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return _list.GetEnumerator();
@@ -188,10 +197,11 @@ namespace SmartGrid.Items
             _header = _header.GetClone();           
         }
 
-        public DragProcessor.IDragElement GetClone()
+        public IDragElement GetClone()
         {
             return (HeaderableList<T>) Clone();
         }
+
     }
 
 }

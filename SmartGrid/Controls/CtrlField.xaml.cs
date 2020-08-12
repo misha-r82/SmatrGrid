@@ -59,7 +59,6 @@ namespace SmartGrid.Controls
             Tag tag = element.DataContext as Tag;
             if (tag == null) return;
             var dragElement = new DragProcessor.DragElement((DragProcessor.IDragElement) tag, WorkSpace.Instance.ActiveField);
-            //Debug.WriteLine("TagSetClick");
             DragHelper.SetClick(dragElement, e);
         }
     }

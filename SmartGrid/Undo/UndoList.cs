@@ -62,7 +62,7 @@ namespace SmartGrid
         {
             var redo = RedoStack.Pop();
             UndoStack.Push(redo);
-            redo.Rendo();
+            redo.Redo();
             if (RedoStack.Count > 0) OnPropertyChanged(nameof(CanRedo));
         }
 

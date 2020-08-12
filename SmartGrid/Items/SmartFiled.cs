@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ using static SmartGrid.DragProcessor;
 namespace SmartGrid
 {
     [DataContract]
-    public class SmartFiled : INotifyPropertyChanged, ICloneableEx<SmartFiled>, DragProcessor.IContainer
+    public class SmartFiled : INotifyPropertyChanged, ICloneableEx<SmartFiled>, DragProcessor.IContainer, IResetCollection<Tag>
     {
         [DataMember]
         public Tag WorkTag
@@ -107,6 +108,22 @@ namespace SmartGrid
             var clone = (SmartFiled)MemberwiseClone();
             clone.CloneRefs();
             return clone;
+        }
+
+        public void Reset(IEnumerable<Tag> newElements)
+        {
+            int pos = 0;
+            foreach (var item in newElements) Cells[pos++] = item;
+        }
+
+        public IEnumerator<Tag> GetEnumerator()
+        {
+            return Cells.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Cells.GetEnumerator();
         }
     }
 }
