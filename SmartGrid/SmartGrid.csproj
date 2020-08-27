@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Editor\HyperlinkCreater.cs" />
     <Compile Include="GridWidth\GridWidth.cs" />
+    <Compile Include="HeaderIcons\HeaderIcon.cs" />
     <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />
     <Compile Include="Properties\Annotations2.cs" />

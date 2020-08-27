@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using SmartGrid.Drag;
+using SmartGrid.HeaderIcons;
 using SmartGrid.Undo;
 
 namespace SmartGrid
@@ -28,6 +30,7 @@ namespace SmartGrid
 
         public MainWindow()
         {
+
             WorkSpace.Instance = new WorkSpace();
             WorkSpace.Instance.PropertyChanged += (sender, args) =>
             {
@@ -109,6 +112,13 @@ namespace SmartGrid
             if (tag == null) return;
             var dragElement = new DragProcessor.DragElement((DragProcessor.IDragElement)tag, WorkSpace.Instance.ActiveField);
             DragHelper.SetClick(dragElement, e);
+        }
+
+        private void TestImg_OnInitialized(object sender, EventArgs e)
+        {
+            var stream = new FileStream(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\cut.png", FileMode.Open);
+            var item = new HeaderIcon(stream);
+            this.testImg.Source = item.Icon;
         }
     }
 
