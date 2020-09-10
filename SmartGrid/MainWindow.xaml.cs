@@ -120,6 +120,12 @@ namespace SmartGrid
             var item = new HeaderIcon(stream);
             this.testImg.Source = item.Icon;
         }
+
+        private void btnIconEditor_Click(object sender, RoutedEventArgs e)
+        {
+            var f = new FrmIconEditor();
+            f.ShowDialog();
+        }
     }
 
 }

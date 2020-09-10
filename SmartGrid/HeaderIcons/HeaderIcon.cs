@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -18,6 +19,18 @@ namespace SmartGrid.HeaderIcons
         {
             FromStream(stream);
         }
+        public HeaderIcon()
+        {
+            IconCollection = new ObservableCollection<HeaderIcon>(new List<HeaderIcon>());
+        }
+        [DataMember]
+        private byte[] binData;
+        [DataMember]
+        public string Name { get; set; }
+        public BitmapImage Icon { get; private set; }
+        [DataMember]
+        public ObservableCollection<HeaderIcon> IconCollection { get; }
+
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
@@ -40,18 +53,6 @@ namespace SmartGrid.HeaderIcons
             Icon = bitmap;
             // bitmap.Freeze();
 
-        }
-        [DataMember]
-        private byte[] binData;
-        [DataMember]
-        public string Name { get; set; }
-        public BitmapImage Icon { get; private set; }
-        [DataMember]
-        public List<HeaderIcon> IconCollection { get; }
-
-        public HeaderIcon()
-        {
-            IconCollection = new List<HeaderIcon>();
         }
     }
 }

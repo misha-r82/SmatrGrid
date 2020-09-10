@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using SmartGrid.Annotations;
+using SmartGrid.HeaderIcons;
 using SmartGrid.Items;
 
 namespace SmartGrid
@@ -16,6 +17,7 @@ namespace SmartGrid
     public class WorkSpace : HeaderableList<SmartFiled>
     {
         [DataMember] private SmartFiled _activeField;
+        [DataMember] private HeaderIcons.HeaderIcon _coreHeaderIcon;
         [DataMember] private static WorkSpace _instance;
         public UndoData Undo { get; private set; }
 
@@ -30,6 +32,7 @@ namespace SmartGrid
             }
         }
 
+        public HeaderIcons.HeaderIcon CoreHeaderIcon => _coreHeaderIcon;
         public WorkSpace()
         {
             Undo = new UndoData();
@@ -37,6 +40,8 @@ namespace SmartGrid
             Add(new SmartFiled("Раздел2"));
             Add(new SmartFiled("Раздел3"));
             ActiveField = this[0];
+            _coreHeaderIcon = new HeaderIcon();
+            _coreHeaderIcon.Name = "Icons";
         }
 
         public SmartFiled ActiveField
