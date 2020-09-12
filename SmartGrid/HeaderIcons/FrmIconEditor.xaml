@@ -22,17 +22,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-       <!-- <Grid.CommandBindings>
-            <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}" Executed="CommandBinding_OnExecuted"></CommandBinding>
-        </Grid.CommandBindings>-->
+
         <StackPanel Orientation="Horizontal">
-            <Button Name="btnAdd" Command="{x:Static local:IconEditorCommands.AddIcon}" Style="{StaticResource BigBtnStyle}">
-                <Image Source="../img/plus.png"/>
-            </Button>
-            <Button Name="btnRemove" Style="{StaticResource BigBtnStyle}" Click="BtnRemove_OnClick">
-                <Image Source="../img/delete.png"/>
-            </Button>
+
         </StackPanel>
-        <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1"/>
+        <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1" />
     </Grid>
 </Window>

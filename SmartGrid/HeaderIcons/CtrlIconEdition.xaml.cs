@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Win32;
-using Path = System.Windows.Shapes.Path;
 
 namespace SmartGrid.HeaderIcons
 {
@@ -27,7 +26,7 @@ namespace SmartGrid.HeaderIcons
             InitializeComponent();
         }
 
-        public IEnumerable<HeaderIcon> SelectedItems
+        public IEnumerable<HeaderIcon> SelectedIcons
         {
             get
             {
@@ -36,21 +35,7 @@ namespace SmartGrid.HeaderIcons
             }
         }
 
-        private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var icon = DataContext as HeaderIcon;
-            if (icon == null) return;
-            var fileDialog = new OpenFileDialog();
-            fileDialog.Multiselect = true;
-            if (fileDialog.ShowDialog() != true) return;
-            foreach (var fileName in fileDialog.FileNames)
-            {
-                if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
-                string name = System.IO.Path.GetFileNameWithoutExtension(fileName);
-                var stream = new FileStream(fileName, FileMode.Open);
-                icon.IconCollection.Add(new HeaderIcon(stream) { Name = name });
-            }
-        }
+        public HeaderIcon Icon { get => DataContext as HeaderIcon; }
 
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -60,6 +45,25 @@ namespace SmartGrid.HeaderIcons
         private void CtrlIconEdition_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var context = e.NewValue;
+        }
+        private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = true;
+            if (fileDialog.ShowDialog() != true) return;
+            foreach (var fileName in fileDialog.FileNames)
+            {
+                if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
+                string name = Path.GetFileNameWithoutExtension(fileName);
+                var stream = new FileStream(fileName, FileMode.Open);
+                Icon.IconCollection.Add(new HeaderIcon(stream) { Name = name });
+            }
+        }
+
+        private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+
         }
     }
 }

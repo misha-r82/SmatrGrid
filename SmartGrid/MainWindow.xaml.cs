@@ -114,12 +114,7 @@ namespace SmartGrid
             DragHelper.SetClick(dragElement, e);
         }
 
-        private void TestImg_OnInitialized(object sender, EventArgs e)
-        {
-            var stream = new FileStream(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\cut.png", FileMode.Open);
-            var item = new HeaderIcon(stream);
-            this.testImg.Source = item.Icon;
-        }
+
 
         private void btnIconEditor_Click(object sender, RoutedEventArgs e)
         {

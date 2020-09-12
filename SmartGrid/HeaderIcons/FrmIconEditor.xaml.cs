@@ -26,19 +26,18 @@ namespace SmartGrid.HeaderIcons
         static RoutedUICommand _addCommand = new RoutedUICommand("Добавить изображение", "AddIcon",typeof(IconEditorCommands));
         public static RoutedUICommand AddIcon
         {
-            get => _addCommand;
+            get => _deleteCommand;
+        }
+        static RoutedUICommand _deleteCommand = new RoutedUICommand("Удалить", "DeleteIcons", typeof(IconEditorCommands));
+        public static RoutedUICommand DeleteIcons
+        {
+            get => _deleteCommand;
         }
     }
     public partial class FrmIconEditor : Window
     {
         
-        /*
-        public static RoutedCommand Add { get; set; }
 
-        static FrmIconEditor()
-        {
-                Add = new RoutedCommand("Add", typeof(FrmIconEditor));
-        }*/
         public FrmIconEditor()
         {
 
@@ -57,15 +56,12 @@ namespace SmartGrid.HeaderIcons
             }
             WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(new HeaderIcon() { Name = "Новая иконка" });*/
         }
-
+        CtrlIconEdition CurIconControl { get; set; }
 
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-        }
     }
 }

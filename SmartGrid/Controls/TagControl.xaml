@@ -88,10 +88,10 @@
 
                 </StackPanel>-->
                 <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
-                        <Image Source="../img/link.png" Margin="2"/>
+                        <Image Source="../img/link.png" Margin="1"/>
                 </Button>
                 <Button Command="Delete" ToolTip="Удалить выбранные элементы" Style="{StaticResource SmallBtnStyle}">
-                    <Image Source="../img/delete.png" Margin="3"/>
+                    <Image Source="../img/delete.png" Margin="1"/>
                 </Button>
             </ToolBar>
         </Grid>

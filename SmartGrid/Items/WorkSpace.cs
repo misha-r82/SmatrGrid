@@ -42,6 +42,9 @@ namespace SmartGrid
             ActiveField = this[0];
             _coreHeaderIcon = new HeaderIcon();
             _coreHeaderIcon.Name = "Icons";
+            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "1" });
+            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "2" });
+            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "3" });
         }
 
         public SmartFiled ActiveField
