@@ -46,24 +46,6 @@ namespace SmartGrid.HeaderIcons
         {
             var context = e.NewValue;
         }
-        private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
 
-            var fileDialog = new OpenFileDialog();
-            fileDialog.Multiselect = true;
-            if (fileDialog.ShowDialog() != true) return;
-            foreach (var fileName in fileDialog.FileNames)
-            {
-                if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
-                string name = Path.GetFileNameWithoutExtension(fileName);
-                var stream = new FileStream(fileName, FileMode.Open);
-                Icon.IconCollection.Add(new HeaderIcon(stream) { Name = name });
-            }
-        }
-
-        private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-
-        }
     }
 }

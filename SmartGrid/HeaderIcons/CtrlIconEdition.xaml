@@ -18,10 +18,7 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <Grid.CommandBindings>
-            <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}" Executed="CommandAdd_OnExecuted"/>
-            <CommandBinding Command="{x:Static ApplicationCommands.Delete}" Executed="CommandDelete_OnExecuted"/>
-        </Grid.CommandBindings>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -30,16 +27,13 @@
             <Image Source="{Binding Icon}" Width="16" Height="16"/>
             <controls:EditableLable Text="{Binding Path=Name}">
             </controls:EditableLable>
-            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить иконку" Margin="5,0,0,0" Width="16" Height="16">
-                <Image Source="../img/plus.png" Margin="1"/>
-            </Button>
         </StackPanel>
         
         <ListView Name="lstMain" Grid.Row="1" ItemsSource="{Binding IconCollection}" HorizontalContentAlignment="Stretch" BorderThickness="0" Margin="5,0,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <local:CtrlIconEdition/>
+                        <local:CtrlIconEdition x:Name="listCtrl"/>
                         <Button Command="Delete" ToolTip="Удалить выбранные элементы" Margin="5,0,0,0" Width="16" Height="16">
                             <Image Source="../img/delete.png" Margin="0"/>
                         </Button>

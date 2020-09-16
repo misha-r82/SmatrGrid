@@ -18,14 +18,20 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
+        <Grid.CommandBindings>
+            <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}" Executed="CommandAdd_OnExecuted"/>
+            <CommandBinding Command="{x:Static ApplicationCommands.Delete}" Executed="CommandDelete_OnExecuted"/>
+        </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-
+            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить иконку" Margin="5,0,0,0" Width="16" Height="16">
+                <Image Source="../img/plus.png" Margin="1"/>
+            </Button>
         </StackPanel>
-        <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1" />
+        <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
     </Grid>
 </Window>

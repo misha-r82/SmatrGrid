@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,7 @@ namespace SmartGrid.HeaderIcons
 
             DataContext = WorkSpace.Instance.CoreHeaderIcon;
             InitializeComponent();
+            SelectedItem = this.DataContext as HeaderIcon;
         }
 
 
@@ -55,13 +57,41 @@ namespace SmartGrid.HeaderIcons
                 WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(icon);
             }
             WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(new HeaderIcon() { Name = "Новая иконка" });*/
-        }
-        CtrlIconEdition CurIconControl { get; set; }
+        }        
+        public HeaderIcon SelectedItem { get; private set; }
+        public HeaderIcon ParenItem { get; private set; }
 
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
+        private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (SelectedItem == null) return;
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = true;
+            if (fileDialog.ShowDialog() != true) return;
+            foreach (var fileName in fileDialog.FileNames)
+            {
+                if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
+                string name = Path.GetFileNameWithoutExtension(fileName);
+                var stream = new FileStream(fileName, FileMode.Open);
+                SelectedItem.IconCollection.Add(new HeaderIcon(stream) { Name = name });
+            }
+        }
 
+        private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            
+        }
+
+        private void ctrlMainIcon_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var element = e.OriginalSource as FrameworkElement;
+            SelectedItem = element.DataContext as HeaderIcon;
+            var parentCtrl = Lib.VisualTreeHelpers.FindAncestor<CtrlIconEdition>(element);
+            if (parentCtrl == null) return;
+            ParenItem = parentCtrl.DataContext as HeaderIcon;
+        }
     }
 }
