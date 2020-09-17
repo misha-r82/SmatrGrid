@@ -82,7 +82,8 @@ namespace SmartGrid.HeaderIcons
 
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            if (ParenItem == null || SelectedItem == null) return;
+            ParenItem.IconCollection.Remove(SelectedItem);
         }
 
         private void ctrlMainIcon_GotFocus(object sender, RoutedEventArgs e)

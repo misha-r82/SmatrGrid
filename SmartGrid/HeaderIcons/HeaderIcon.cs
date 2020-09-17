@@ -15,7 +15,7 @@ namespace SmartGrid.HeaderIcons
     [KnownType(typeof(System.Array))]  //here !!!!! for System.Byte[*]
     public class HeaderIcon
     {
-        public HeaderIcon(Stream stream)
+        public HeaderIcon(Stream stream): this()
         {
             FromStream(stream);
         }
@@ -47,12 +47,9 @@ namespace SmartGrid.HeaderIcons
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.StreamSource = new MemoryStream(binData);
-            //bitmap.UriSource = new Uri(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\cut.png", UriKind.Absolute);
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
             Icon = bitmap;
-            // bitmap.Freeze();
-
         }
     }
 }

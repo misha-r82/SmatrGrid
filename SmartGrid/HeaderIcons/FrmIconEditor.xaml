@@ -28,8 +28,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить иконку" Margin="5,0,0,0" Width="16" Height="16">
+            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить иконку" Margin="5,0,0,0" Width="22" Height="22">
                 <Image Source="../img/plus.png" Margin="1"/>
+            </Button>
+            <Button Command="Delete" ToolTip="Удалить выбранные элементы" Margin="5,0,0,0" Width="22" Height="22">
+                <Image Source="../img/delete.png" Margin="0"/>
             </Button>
         </StackPanel>
         <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
