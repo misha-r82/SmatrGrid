@@ -32,7 +32,7 @@ namespace SmartGrid
             }
         }
 
-        public HeaderIcons.HeaderIcon CoreHeaderIcon => _coreHeaderIcon;
+        public HeaderIcon CoreHeaderIcon => _coreHeaderIcon;
         public WorkSpace()
         {
             Undo = new UndoData();

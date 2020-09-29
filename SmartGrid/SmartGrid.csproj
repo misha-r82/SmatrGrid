@@ -100,6 +100,9 @@
     </Compile>
     <Compile Include="Editor\HyperlinkCreater.cs" />
     <Compile Include="GridWidth\GridWidth.cs" />
+    <Compile Include="HeaderIcons\CtrlIconPanel.xaml.cs">
+      <DependentUpon>CtrlIconPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HeaderIcons\HeaderIcon.cs" />
     <Compile Include="HeaderIcons\FrmIconEditor.xaml.cs">
       <DependentUpon>FrmIconEditor.xaml</DependentUpon>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editor\FrmHyperlink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HeaderIcons\CtrlIconPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -30,10 +30,14 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding IconCollection}">
-                    <StackPanel Orientation="Horizontal">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <Image Source="{Binding Icon}" Width="16" Height="16"/>
-                        <TextBlock Text="{Binding Name}" />
-                    </StackPanel>
+                        <controls:EditableLable Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
+                    </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SmartGrid"
         xmlns:lib="clr-namespace:Lib;assembly=Lib"
         xmlns:controls="clr-namespace:SmartGrid.Controls"
+        xmlns:icons="clr-namespace:SmartGrid.HeaderIcons"
         mc:Ignorable="d"
         Title="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField.Header}" Height="800" Width="1200">
     <Grid Name="gridMain" PreviewMouseMove="GridMain_OnPreviewMouseMove">
@@ -59,6 +60,7 @@
                     </RibbonSplitButton.ItemTemplate>
                 </RibbonSplitButton>
             </StackPanel>
+            <icons:CtrlIconPanel/>
             <ToolBar>
                 <Button Name="btnIconEditor" Click="btnIconEditor_Click">Icons</Button>
             </ToolBar>
