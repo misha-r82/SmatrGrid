@@ -35,6 +35,6 @@
                 <Image Source="../img/delete.png" Margin="0"/>
             </Button>
         </StackPanel>
-        <local:CtrlIconEdition x:Name="ctrlMainIcon" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
+        <local:CtrlIconEdition x:Name="iconTree" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
     </Grid>
 </Window>

@@ -50,13 +50,8 @@ namespace SmartGrid.HeaderIcons
 
 
         private void BtnRemove_OnClick(object sender, RoutedEventArgs e)
-        {/*
-            var selected = lstMain.SelectedItems.OfType<HeaderIcon>().ToArray();
-            foreach (HeaderIcon icon in selected)
-            {
-                WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(icon);
-            }
-            WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(new HeaderIcon() { Name = "Новая иконка" });*/
+        {
+            WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(iconTree.SelectedIcon);
         }        
         public HeaderIcon SelectedItem { get; private set; }
         public HeaderIcon ParenItem { get; private set; }

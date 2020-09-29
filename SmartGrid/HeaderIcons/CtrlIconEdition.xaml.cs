@@ -26,12 +26,12 @@ namespace SmartGrid.HeaderIcons
             InitializeComponent();
         }
 
-        public IEnumerable<HeaderIcon> SelectedIcons
+        public HeaderIcon SelectedIcon
         {
             get
             {
-                foreach (var item in lstMain.SelectedItems.OfType<HeaderIcon>())
-                    yield return item;
+                return iconTree.SelectedItem as HeaderIcon;
+                
             }
         }
 
