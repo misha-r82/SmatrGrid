@@ -35,7 +35,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Icon}" Width="16" Height="16"/>
+                        <Image Source="{Binding Icon}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
                         <controls:EditableLable Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </HierarchicalDataTemplate>

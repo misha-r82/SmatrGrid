@@ -24,16 +24,17 @@ namespace SmartGrid.HeaderIcons
 
     public static class IconEditorCommands
     {
-        static RoutedUICommand _addCommand = new RoutedUICommand("Добавить изображение", "AddIcon",typeof(IconEditorCommands));
+        static RoutedUICommand _addCommand = new RoutedUICommand("Добавить значек", "AddIcon",typeof(IconEditorCommands));
+        static RoutedUICommand _addChieldCommand = new RoutedUICommand("Добавить вложенный значек", "AddIconChield", typeof(IconEditorCommands));
         public static RoutedUICommand AddIcon
         {
-            get => _deleteCommand;
+            get => _addCommand;
         }
-        static RoutedUICommand _deleteCommand = new RoutedUICommand("Удалить", "DeleteIcons", typeof(IconEditorCommands));
-        public static RoutedUICommand DeleteIcons
+        public static RoutedUICommand AddIconChield
         {
-            get => _deleteCommand;
+            get => _addChieldCommand;
         }
+
     }
     public partial class FrmIconEditor : Window
     {
@@ -54,7 +55,6 @@ namespace SmartGrid.HeaderIcons
             WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(iconTree.SelectedIcon);
         }        
         public HeaderIcon SelectedItem { get; private set; }
-        public HeaderIcon ParenItem { get; private set; }
 
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -62,7 +62,15 @@ namespace SmartGrid.HeaderIcons
         }
         private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (SelectedItem == null) return;
+            AddIcon(SelectedItem.Parent);
+        }
+        private void CommandAddChield_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            AddIcon(SelectedItem);
+        }
+        private void AddIcon(HeaderIcon parentIcon)
+        {
+            if (parentIcon == null) return;
             var fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = true;
             if (fileDialog.ShowDialog() != true) return;
@@ -71,23 +79,20 @@ namespace SmartGrid.HeaderIcons
                 if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
                 string name = Path.GetFileNameWithoutExtension(fileName);
                 var stream = new FileStream(fileName, FileMode.Open);
-                SelectedItem.IconCollection.Add(new HeaderIcon(stream) { Name = name });
+                var newIcon = parentIcon.CreateChield(name, stream);
+                parentIcon.IconCollection.Add(newIcon);
             }
         }
-
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (ParenItem == null || SelectedItem == null) return;
-            ParenItem.IconCollection.Remove(SelectedItem);
+            if (SelectedItem == null) return;
+            SelectedItem.Parent.IconCollection.Remove(SelectedItem);
         }
 
         private void ctrlMainIcon_GotFocus(object sender, RoutedEventArgs e)
         {
             var element = e.OriginalSource as FrameworkElement;
             SelectedItem = element.DataContext as HeaderIcon;
-            var parentCtrl = Lib.VisualTreeHelpers.FindAncestor<CtrlIconEdition>(element);
-            if (parentCtrl == null) return;
-            ParenItem = parentCtrl.DataContext as HeaderIcon;
         }
     }
 }

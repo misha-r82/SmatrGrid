@@ -20,6 +20,7 @@
         </Grid.Resources>
         <Grid.CommandBindings>
             <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}" Executed="CommandAdd_OnExecuted"/>
+            <CommandBinding Command="{x:Static local:IconEditorCommands.AddIconChield}" Executed="CommandAddChield_OnExecuted"/>
             <CommandBinding Command="{x:Static ApplicationCommands.Delete}" Executed="CommandDelete_OnExecuted"/>
         </Grid.CommandBindings>
         <Grid.RowDefinitions>
@@ -27,14 +28,17 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить иконку" Margin="5,0,0,0" Width="22" Height="22">
-                <Image Source="../img/plus.png" Margin="1"/>
+        <ToolBar>
+            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить значек" Margin="5,0,0,0" Width="22" Height="22">
+                <Image Source="../img/icon-photo.png" Margin="0"/>
+            </Button>
+            <Button Command="{x:Static local:IconEditorCommands.AddIconChield}" ToolTip="Добавить дочерний значек" Margin="5,0,0,0" Width="22" Height="22">
+                <Image Source="../img/icon-photo-plus.png" Margin="-1,0,-1,-2"/>
             </Button>
             <Button Command="Delete" ToolTip="Удалить выбранные элементы" Margin="5,0,0,0" Width="22" Height="22">
                 <Image Source="../img/delete.png" Margin="0"/>
             </Button>
-        </StackPanel>
+        </ToolBar>
         <local:CtrlIconEdition x:Name="iconTree" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
     </Grid>
 </Window>

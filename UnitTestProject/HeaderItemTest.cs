@@ -12,11 +12,11 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
-            var stream = new FileStream(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\file.png", FileMode.Open);
+            /*var stream = new FileStream(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\file.png", FileMode.Open);
             var item = new HeaderIcon(stream);
             FileIO.SerializeDataContract(item, @"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\file1.xml");
             var deserialized =
-                FileIO.DeserializeDataContract<HeaderIcon>(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\file1.xml");
+                FileIO.DeserializeDataContract<HeaderIcon>(@"C:\Users\misha\RiderProjects\SmartGrid\smartgrid\SmartGrid\img\file1.xml");*/
 
         }
     }

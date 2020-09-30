@@ -40,11 +40,11 @@ namespace SmartGrid
             Add(new SmartFiled("Раздел2"));
             Add(new SmartFiled("Раздел3"));
             ActiveField = this[0];
-            _coreHeaderIcon = new HeaderIcon();
+            _coreHeaderIcon = HeaderIcon.CreateBaseItem();
             _coreHeaderIcon.Name = "Icons";
-            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "1" });
-            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "2" });
-            _coreHeaderIcon.IconCollection.Add(new HeaderIcon() { Name = "3" });
+            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("1"));
+            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("2"));
+            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("3"));
         }
 
         public SmartFiled ActiveField
