@@ -110,6 +110,7 @@
     <Compile Include="HeaderIcons\CtrlIconEdition.xaml.cs">
       <DependentUpon>CtrlIconEdition.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HeaderIcons\IconRepo.cs" />
     <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />
     <Compile Include="Properties\Annotations2.cs" />

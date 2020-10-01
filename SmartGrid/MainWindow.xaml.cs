@@ -119,7 +119,8 @@ namespace SmartGrid
         private void btnIconEditor_Click(object sender, RoutedEventArgs e)
         {
             var f = new FrmIconEditor();
-            f.ShowDialog();
+            if (f.ShowDialog() != true) ;
+            //TODO: UndoEdition
         }
     }
 

@@ -16,8 +16,9 @@ namespace SmartGrid
     [DataContract]
     public class WorkSpace : HeaderableList<SmartFiled>
     {
+
         [DataMember] private SmartFiled _activeField;
-        [DataMember] private HeaderIcons.HeaderIcon _coreHeaderIcon;
+        [DataMember] private HeaderIcon _coreHeaderIcon;
         [DataMember] private static WorkSpace _instance;
         public UndoData Undo { get; private set; }
 
@@ -40,11 +41,7 @@ namespace SmartGrid
             Add(new SmartFiled("Раздел2"));
             Add(new SmartFiled("Раздел3"));
             ActiveField = this[0];
-            _coreHeaderIcon = HeaderIcon.CreateBaseItem();
-            _coreHeaderIcon.Name = "Icons";
-            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("1"));
-            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("2"));
-            _coreHeaderIcon.IconCollection.Add(_coreHeaderIcon.CreateChield("3"));
+            _coreHeaderIcon = IconRepo.CoreIcon;
         }
 
         public SmartFiled ActiveField

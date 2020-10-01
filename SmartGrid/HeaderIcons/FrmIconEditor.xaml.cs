@@ -94,5 +94,10 @@ namespace SmartGrid.HeaderIcons
             var element = e.OriginalSource as FrameworkElement;
             SelectedItem = element.DataContext as HeaderIcon;
         }
+
+        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            IconRepo.Save();
+        }
     }
 }

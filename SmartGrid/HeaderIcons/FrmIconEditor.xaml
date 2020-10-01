@@ -22,6 +22,7 @@
             <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}" Executed="CommandAdd_OnExecuted"/>
             <CommandBinding Command="{x:Static local:IconEditorCommands.AddIconChield}" Executed="CommandAddChield_OnExecuted"/>
             <CommandBinding Command="{x:Static ApplicationCommands.Delete}" Executed="CommandDelete_OnExecuted"/>
+            <CommandBinding Command="Save" Executed="CommandBinding_OnExecuted"></CommandBinding>
         </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -37,6 +38,9 @@
             </Button>
             <Button Command="Delete" ToolTip="Удалить выбранные элементы" Margin="5,0,0,0" Width="22" Height="22">
                 <Image Source="../img/delete.png" Margin="0"/>
+            </Button>
+            <Button Command="Save" ToolTip="Сохранить изменения" Margin="5,0,0,0" Width="22" Height="22">
+                <Image Source="../img/save.png" Margin="0" HorizontalAlignment="Right"/>
             </Button>
         </ToolBar>
         <local:CtrlIconEdition x:Name="iconTree" Grid.Row="1" GotFocus="ctrlMainIcon_GotFocus"/>
