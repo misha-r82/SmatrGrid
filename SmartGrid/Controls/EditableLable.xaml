@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="EditableLable_OnLoaded" DataContextChanged="EditableLable_OnDataContextChanged" BorderThickness="0">
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="EditableLable_OnDataContextChanged" BorderThickness="0">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Style.Triggers>

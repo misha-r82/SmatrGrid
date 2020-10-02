@@ -47,7 +47,6 @@ namespace SmartGrid.Controls
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
-        public bool CaptureFocus { get; set; }
         private bool _isEditing;
         public bool DoubleClick { get; set; } = true;
         public bool IsEditing
@@ -98,36 +97,7 @@ namespace SmartGrid.Controls
             return null;
         }
         private FrameworkElement _prewItem = null;
-        private void EditableLable_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (!CaptureFocus) return;
-            var item = sender as UIElement;
-            if (item == null) return;
-            var focusable = GetFirstFocusable(item);
-            if (focusable == null) return;
-            //Debug.WriteLine("Focusable: "+ focusable);
-            bool capture = false;
-            focusable.GotKeyboardFocus += (o, args) =>
-            {
-                if (args.OldFocus != null && !capture)
-                    
-                /*if (Equals(args.OldFocus, focusable))*/
-                {
-                    //IsEditing = true;
-                    capture = true;
-                    TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                    UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
 
-                    if (keyboardFocus != null)
-                    {
-                        //keyboardFocus.MoveFocus(tRequest);
-                    }
-                    //Debug.WriteLine(args.OldFocus + "->" + args.NewFocus);
-                }
-            };
-            focusable.LostKeyboardFocus += (o, args) => { capture = false; };
-
-        }
         private void TextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter) textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));

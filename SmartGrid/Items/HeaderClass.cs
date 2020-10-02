@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using SmartGrid.Annotations;
+using SmartGrid.HeaderIcons;
 using Test;
 
 namespace SmartGrid
@@ -15,6 +16,7 @@ namespace SmartGrid
     {
         [DataMember]private FontStyle style;
         [DataMember] private string _header;
+        [DataMember] private IconCollection _icons;
 
         public HeaderClass(string header = "")
         {
@@ -37,6 +39,9 @@ namespace SmartGrid
             get => style;
             set => style = value;
         }
+
+        public IconCollection Icons => _icons;
+
         public void CloneRefs()
         {
             Style = style.GetClone();

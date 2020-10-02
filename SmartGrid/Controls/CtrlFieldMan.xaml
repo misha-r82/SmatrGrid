@@ -30,9 +30,8 @@
                             <Grid.LayoutTransform>
                                 <RotateTransform Angle="-90"/>
                             </Grid.LayoutTransform>
-                            <controls:EditableLable x:Name="ctrlHeader" Text="{Binding Header.Header, Mode=TwoWay}" MinWidth="80" 
-                                                    PreviewMouseDown="TxtHeader_OnPreviewMouseDown"
-                                                    GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus"/>
+                            <controls:HeaderCtrl  x:Name="ctrlHeader" MinWidth="80" PreviewMouseDown="TxtHeader_OnPreviewMouseDown"
+                                                  GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

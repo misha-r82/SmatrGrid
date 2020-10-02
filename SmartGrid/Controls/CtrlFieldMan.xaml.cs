@@ -41,7 +41,6 @@ namespace SmartGrid
             newItem.IsEditMode = true;
             newItem.Header.Header = "Раздел";
             space.Add(newItem);
-            SetIsEditing(newItem, true);
         }
 
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -67,16 +66,6 @@ namespace SmartGrid
             e.Handled = false;
         }
 
-        private void SetIsEditing(SmartFiled item, bool value)
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                var newListItem = lstMain.ItemContainerGenerator.ContainerFromItem(item) as Control;
-                if (newListItem == null) return;
-                var ctrl = Lib.VisualTreeHelpers.FindChild<EditableLable>(newListItem, "ctrlHeader");
-                ctrl.IsEditing = value;
-            }), DispatcherPriority.Input);
-        }
 
         private void ItmColor_OnClick(object sender, RoutedEventArgs e)
         {

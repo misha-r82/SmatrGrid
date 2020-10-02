@@ -36,7 +36,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ctrl:EditableLable Text="{Binding Header.Header}" PreviewMouseDown="CanvTag_PreviewMouseDown"/>
+                        <ctrl:HeaderCtrl  PreviewMouseDown="CanvTag_PreviewMouseDown"/>
                         <Border Name="canvTag" Grid.Column="1" Style="{StaticResource LvItemDragBorderStyle}" 
                                 MouseDown="CanvTag_PreviewMouseDown"/>
                     </Grid>

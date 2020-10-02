@@ -10,18 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmartGrid.HeaderIcons
+namespace SmartGrid.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для FrmIconEditor.xaml
+    /// Логика взаимодействия для HeaderCtrl.xaml
     /// </summary>
-    public partial class FrmIconEditor : Window
+    public partial class HeaderCtrl : UserControl
     {
-        public FrmIconEditor()
+        public HeaderCtrl()
         {
             InitializeComponent();
+        }
+
+        public bool IsEditing
+        {
+            get { return txtHeader.IsEditing; }
         }
     }
 }
