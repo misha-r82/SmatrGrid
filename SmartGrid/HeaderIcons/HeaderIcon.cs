@@ -32,7 +32,7 @@ namespace SmartGrid.HeaderIcons
         public string Name { get; set; }
         public BitmapImage Icon { get; private set; }
         [DataMember]
-        public ObservableCollection<HeaderIcon> IconCollection { get; }
+        public ObservableCollection<HeaderIcon> IconCollection { get; private set; }
         [DataMember] public HeaderIcon Parent { get; private set; }
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
@@ -57,13 +57,21 @@ namespace SmartGrid.HeaderIcons
             {
                 binData = br.ReadBytes((int) stream.Length);
             }
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = new MemoryStream(binData);
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            Icon = bitmap;
-            OnPropertyChanged(nameof(Icon));
+
+            try
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = new MemoryStream(binData);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                Icon = bitmap;
+                OnPropertyChanged(nameof(Icon));
+            }
+            catch (Exception e)
+            {
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
