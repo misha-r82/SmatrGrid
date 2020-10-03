@@ -9,7 +9,7 @@
         xmlns:icons="clr-namespace:SmartGrid.HeaderIcons"
         mc:Ignorable="d"
         Title="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField.Header}" Height="800" Width="1200">
-    <Grid Name="gridMain" PreviewMouseMove="GridMain_OnPreviewMouseMove">
+    <Grid Name="gridMain" PreviewMouseMove="GridMain_OnPreviewMouseMove" GotFocus="GridMain_OnGotFocus" >
         <Grid.Resources>
             <ResourceDictionary>
                 <lib:TestConverter x:Key="TestConverter"/>

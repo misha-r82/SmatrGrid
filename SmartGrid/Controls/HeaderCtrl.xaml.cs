@@ -29,5 +29,6 @@ namespace SmartGrid.Controls
         {
             get { return txtHeader.IsEditing; }
         }
+
     }
 }

@@ -114,13 +114,19 @@ namespace SmartGrid
             DragHelper.SetClick(dragElement, e);
         }
 
-
-
         private void btnIconEditor_Click(object sender, RoutedEventArgs e)
         {
             var f = new FrmIconEditor();
             if (f.ShowDialog() != true) ;
             //TODO: UndoEdition
+        }
+
+        private void GridMain_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            var element = e.OriginalSource as FrameworkElement;
+            var hasHeader = element.DataContext as IHasHeader;
+            if (hasHeader == null) return;
+            WorkSpace.Instance.CurElement = hasHeader;
         }
     }
 

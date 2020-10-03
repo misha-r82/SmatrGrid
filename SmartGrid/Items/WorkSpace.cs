@@ -21,7 +21,7 @@ namespace SmartGrid
         [DataMember] private HeaderIcon _coreHeaderIcon;
         [DataMember] private static WorkSpace _instance;
         public UndoData Undo { get; private set; }
-
+        public IHasHeader CurElement { get; set; }
         public static WorkSpace Instance
         {
             get { return _instance; }

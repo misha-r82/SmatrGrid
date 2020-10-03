@@ -22,6 +22,7 @@ namespace SmartGrid
         {
             _header = header;
             Style = new FontStyle();
+            _icons = new IconCollection();
         }
 
         public string Header
