@@ -80,6 +80,7 @@
     <Compile Include="Controls\HeaderCtrl.xaml.cs">
       <DependentUpon>HeaderCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IHasSelectedHeaderItems.cs" />
     <Compile Include="Controls\NodeCotrol.xaml.cs">
       <DependentUpon>NodeCotrol.xaml</DependentUpon>
     </Compile>
@@ -115,6 +116,7 @@
     </Compile>
     <Compile Include="HeaderIcons\IconCollection.cs" />
     <Compile Include="HeaderIcons\IconRepo.cs" />
+    <Compile Include="Items\CurElement.cs" />
     <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />
     <Compile Include="Properties\Annotations2.cs" />

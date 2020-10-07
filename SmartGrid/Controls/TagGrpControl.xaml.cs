@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartGrid.Controls;
 using SmartGrid.Drag;
 using static SmartGrid.DragProcessor;
 
@@ -21,13 +22,14 @@ namespace SmartGrid
     /// <summary>
     /// Interaction logic for TagControl.xaml
     /// </summary>
-    public partial class TagGrpControl : UserControl
+    public partial class TagGrpControl : UserControl, IHasSelectedHeaderItems
     {
         public TagGrpControl()
         {
             InitializeComponent();
         }
         private TagGroup TagGrp { get { return DataContext as TagGroup;} }
+        public IEnumerable<IHasHeader> SelectedItems => SelectedTags;
         private Tag[] SelectedTags
         {
             get { return lstMain.SelectedItems.OfType<Tag>().ToArray(); }
@@ -73,5 +75,7 @@ namespace SmartGrid
             var value = !tags.First().Header.Style.Underline;
             foreach (Tag tw in tags) tw.Header.Style.Underline = value;
         }
+
+
     }
 }

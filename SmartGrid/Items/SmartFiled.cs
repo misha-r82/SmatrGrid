@@ -71,6 +71,7 @@ namespace SmartGrid
         public void Add(IEnumerable<IHasHeader> items, IHasHeader insertBefore = null)
         {
             var pos = Cells.IndexOf(insertBefore as Tag);
+            if (pos < 0) return;
             Cells[pos] = (Tag)items.First();
         }
 

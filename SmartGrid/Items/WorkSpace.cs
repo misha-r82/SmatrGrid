@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using SmartGrid.Annotations;
@@ -21,7 +22,7 @@ namespace SmartGrid
         [DataMember] private HeaderIcon _coreHeaderIcon;
         [DataMember] private static WorkSpace _instance;
         public UndoData Undo { get; private set; }
-        public IHasHeader CurElement { get; set; }
+        public CurElement Curent { get; private set; }
         public static WorkSpace Instance
         {
             get { return _instance; }
@@ -37,6 +38,7 @@ namespace SmartGrid
         public WorkSpace()
         {
             Undo = new UndoData();
+            Curent = new CurElement();
             Add(new SmartFiled("Раздел1"));
             Add(new SmartFiled("Раздел2"));
             Add(new SmartFiled("Раздел3"));

@@ -27,7 +27,7 @@ namespace SmartGrid
     /// <summary>
     /// Interaction logic for TagControl.xaml
     /// </summary>
-    public partial class TagControl : UserControl, INotifyPropertyChanged
+    public partial class TagControl : UserControl, INotifyPropertyChanged, IHasSelectedHeaderItems
     {
         public TagControl()
         {
@@ -42,13 +42,14 @@ namespace SmartGrid
 
         }
         public Node NewNode { get; private set; }
-        private Node _droppedNode;
+        
         private HeaderUndoScope<Tag> _headerUndoScope;
-        private Node[] SelectedNodes
-        {
-            get { return lstMain.SelectedItems.OfType<Node>().ToArray(); }
-        }
+        private Node[] SelectedNodes => lstMain.SelectedItems.OfType<Node>().ToArray();
+
+        public IEnumerable<IHasHeader> SelectedItems => SelectedNodes;
         private Tag CurTag { get; set; }
+
+
         private void AddNew()
         {
             var tmp = txtNewNode.DataContext;
@@ -199,5 +200,7 @@ namespace SmartGrid
         {
             WorkSpace.Instance.Undo.AddScope(_headerUndoScope);
         }
+
+
     }
 }

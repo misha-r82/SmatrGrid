@@ -123,10 +123,7 @@ namespace SmartGrid
 
         private void GridMain_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            var element = e.OriginalSource as FrameworkElement;
-            var hasHeader = element.DataContext as IHasHeader;
-            if (hasHeader == null) return;
-            WorkSpace.Instance.CurElement = hasHeader;
+            WorkSpace.Instance.Curent.GotFocuse(e);
         }
     }
 
