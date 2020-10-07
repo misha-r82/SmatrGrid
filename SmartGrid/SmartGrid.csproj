@@ -80,7 +80,6 @@
     <Compile Include="Controls\HeaderCtrl.xaml.cs">
       <DependentUpon>HeaderCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IHasSelectedHeaderItems.cs" />
     <Compile Include="Controls\NodeCotrol.xaml.cs">
       <DependentUpon>NodeCotrol.xaml</DependentUpon>
     </Compile>

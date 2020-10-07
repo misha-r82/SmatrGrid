@@ -46,6 +46,8 @@ namespace SmartGrid
         public void CloneRefs()
         {
             Style = style.GetClone();
+            _icons = new IconCollection(_icons);
+            
         }
         public object Clone()
         {

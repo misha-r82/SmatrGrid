@@ -54,7 +54,7 @@
                     <Image Source="../img/plus.png" Margin="3"/>
                 </Button>
             </Grid>
-            <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" BorderThickness="0">
+            <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" BorderThickness="0" SelectionChanged="LstMain_OnSelectionChanged">
                 <ListView.CommandBindings>
                     <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
                     <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>

@@ -22,14 +22,13 @@ namespace SmartGrid
     /// <summary>
     /// Interaction logic for TagControl.xaml
     /// </summary>
-    public partial class TagGrpControl : UserControl, IHasSelectedHeaderItems
+    public partial class TagGrpControl : UserControl
     {
         public TagGrpControl()
         {
             InitializeComponent();
         }
         private TagGroup TagGrp { get { return DataContext as TagGroup;} }
-        public IEnumerable<IHasHeader> SelectedItems => SelectedTags;
         private Tag[] SelectedTags
         {
             get { return lstMain.SelectedItems.OfType<Tag>().ToArray(); }
@@ -77,5 +76,9 @@ namespace SmartGrid
         }
 
 
+        private void LstMain_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WorkSpace.Instance.Curent.SetSelectedElements(lstMain.SelectedItems);
+        }
     }
 }

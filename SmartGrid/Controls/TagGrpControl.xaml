@@ -28,7 +28,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView Name="lstMain" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" Grid.Row="0" Margin="0,11,0,0">
+        <ListView Name="lstMain" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" Grid.Row="0" Margin="0,11,0,0" SelectionChanged="LstMain_OnSelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,-1,0,0">

@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions> 
         <ListView Name="lstMain" Grid.Row="0" ItemsSource="{Binding }" HorizontalContentAlignment="Stretch"
-                  SelectedItem="{Binding ActiveField, Mode=TwoWay}">
+                  SelectedItem="{Binding ActiveField, Mode=TwoWay}" SelectionChanged="LstMain_OnSelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="Gray" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

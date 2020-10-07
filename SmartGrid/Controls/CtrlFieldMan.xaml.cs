@@ -25,7 +25,7 @@ namespace SmartGrid
     /// <summary>
     /// Interaction logic for CtrlFieldMan.xaml
     /// </summary>
-    public partial class CtrlFieldMan : UserControl, IHasSelectedHeaderItems
+    public partial class CtrlFieldMan : UserControl
     {
         public CtrlFieldMan()
         {
@@ -33,7 +33,6 @@ namespace SmartGrid
         }
         private SmartFiled _field;
         private HeaderUndoScope<SmartFiled> _headerScope;
-        public IEnumerable<IHasHeader> SelectedItems => lstMain.Items.OfType<SmartFiled>().ToArray();
         private void BtnAddField_OnClick(object sender, RoutedEventArgs e)
         {
             var space = ((FrameworkElement) sender).DataContext as WorkSpace;
@@ -85,5 +84,9 @@ namespace SmartGrid
         }
 
 
+        private void LstMain_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WorkSpace.Instance.Curent.SetSelectedElements(lstMain.SelectedItems);
+        }
     }
 }

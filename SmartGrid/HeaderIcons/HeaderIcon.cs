@@ -37,6 +37,7 @@ namespace SmartGrid.HeaderIcons
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
+            if (binData == null) return;
             var stream = new MemoryStream(binData);
             FromStream(stream);
         }

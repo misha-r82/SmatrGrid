@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -6,6 +7,12 @@ namespace SmartGrid.HeaderIcons
 {
     public class IconCollection : ObservableCollection<HeaderIcon>
     {
+        public IconCollection(IEnumerable<HeaderIcon> source = null)
+        {
+            if (source!=null)
+                foreach (var item in source)
+                    Add(item);
+        }
         private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
         {
             return icon.IconCollection.Contains(icon1) || icon1.IconCollection.Contains(icon);
