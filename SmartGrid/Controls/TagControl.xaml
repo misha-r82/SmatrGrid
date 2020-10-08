@@ -7,7 +7,7 @@
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              xmlns:ctrls="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Focusable="True" GotFocus="OnGotFocus" LostFocus="OnLostFocus" AllowDrop="True" Drop="On_Drop">
+             d:DesignHeight="300" d:DesignWidth="300" Focusable="True" AllowDrop="True" Drop="On_Drop">
     <Border BorderBrush="#757575" BorderThickness="0">
         <Grid Name="gridMain"  >
             <Grid.Resources>
@@ -23,9 +23,6 @@
             </Grid.Resources>
             <Grid.CommandBindings>
                 <CommandBinding Command="Delete" Executed="CommDell_Exec"/>
-                <CommandBinding Command="ToggleBold" Executed="CommandBoldTag_OnExecuted"/>
-                <CommandBinding Command="ToggleItalic" Executed="CommandItalicTag_OnExecuted"/>
-                <CommandBinding Command="ToggleUnderline" Executed="CommandBindingUndelineTag_OnExecuted"/>
                 <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
                 <CommandBinding Command="Cut" Executed="CommandCut_OnExecuted"/>
                 <CommandBinding Command="Paste" Executed="CommandPaste_OnExecuted"/>
@@ -55,11 +52,7 @@
                 </Button>
             </Grid>
             <ListView Name="lstMain" Grid.Row="2" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" BorderThickness="0" SelectionChanged="LstMain_OnSelectionChanged">
-                <ListView.CommandBindings>
-                    <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
-                    <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>
-                    <CommandBinding Command="ToggleUnderline" Executed="CommandUnderline_OnExecuted"/>
-                </ListView.CommandBindings>
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ctrls:NodeCotrol PreviewMouseDown="Node_OnPreviewMouseDown"/>
@@ -83,11 +76,7 @@
                 <Button Name="btnPaste" ToolTip="Вставить" Command="Paste" Style="{StaticResource SmallBtnStyle}">
                     <Image Source="../img/paste.png"/>
                 </Button>
-                <ctrls:CtrlFontCommands/>
-                <!--<StackPanel Orientation="Horizontal" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
-
-                </StackPanel>-->
-                <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}">
+                <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
                         <Image Source="../img/link.png" Margin="1"/>
                 </Button>
                 <Button Command="Delete" ToolTip="Удалить выбранные элементы" Style="{StaticResource SmallBtnStyle}">

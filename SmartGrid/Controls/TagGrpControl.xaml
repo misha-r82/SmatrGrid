@@ -18,12 +18,6 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <Grid.CommandBindings>
-            <CommandBinding Command="Delete" Executed="CommandBinding_OnExecuted"/>
-            <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
-            <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>
-            <CommandBinding Command="ToggleUnderline" Executed="CommandUnderline_OnExecuted"/>
-        </Grid.CommandBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

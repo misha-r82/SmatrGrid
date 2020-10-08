@@ -51,31 +51,6 @@ namespace SmartGrid
                 TagGrp.Remove(tag);
         }
 
-        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
-            if(!tags.Any()) return;
-            var value = !tags.First().Header.Style.Bold;
-            foreach (Tag tw in tags) tw.Header.Style.Bold = value;
-        }
-
-        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
-            if (!tags.Any()) return;
-            var value = !tags.First().Header.Style.Italic;
-            foreach (Tag tw in tags) tw.Header.Style.Italic = value;
-        }
-
-        private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var tags = lstMain.SelectedItems.OfType<Tag>().ToArray();
-            if (!tags.Any()) return;
-            var value = !tags.First().Header.Style.Underline;
-            foreach (Tag tw in tags) tw.Header.Style.Underline = value;
-        }
-
-
         private void LstMain_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             WorkSpace.Instance.Curent.SetSelectedElements(lstMain.SelectedItems);

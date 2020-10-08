@@ -24,5 +24,24 @@ namespace SmartGrid.Controls
         {
             InitializeComponent();
         }
+
+        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Bold = !element.Header.Style.Bold;
+
+        }
+
+        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Italic = !element.Header.Style.Italic;
+        }
+
+        private void CommandUndeline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Underline = !element.Header.Style.Underline;
+        }
     }
 }

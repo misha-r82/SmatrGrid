@@ -60,6 +60,7 @@
                     </RibbonSplitButton.ItemTemplate>
                 </RibbonSplitButton>
             </StackPanel>
+            <controls:CtrlFontCommands/>
             <icons:CtrlIconPanel/>
             <ToolBar>
                 <Button Name="btnIconEditor" Click="btnIconEditor_Click">Icons</Button>

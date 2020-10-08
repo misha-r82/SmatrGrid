@@ -93,14 +93,10 @@ namespace SmartGrid
                 e.Handled = false;
             }
         }
-
-
         private void CommDell_Exec(object sender, ExecutedRoutedEventArgs e)
         {
             CurTag.Remove(SelectedNodes);
         }
-
-
         private void BtnLink_OnClick(object sender, RoutedEventArgs e)
         {
             Editor.NodeEditor.HyperlinkCmd();
@@ -140,55 +136,6 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
-            if (!nodes.Any()) return;
-            var value = !nodes.First().Header.Style.Bold;
-            foreach (Node node in nodes) node.Header.Style.Bold = value;
-        }
-
-        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
-            if (!nodes.Any()) return;
-            var value = !nodes.First().Header.Style.Italic;
-            foreach (Node node in nodes) node.Header.Style.Italic = value;
-        }
-
-        private void CommandUnderline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var nodes = lstMain.SelectedItems.OfType<Node>().ToArray();
-            if (!nodes.Any()) return;
-            var value = !nodes.First().Header.Style.Underline;
-            foreach (Node node in nodes) node.Header.Style.Underline = value;
-        }
-
-        private void CommandBoldTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            CurTag.Header.Style.Bold = !CurTag.Header.Style.Bold;
-        }
-
-        private void CommandItalicTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            CurTag.Header.Style.Italic = !CurTag.Header.Style.Italic;
-        }
-
-        private void CommandBindingUndelineTag_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            CurTag.Header.Style.Underline = !CurTag.Header.Style.Underline;
-        }
-
-        private void OnGotFocus(object sender, RoutedEventArgs e)
-        {
-           // Debug.WriteLine($"GotFocus{CurTag.Header.Header}");
-        }
-
-        private void OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            //Debug.WriteLine($"LostFocus{CurTag.Header.Header}");
-        }
-
 
         private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
         {

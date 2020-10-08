@@ -36,6 +36,8 @@ namespace SmartGrid.Items
             var element = e.OriginalSource as FrameworkElement;
             var hasHeader = element.DataContext as IHasHeader;
             if (hasHeader == null) return;
+            if (hasHeader is Tag && !(e.Source is TagGrpControl))
+                SelectedElements = new[] {hasHeader};
             Element = hasHeader;
         }
     }
