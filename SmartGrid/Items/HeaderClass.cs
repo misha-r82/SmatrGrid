@@ -7,6 +7,10 @@ using Test;
 
 namespace SmartGrid
 {
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Node))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Tag))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TagGroup))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SmartFiled))]
     public interface IHasHeader
     {
         HeaderClass Header { get; }

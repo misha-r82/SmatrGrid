@@ -15,7 +15,6 @@
                     <lib:TestConverter x:Key="TestConverter"/>
                     <lib:BoolVisConverter x:Key="BoolVisConverter"/>
                     <ctrls:EditableLable x:Key="EditableLabel"/>
-                    <ctrls:CtrlFontCommands x:Key="CtrlFontCommands"/>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
                     </ResourceDictionary.MergedDictionaries>
@@ -23,10 +22,6 @@
             </Grid.Resources>
             <Grid.CommandBindings>
                 <CommandBinding Command="Delete" Executed="CommDell_Exec"/>
-                <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
-                <CommandBinding Command="Cut" Executed="CommandCut_OnExecuted"/>
-                <CommandBinding Command="Paste" Executed="CommandPaste_OnExecuted"/>
-
             </Grid.CommandBindings>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -67,15 +62,6 @@
             <ToolBar Name="panelTools"  Grid.ColumnSpan="2" Grid.Row="3" Margin="0.5" HorizontalAlignment="Right"
                      Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
                     Converter={StaticResource BoolVisConverter}}" Focusable="False">
-                <Button Name="btnCut" ToolTip="Вырезать" Command="Cut" Style="{StaticResource SmallBtnStyle}">
-                    <Image Source="../img/cut.png"/>
-                </Button>
-                <Button Name="btnCopy" ToolTip="Копировать" Command="Copy" Style="{StaticResource SmallBtnStyle}">
-                    <Image Source="../img/copy.png"/>
-                </Button>
-                <Button Name="btnPaste" ToolTip="Вставить" Command="Paste" Style="{StaticResource SmallBtnStyle}">
-                    <Image Source="../img/paste.png"/>
-                </Button>
                 <Button Name="btnLink" ToolTip="Ссылка" Click="BtnLink_OnClick" Style="{StaticResource SmallBtnStyle}" Visibility="{Binding IsNodeEditionMode, Converter={StaticResource BoolVisConverter}}">
                         <Image Source="../img/link.png" Margin="1"/>
                 </Button>

@@ -61,6 +61,7 @@
                 </RibbonSplitButton>
             </StackPanel>
             <controls:CtrlFontCommands/>
+            <controls:CtrlCopyPaste/>
             <icons:CtrlIconPanel/>
             <ToolBar>
                 <Button Name="btnIconEditor" Click="btnIconEditor_Click">Icons</Button>

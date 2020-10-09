@@ -2,8 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SmartGrid"
+             xmlns:lib="clr-namespace:Lib;assembly=Lib"
+             xmlns:controls="clr-namespace:SmartGrid.Controls"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <lib:TestConverter x:Key="TestConverter"/>
+            <lib:BoolVisConverter x:Key="BoolVisConverter"/>
+            <controls:EditableLable x:Key="EditableLabel"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/StylesDic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

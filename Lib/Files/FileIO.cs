@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Xml;
+using Newtonsoft.Json;
+
 namespace Lib
 {
 
@@ -57,7 +59,7 @@ namespace Lib
                 result.AddRange(str.Split(separator, StringSplitOptions.RemoveEmptyEntries));
             return result.ToArray();
         }
-        public static void serializeBin<T>(T obj, string path)
+        public static void SerializeBin<T>(T obj, string path)
         {
             Stream stream = File.Create(path);
             BinaryFormatter bf = new BinaryFormatter();
@@ -80,7 +82,7 @@ namespace Lib
             fs.Close();
             return default(T);
         }
-        public static Exception SerializeXML<T>(T obj, string path)
+        public static Exception SerializeXml<T>(T obj, string path)
         {
             try
             {
@@ -101,6 +103,7 @@ namespace Lib
             StreamReader sr = null;
             try
             {
+                DeserializeEx = null;
                 sr = new StreamReader(path);
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 rez = (T)serializer.Deserialize(sr);
@@ -128,7 +131,7 @@ namespace Lib
             {
                 fs = new FileStream(path, FileMode.Open);
                 reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-                var serializer = new DataContractSerializer(typeof(T), new DataContractSerializerSettings() {});
+                var serializer = new DataContractSerializer(typeof(T));
                 rez = (T)serializer.ReadObject(reader);
             }
             catch (Exception ex)
@@ -142,6 +145,72 @@ namespace Lib
                 if (fs != null) fs.Close();
             }
             return rez;
+        }
+        public static string SerializeJson(object obj)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                var res = JsonConvert.SerializeObject(obj);
+                return res;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+        public static T DeserializeJsonFromString<T>(string jsonStr) where T : class
+        {
+            DeserializeEx = null;
+            T rez;
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                var res = JsonConvert.DeserializeObject<T>(jsonStr);
+                return res;
+            }
+            catch (Exception e)
+            {
+                DeserializeEx = e;
+            }
+            return default(T);
+        }
+        public static Exception SerializeJson<T>(T obj, string path)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(path))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, obj);
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+        }
+        public static T DeserializeJson<T>(string path)
+        {
+            DeserializeEx = null;
+            T rez;
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                using (var sr = new StreamReader(path))
+                using (JsonReader jr = new JsonTextReader(sr))
+                {
+                    rez = serializer.Deserialize<T>(jr);
+                    return rez;
+                }
+            }
+            catch (Exception e)
+            {
+                DeserializeEx = e;
+            }
+            return default(T);
         }
         public static Exception SerializeDataContract<T>(T obj, string path)
         {
@@ -158,22 +227,21 @@ namespace Lib
             XmlDictionaryWriter writer = XmlDictionaryWriter.CreateTextWriter(fs);
             try
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(T), 
-                    new DataContractSerializerSettings() {PreserveObjectReferences = true});
+                DataContractSerializer serializer = new DataContractSerializer(typeof(T));
                 serializer.WriteObject(writer, obj);
             }
             catch (Exception ex) { return ex; }
             finally { writer.Close(); }
             return null;
         }
-        public static string serializeXML<T>(T obj)
+        public static string SerializeDataContract<T>(T obj)
         {
             MemoryStream ms = new MemoryStream();
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             serializer.WriteObject(ms, obj);
             return FEncoding.GetString(ms.ToArray());
         }
-        public static T deserializeXMLFromString<T>(string str)
+        public static T DeserializeXMLFromString<T>(string str)
         {
             T rez;
             byte[] bytes = FEncoding.GetBytes(str.ToCharArray());

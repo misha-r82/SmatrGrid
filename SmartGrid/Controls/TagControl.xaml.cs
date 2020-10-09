@@ -47,8 +47,6 @@ namespace SmartGrid
         private Node[] SelectedNodes => lstMain.SelectedItems.OfType<Node>().ToArray();
 
         private Tag CurTag { get; set; }
-
-
         private void AddNew()
         {
             CurTag.Add(NewNode.GetClone());
@@ -69,7 +67,6 @@ namespace SmartGrid
                     AddNew();                               
             }
         }
-
         private void On_Drop(object sender, DragEventArgs e)
         {
             var data = e.Data.GetData(typeof(DragProcessor.DragElement)) as DragProcessor.DragElement;
@@ -101,34 +98,6 @@ namespace SmartGrid
         {
             Editor.NodeEditor.HyperlinkCmd();
         }
-
-        private void CopyNodesToClipboard(IEnumerable<Node> nodes)
-        {
-            Editor.NodeEditor.SaveToNodeVal();
-            var serialized = FileIO.serializeXML(nodes);
-            Clipboard.SetData(DragProcessor.DargContentType.Nodes.ToString(), serialized);
-        }
-        private void CommandCopy_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            CopyNodesToClipboard(SelectedNodes);
-        }
-
-        private void CommandCut_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var selected = SelectedNodes.ToArray();
-            CurTag.Remove(selected);
-            CopyNodesToClipboard(selected);
-        }
-
-        private void CommandPaste_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (Clipboard.ContainsData(DragProcessor.DargContentType.Nodes.ToString()))
-            {
-                var serialized = Clipboard.GetData(DragProcessor.DargContentType.Nodes.ToString()).ToString();
-                var nodes = FileIO.deserializeXMLFromString<IEnumerable<Node>>(serialized);
-                if (nodes != null) CurTag.Add(nodes);
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -136,18 +105,14 @@ namespace SmartGrid
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         private void CtrlHeader_OnGotFocus(object sender, RoutedEventArgs e)
         {
             _headerUndoScope = new HeaderUndoScope<Tag>(CurTag, "Изменение заголовка набора {0}");
         }
-
         private void CtrlHeader_OnLostFocus(object sender, RoutedEventArgs e)
         {
             WorkSpace.Instance.Undo.AddScope(_headerUndoScope);
         }
-
-
         private void LstMain_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             WorkSpace.Instance.Curent.SetSelectedElements(lstMain.SelectedItems);
