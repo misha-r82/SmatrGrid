@@ -49,11 +49,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DragElementCreateTest.cs" />
     <Compile Include="HeaderItemTest.cs" />
+    <Compile Include="SerializationTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

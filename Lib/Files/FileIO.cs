@@ -5,10 +5,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Text;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Lib
 {
@@ -148,16 +150,35 @@ namespace Lib
         }
         public static string SerializeJson(object obj)
         {
-            JsonSerializer serializer = new JsonSerializer();
             try
             {
-                var res = JsonConvert.SerializeObject(obj);
+                ITraceWriter traceWriter = new NLogTraceWriter();
+                var sett = new JsonSerializerSettings();
+                sett.TypeNameHandling = TypeNameHandling.All;
+                sett.TraceWriter = traceWriter;
+                var res = JsonConvert.SerializeObject(obj, sett);
+                Debug.WriteLine(traceWriter);
                 return res;
             }
             catch (Exception e)
             {
                 return "";
             }
+        }
+        public class NLogTraceWriter : ITraceWriter
+        {
+
+            public TraceLevel LevelFilter
+            {
+                // trace all messages. nlog can handle filtering
+                get { return TraceLevel.Verbose; }
+            }
+
+            public void Trace(TraceLevel level, string message, Exception ex)
+            {
+                Debug.WriteLine(message);
+            }
+
         }
         public static T DeserializeJsonFromString<T>(string jsonStr) where T : class
         {

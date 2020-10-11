@@ -7,6 +7,7 @@ namespace SmartGrid.HeaderIcons
 {
     public class IconCollection : ObservableCollection<HeaderIcon>
     {
+        private IconCollection() { }
         public IconCollection(IEnumerable<HeaderIcon> source = null)
         {
             if (source!=null)

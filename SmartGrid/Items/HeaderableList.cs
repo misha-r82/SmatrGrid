@@ -9,12 +9,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SmartGrid.Annotations;
 using static SmartGrid.DragProcessor;
 
 namespace SmartGrid.Items
 {
     [DataContract]
+    [JsonObject]
     public class HeaderableList<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged, DragProcessor.IContainer, IResetCollection<T> where T: class, IDragElement
     {
         [DataMember] private List<T> _list;
