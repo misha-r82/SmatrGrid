@@ -7,9 +7,10 @@
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              xmlns:ctrls="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Focusable="True" AllowDrop="True" Drop="On_Drop">
-    <Border BorderBrush="#757575" BorderThickness="0">
-        <Grid Name="gridMain"  >
+             d:DesignHeight="300" d:DesignWidth="300"  AllowDrop="True" Drop="On_Drop"
+             GotFocus="TagControl_OnGotFocus" Focusable="True" >
+    <Border BorderBrush="#757575" BorderThickness="0" >
+        <Grid Name="gridMain"  MouseDown="GridMain_OnMouseDown">
             <Grid.Resources>
                 <ResourceDictionary>
                     <lib:TestConverter x:Key="TestConverter"/>

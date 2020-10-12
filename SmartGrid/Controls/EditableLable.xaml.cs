@@ -107,5 +107,10 @@ namespace SmartGrid.Controls
         {
             
         }
+
+        private void EditableLable_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            label.Focus();
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace SmartGrid.Controls
         private void CommandCut_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CopyNodesToClipboard(WorkSpace.Instance.Curent.SelectedElements);
-            var contayiner = WorkSpace.Instance.Curent.Element as DragProcessor.IContainer;
+            var contayiner = WorkSpace.Instance.Curent.Contayner as DragProcessor.IContainer;
             contayiner?.Remove(WorkSpace.Instance.Curent.SelectedElements);
         }
 
@@ -76,7 +76,7 @@ namespace SmartGrid.Controls
                 var serialized = Clipboard.GetData(DragProcessor.DargContentType.Field.ToString()).ToString();
                 elements = FileIO.DeserializeXMLFromString<SmartFiled[]>(serialized).Cast<IHasHeader>().ToArray();
             }
-            var contayiner = WorkSpace.Instance.Curent.Element as DragProcessor.IContainer;
+            var contayiner = WorkSpace.Instance.Curent.Contayner as DragProcessor.IContainer;
             contayiner?.Add(elements);
         }
     }

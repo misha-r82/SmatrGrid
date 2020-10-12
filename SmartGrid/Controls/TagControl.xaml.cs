@@ -117,5 +117,16 @@ namespace SmartGrid
         {
             WorkSpace.Instance.Curent.SetSelectedElements(lstMain.SelectedItems);
         }
+
+        private void GridMain_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsFocused) Focus();
+
+        }
+
+        private void TagControl_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (IsFocused) ctrlHeader.Focus();
+        }
     }
 }
