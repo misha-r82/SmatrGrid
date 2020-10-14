@@ -103,14 +103,9 @@ namespace SmartGrid.Controls
             if(e.Key == Key.Enter) textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
         }
 
-        private void EditableLable_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
-        }
-
         private void EditableLable_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            label.Focus();
+            Keyboard.Focus(label);
         }
     }
 }

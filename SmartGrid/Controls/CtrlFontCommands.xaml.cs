@@ -27,6 +27,8 @@ namespace SmartGrid.Controls
 
         private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            e.Handled = false;
+            return;
             foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
                 element.Header.Style.Bold = !element.Header.Style.Bold;
 

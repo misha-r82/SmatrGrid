@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             <Grid>
                 <ctrls:EditableLable x:Name="ctrlHeader" Text="{Binding Header.Header, Mode=TwoWay}" Margin="1"
-                                     GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus"/>
+                                     GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus" Focusable="True"/>
             </Grid>
         <Grid Name="gridNewNode" Grid.Row="1" Margin="2"   Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
                     Converter={StaticResource BoolVisConverter}}">

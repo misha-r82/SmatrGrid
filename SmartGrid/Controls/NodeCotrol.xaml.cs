@@ -85,12 +85,14 @@ namespace SmartGrid.Controls
         {
             var node = DataContext as Node;
             _headerScope = new HeaderUndoScope<Node>(node, "Изменение заголовка записи {0}");
+            //Keyboard.Focus(ctrlHeader);
 
         }
 
         private void NodeCotrol_OnLostFocus(object sender, RoutedEventArgs e)
         {
             WorkSpace.Instance.Undo.AddScope(_headerScope);
+
 
         }
     }

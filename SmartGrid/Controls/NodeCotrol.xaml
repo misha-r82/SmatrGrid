@@ -8,15 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Initialized="FrameworkElement_OnInitialized" GotFocus="NodeCotrol_OnGotFocus" LostFocus="NodeCotrol_OnLostFocus">
     <Grid >
-        <Grid.Resources>
-            <ResourceDictionary>
-                <lib:TestConverter x:Key="TestConverter"/>
-                <lib:BoolVisConverter x:Key="BoolVisConverter"/>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="../Themes/StylesDic.xaml"/>
-                </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-        </Grid.Resources>
         <Grid.CommandBindings>
             
             <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
@@ -32,7 +23,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <local:HeaderCtrl x:Name="ctrlHeader" TabIndex="0"/>
+        <local:HeaderCtrl x:Name="ctrlHeader" TabIndex="0" Focusable="True"/>
         <RichTextBox Name="txtBody" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" SizeChanged="TxtVal_OnSizeChanged"
                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
         <Grid Name="gridRight"  Grid.Column="2">

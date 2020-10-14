@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              xmlns:lib="clr-namespace:Lib;assembly=Lib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="EditableLable_OnDataContextChanged" BorderThickness="0" GotFocus="EditableLable_OnGotFocus" Focusable="True">
+             d:DesignHeight="300" d:DesignWidth="300" BorderThickness="0" Focusable="True" GotFocus="EditableLable_OnGotFocus">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Style.Triggers>

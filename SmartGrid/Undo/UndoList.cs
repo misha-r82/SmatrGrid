@@ -24,6 +24,7 @@ namespace SmartGrid
 
         public void AddScope(UndoScope scope)
         {
+            if (scope == null) return;
             if (!scope.HasChanges) return;
             RedoStack.Clear();
             UndoStack.Push(scope);
