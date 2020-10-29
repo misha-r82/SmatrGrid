@@ -6,11 +6,6 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.CommandBindings>
-        <CommandBinding Command="ToggleBold" Executed="CommandBold_OnExecuted"/>
-        <CommandBinding Command="ToggleItalic" Executed="CommandItalic_OnExecuted"/>
-        <CommandBinding Command="ToggleUnderline" Executed="CommandUndeline_OnExecuted"/>
-    </UserControl.CommandBindings>
     <StackPanel Orientation="Horizontal">
         <StackPanel.Resources>
             <ResourceDictionary>

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Lib;
 using Microsoft.Win32;
 using SmartGrid.Drag;
 using SmartGrid.HeaderIcons;
@@ -63,7 +64,6 @@ namespace SmartGrid
 
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
-
             var fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Таблицы (*.grd)|*.grd";
             if (fileDialog.ShowDialog(this) != true) return;
@@ -82,6 +82,64 @@ namespace SmartGrid
         {
             WorkSpace.Instance.Undo.Redo();
         }
+        private void CopyNodesToClipboard(IEnumerable<IHasHeader> elements)
+        {
+            if (elements == null || !elements.Any()) return;
+            var arr = elements.ToArray();
+            Editor.NodeEditor.SaveToNodeVal();
+            string serialized = "";
+            if (arr[0] is Node)
+            {
+                serialized = FileIO.SerializeDataContract(arr.OfType<Node>().ToArray());
+                Clipboard.SetData(DragProcessor.DargContentType.Nodes.ToString(), serialized);
+            }
+            else
+            if (arr[0] is Tag)
+            {
+                serialized = FileIO.SerializeDataContract(arr.OfType<Tag>().ToArray());
+                Clipboard.SetData(DragProcessor.DargContentType.Tag.ToString(), serialized);
+            }
+            else if (arr[0] is SmartFiled)
+            {
+                serialized = FileIO.SerializeDataContract(arr.OfType<SmartFiled>().ToArray());
+                Clipboard.SetData(DragProcessor.DargContentType.Field.ToString(), serialized);
+            }
+
+        }
+        private void CommandCopy_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CopyNodesToClipboard(WorkSpace.Instance.Curent.SelectedElements);
+        }
+
+        private void CommandCut_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CopyNodesToClipboard(WorkSpace.Instance.Curent.SelectedElements);
+            var contayiner = WorkSpace.Instance.Curent.Contayner as DragProcessor.IContainer;
+            contayiner?.Remove(WorkSpace.Instance.Curent.SelectedElements);
+        }
+
+        private void CommandPaste_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            IHasHeader[] elements = null;
+            if (Clipboard.ContainsData(DragProcessor.DargContentType.Nodes.ToString()))
+            {
+                var serialized = Clipboard.GetData(DragProcessor.DargContentType.Nodes.ToString()).ToString();
+                elements = FileIO.DeserializeXMLFromString<Node[]>(serialized).Cast<IHasHeader>().ToArray();
+            }
+            else
+            if (Clipboard.ContainsData(DragProcessor.DargContentType.Tag.ToString()))
+            {
+                var serialized = Clipboard.GetData(DragProcessor.DargContentType.Tag.ToString()).ToString();
+                elements = FileIO.DeserializeXMLFromString<Tag[]>(serialized).Cast<IHasHeader>().ToArray();
+            }
+            else if (Clipboard.ContainsData(DragProcessor.DargContentType.Field.ToString()))
+            {
+                var serialized = Clipboard.GetData(DragProcessor.DargContentType.Field.ToString()).ToString();
+                elements = FileIO.DeserializeXMLFromString<SmartFiled[]>(serialized).Cast<IHasHeader>().ToArray();
+            }
+            var contayiner = WorkSpace.Instance.Curent.Contayner as DragProcessor.IContainer;
+            contayiner?.Add(elements);
+        }
 
         private void CommandUndo_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -92,7 +150,24 @@ namespace SmartGrid
         {
             e.CanExecute = WorkSpace.Instance.Undo.CanRedo;
         }
+        private void CommandBold_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Bold = !element.Header.Style.Bold;
 
+        }
+
+        private void CommandItalic_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Italic = !element.Header.Style.Italic;
+        }
+
+        private void CommandUndeline_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var element in WorkSpace.Instance.Curent.SelectedElements)
+                element.Header.Style.Underline = !element.Header.Style.Underline;
+        }
         private void RedoToItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var redoItem = ((FrameworkElement)sender).DataContext as UndoScope;

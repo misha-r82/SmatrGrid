@@ -6,12 +6,7 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.CommandBindings>
-        <CommandBinding Command="Copy" Executed="CommandCopy_OnExecuted"/>
-        <CommandBinding Command="Cut" Executed="CommandCut_OnExecuted"/>
-        <CommandBinding Command="Paste" Executed="CommandPaste_OnExecuted"/>
-    </UserControl.CommandBindings>
-        <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal">
         <Button Name="btnCut" ToolTip="Вырезать" Command="Cut" Style="{StaticResource SmallBtnStyle}">
             <Image Source="../img/cut.png"/>
         </Button>
