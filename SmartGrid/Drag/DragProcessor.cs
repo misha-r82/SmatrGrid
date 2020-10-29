@@ -37,15 +37,9 @@ namespace SmartGrid
                 default: return "перемещение";
             }
         }
-
-        private static void CreateUndoScope(DragData data)
-
-        {
-
-
-        }
         public static void DoDrag(DragData data)
         {
+            if (data.@from.Elements.Last() == data.to.FirstElement) return; // элемент сам на себя
             var name =
                 $"{GetOperaionName(data.Mode)} {data.@from.FirstElement.Header.Header} -> {data.to.Container.Header.Header}";
             var undoChain = new UndoChain(name);

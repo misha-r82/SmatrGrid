@@ -35,7 +35,7 @@ namespace SmartGrid
         [DataMember] public GridWidth GridWidth { get; private set; }
         private bool _isEditMode;
         [DataMember]public HeaderClass Header { get; private set; }
-        public ObservableCollection<Tag> Cells { get; private set; }
+        [DataMember] public ObservableCollection<Tag> Cells { get; private set; }
         private Tag _workTag;
 
         public bool IsEditMode

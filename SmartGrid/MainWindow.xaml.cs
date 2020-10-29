@@ -137,7 +137,7 @@ namespace SmartGrid
                 var serialized = Clipboard.GetData(DragProcessor.DargContentType.Field.ToString()).ToString();
                 elements = FileIO.DeserializeXMLFromString<SmartFiled[]>(serialized).Cast<IHasHeader>().ToArray();
             }
-            var contayiner = WorkSpace.Instance.Curent.Contayner as DragProcessor.IContainer;
+            var contayiner = WorkSpace.Instance.Curent.Contayner;
             contayiner?.Add(elements);
         }
 

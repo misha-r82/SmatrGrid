@@ -268,8 +268,15 @@ namespace Lib
             byte[] bytes = FEncoding.GetBytes(str.ToCharArray());
             MemoryStream ms = new MemoryStream(bytes);
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-            try { rez = (T)serializer.ReadObject(ms); }
-            catch (Exception) { return default(T); }
+            try
+            {
+                rez = (T) serializer.ReadObject(ms);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return default(T);
+            }
             finally { ms.Close(); }
             return rez;
         }
