@@ -49,17 +49,6 @@ namespace SmartGrid.Controls
             var all = WorkSpace.Instance.ActiveField.GridWidth.W2 + WorkSpace.Instance.ActiveField.GridWidth.W3;
             WorkSpace.Instance.ActiveField.GridWidth.W2 = WorkSpace.Instance.ActiveField.GridWidth.W3 = all / 2;
         }
-        private void Tag_Drop(object sender, DragEventArgs e)
-        {
-            DragProcessor.DoDrag(sender, e);
-        }
-        private void Tag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var element = (FrameworkElement)sender;
-            Tag tag = element.DataContext as Tag;
-            if (tag == null) return;
-            var dragElement = new DragProcessor.DragElement((DragProcessor.IDragElement) tag, WorkSpace.Instance.ActiveField);
-            DragHelper.SetClick(dragElement, e);
-        }
+
     }
 }

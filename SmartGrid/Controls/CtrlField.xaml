@@ -7,7 +7,7 @@
              xmlns:smartGrid="clr-namespace:SmartGrid"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Name="gridWrk"  Drop="Tag_Drop">
+    <Grid Name="gridWrk">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding ActiveField.GridWidth.GH1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <RowDefinition Height="6"/>
@@ -27,14 +27,14 @@
         <GridSplitter Name="spltH2" Grid.Row="3" Grid.ColumnSpan="5" MouseDoubleClick="SpltH2_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
         <GridSplitter Name="spltW1" Grid.Column="1" Grid.RowSpan="5" MouseDoubleClick="SpltW1_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
         <GridSplitter Name="spltW2" Grid.Column="3" Grid.RowSpan="5" MouseDoubleClick="SpltW2_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
-        <smartGrid:TagControl x:Name="tag11" DataContext="{Binding Cells[0]}" Grid.Column="0" Grid.Row="0"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag12" DataContext="{Binding Cells[1]}" Grid.Column="2" Grid.Row="0"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag13" DataContext="{Binding Cells[2]}" Grid.Column="4" Grid.Row="0"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag21" DataContext="{Binding Cells[3]}" Grid.Column="0" Grid.Row="2"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag22" DataContext="{Binding Cells[4]}" Grid.Column="2" Grid.Row="2"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag23" DataContext="{Binding Cells[5]}" Grid.Column="4" Grid.Row="2"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag31" DataContext="{Binding Cells[6]}" Grid.Column="0" Grid.Row="4"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag32" DataContext="{Binding Cells[7]}"  Grid.Column="2" Grid.Row="4"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
-        <smartGrid:TagControl x:Name="tag33" DataContext="{Binding Cells[8]}" Grid.Column="4" Grid.Row="4"  PreviewMouseDown="Tag_OnPreviewMouseDown"/>
+        <smartGrid:TagControl x:Name="tag11" DataContext="{Binding Cells[0]}" Grid.Column="0" Grid.Row="0"/>
+        <smartGrid:TagControl x:Name="tag12" DataContext="{Binding Cells[1]}" Grid.Column="2" Grid.Row="0"/>
+        <smartGrid:TagControl x:Name="tag13" DataContext="{Binding Cells[2]}" Grid.Column="4" Grid.Row="0"/>
+        <smartGrid:TagControl x:Name="tag21" DataContext="{Binding Cells[3]}" Grid.Column="0" Grid.Row="2"/>
+        <smartGrid:TagControl x:Name="tag22" DataContext="{Binding Cells[4]}" Grid.Column="2" Grid.Row="2"/>
+        <smartGrid:TagControl x:Name="tag23" DataContext="{Binding Cells[5]}" Grid.Column="4" Grid.Row="2"/>
+        <smartGrid:TagControl x:Name="tag31" DataContext="{Binding Cells[6]}" Grid.Column="0" Grid.Row="4"/>
+        <smartGrid:TagControl x:Name="tag32" DataContext="{Binding Cells[7]}"  Grid.Column="2" Grid.Row="4"/>
+        <smartGrid:TagControl x:Name="tag33" DataContext="{Binding Cells[8]}" Grid.Column="4" Grid.Row="4"/>
     </Grid>
 </UserControl>

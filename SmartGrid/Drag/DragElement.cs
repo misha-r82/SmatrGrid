@@ -28,6 +28,7 @@ namespace SmartGrid
                 
                 if (type == typeof(Node)) return new Node(header);
                 if (type == typeof(Tag)) return new Tag(header);
+                if (type== typeof(TagGroup)) return new Tag(header);
                 if (type == typeof(SmartFiled)) return new SmartFiled(header);
                 throw new Exception($"Error Creating element {type}");
             }

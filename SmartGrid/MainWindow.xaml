@@ -67,9 +67,9 @@
         <StackPanel Grid.RowSpan="2" Grid.Row="1">
             <local:CtrlFieldMan/>
         </StackPanel>
-        <local:TagControl x:Name="tag00" DataContext="{Binding ActiveField.WorkTag}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" PreviewMouseDown="Tag_OnPreviewMouseDown"/>
+        <local:TagControl x:Name="tag00" DataContext="{Binding ActiveField.WorkTag}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" PreviewMouseDown="Tag_OnPreviewMouseDown" Drop="On_Drop"/>
         <local:TagGrpControl x:Name="tagGrp" Grid.Column="5" DataContext="{Binding ActiveField.TagGrp}" Grid.RowSpan="2" Grid.Row="1" Height="770" VerticalAlignment="Top"/>
-        <controls:CtrlField Grid.Row="1" Grid.Column="3" DataContext="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField }"/>
+        <controls:CtrlField x:Name="ctrlField" Grid.Row="1" Grid.Column="3" DataContext="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField }" Drop="On_Drop"/>
     </Grid>
 
 

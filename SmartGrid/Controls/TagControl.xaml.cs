@@ -90,6 +90,14 @@ namespace SmartGrid
                 e.Handled = false;
             }
         }
+        private void Tag_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (FrameworkElement)sender;
+            Tag tag = element.DataContext as Tag;
+            if (tag == null) return;
+            var dragElement = new DragProcessor.DragElement((DragProcessor.IDragElement)tag, WorkSpace.Instance.ActiveField);
+            DragHelper.SetClick(dragElement, e);
+        }
         private void CommDell_Exec(object sender, ExecutedRoutedEventArgs e)
         {
             CurTag.Remove(SelectedNodes);

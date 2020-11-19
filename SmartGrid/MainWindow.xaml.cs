@@ -200,6 +200,16 @@ namespace SmartGrid
         {
             WorkSpace.Instance.Curent.GotFocuse(e);
         }
+
+        private void On_Drop(object sender, DragEventArgs e)
+        {
+            DragProcessor.DoDrag(ctrlField, e);
+        }
+
+        private void Tag00_OnDrop(object sender, DragEventArgs e)
+        {
+            DragProcessor.DoDrag(this, e);
+        }
     }
 
 }

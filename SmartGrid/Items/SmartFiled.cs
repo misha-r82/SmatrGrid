@@ -73,6 +73,7 @@ namespace SmartGrid
             var pos = Cells.IndexOf(insertBefore as Tag);
             if (pos < 0) return;
             Cells[pos] = (Tag)items.First();
+            if (pos == 9) OnPropertyChanged(nameof(WorkTag));
         }
 
         public void Remove(IEnumerable<IHasHeader> items)
