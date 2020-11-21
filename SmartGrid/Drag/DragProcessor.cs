@@ -45,7 +45,9 @@ namespace SmartGrid
             var undoChain = new UndoChain(name);
             undoChain.Add(UndoCollectionScopeFactory.CreateScope(data.@from.Container));
             undoChain.Add(UndoCollectionScopeFactory.CreateScope(data.to.Container));
-            switch (data.Mode)
+            var mode = data.Mode;
+            if (data.@from.FirstElement is SmartFiled && !(data.to.Container is WorkSpace)) mode = SwapMode.Copy; // не удаляем поля при перетаскивании на элементы
+            switch (mode)
             {
                 case SwapMode.Copy:
                 {
