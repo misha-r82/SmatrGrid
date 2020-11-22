@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartGrid.HeaderIcons;
 
 namespace SmartGrid.Controls
 {
@@ -30,5 +31,11 @@ namespace SmartGrid.Controls
             get { return txtHeader.IsEditing; }
         }
 
+        private void Icon_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 2) return;
+            var context = ((FrameworkElement) sender).DataContext as HeaderIcon;
+            context.NextIcon();
+        }
     }
 }

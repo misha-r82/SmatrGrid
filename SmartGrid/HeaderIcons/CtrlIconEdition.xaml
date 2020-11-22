@@ -35,8 +35,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Icon}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
-                        <controls:EditableLable Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
+                        <!--<Image Source="{Binding IconData.Icon}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
+                        <controls:EditableLable Text="{Binding IconData.Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>-->
                     </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>

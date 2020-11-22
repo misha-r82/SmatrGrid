@@ -49,7 +49,7 @@ namespace SmartGrid.HeaderIcons
             {
                 if (fileDialog.ShowDialog() != true) return;
                 var stream = new FileStream(fileDialog.FileName, FileMode.Open);
-                icon.FromStream(stream);
+                icon.Icon.FromStream(stream);
             }
             catch (Exception exception)
             {

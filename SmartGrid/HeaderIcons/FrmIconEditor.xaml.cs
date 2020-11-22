@@ -79,8 +79,7 @@ namespace SmartGrid.HeaderIcons
                 if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
                 string name = Path.GetFileNameWithoutExtension(fileName);
                 var stream = new FileStream(fileName, FileMode.Open);
-                var newIcon = parentIcon.CreateChield(name, stream);
-                parentIcon.IconCollection.Add(newIcon);
+                parentIcon.Create(parentIcon, name, stream);
             }
         }
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)

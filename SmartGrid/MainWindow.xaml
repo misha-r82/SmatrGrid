@@ -61,7 +61,7 @@
             <controls:CtrlCopyPaste/>
             <icons:CtrlIconPanel/>
             <ToolBar>
-                <Button Name="btnIconEditor" Click="btnIconEditor_Click">Icons</Button>
+                <Button Name="btnIconEditor" Click="btnIconEditor_Click">IconBitMaps</Button>
             </ToolBar>
         </ToolBar>
         <StackPanel Grid.RowSpan="2" Grid.Row="1">

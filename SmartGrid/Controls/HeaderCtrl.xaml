@@ -19,7 +19,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Icon}" Width="16" Height="16" Margin="2,0" Focusable="True"/>
+                    <Image Source="{Binding CurIcon.IconData}" Width="16" Height="16" Margin="2,0" Focusable="True" MouseDown="Icon_OnMouseDown"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

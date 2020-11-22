@@ -37,7 +37,7 @@ namespace SmartGrid.HeaderIcons
         {
             if (!icon.IconCollection.Any()) return;
             int pos = IndexOf(icon);
-            if (pos < 0) throw new ArgumentException("IconCollection не содержит переданный Icon");
+            if (pos < 0) throw new ArgumentException("IconCollection не содержит переданный IconBitMap");
             RemoveAt(pos);
             Insert(pos, icon);
 

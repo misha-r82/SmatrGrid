@@ -13,27 +13,26 @@ using SmartGrid.Annotations;
 
 namespace SmartGrid.HeaderIcons
 {
-    [DataContract(IsReference = true)]
+    [DataContract]
     [KnownType(typeof(byte[]))]
     [KnownType(typeof(System.Array))]  //here !!!!! for System.Byte[*]
-    public class HeaderIcon : INotifyPropertyChanged
+    public class IconData
     {
-        private HeaderIcon(Stream stream): this()
-        {
-            FromStream(stream);
-        }
-        private HeaderIcon()
-        {
-            IconCollection = new ObservableCollection<HeaderIcon>(new List<HeaderIcon>());
-        }
         [DataMember]
         private byte[] binData;
+        public IconData()
+        { }
+
+        public IconData(string name)
+        {
+            Name = name;
+        }
+
         [DataMember]
         public string Name { get; set; }
-        public BitmapImage Icon { get; private set; }
-        [DataMember]
-        public ObservableCollection<HeaderIcon> IconCollection { get; private set; }
-        [DataMember] public HeaderIcon Parent { get; private set; }
+
+        public BitmapImage IconBitMap { get; private set; }
+
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
@@ -42,15 +41,6 @@ namespace SmartGrid.HeaderIcons
             FromStream(stream);
         }
 
-        public static HeaderIcon CreateBaseItem()
-        {
-            return new HeaderIcon(){Name = "BaseItem"};
-        }
-
-        public HeaderIcon CreateChield(string name = "", Stream stream = null)
-        {
-            return new HeaderIcon(stream){Name =name, Parent = this};
-        }
         public void FromStream(Stream stream)
         {
             if (stream == null) return;
@@ -66,15 +56,53 @@ namespace SmartGrid.HeaderIcons
                 bitmap.StreamSource = new MemoryStream(binData);
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.EndInit();
-                Icon = bitmap;
-                OnPropertyChanged(nameof(Icon));
+                IconBitMap = bitmap;
             }
             catch (Exception e)
             {
             }
 
         }
+    }
 
+    [DataContract(IsReference = true)]
+    public class HeaderIcon : INotifyPropertyChanged
+    {
+        [DataMember]
+        private readonly IconData _icon;
+        public IconData Icon => _icon;
+        public HeaderIcon CurIcon => IconCollection[_curPos];
+        [DataMember]
+        public ObservableCollection<HeaderIcon> IconCollection { get; private set; }
+        [DataMember] public HeaderIcon Parent { get; private set; }
+        [DataMember] private int _curPos;
+        private HeaderIcon()
+        {
+            _icon = new IconData("Base Icon");
+            IconCollection = new ObservableCollection<HeaderIcon>(new List<HeaderIcon>());
+            IconCollection.Add(this);
+        }
+        public static HeaderIcon CreateBaseItem() { return new HeaderIcon();}
+        public HeaderIcon Create(HeaderIcon parent, string name, Stream stram)
+        {
+            var newItem = new HeaderIcon();
+            newItem.Icon.Name = name;
+            newItem.Icon.FromStream(stram);
+            newItem.Parent = parent;
+            IconCollection.Add(newItem);
+            return newItem;
+        }
+        [OnDeserialized()]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            if(IconCollection.Count == 0) IconCollection.Add(this);
+        }
+        public void NextIcon()
+        {
+            _curPos++;
+            if (_curPos == IconCollection.Count) _curPos = 0;
+            OnPropertyChanged(nameof(CurIcon));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
