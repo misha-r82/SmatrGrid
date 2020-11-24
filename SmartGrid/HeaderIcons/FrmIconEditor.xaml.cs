@@ -48,12 +48,6 @@ namespace SmartGrid.HeaderIcons
             SelectedItem = this.DataContext as HeaderIcon;
         }
 
-
-
-        private void BtnRemove_OnClick(object sender, RoutedEventArgs e)
-        {
-            WorkSpace.Instance.CoreHeaderIcon.IconCollection.Remove(iconTree.SelectedIcon);
-        }        
         public HeaderIcon SelectedItem { get; private set; }
 
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)

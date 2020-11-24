@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,26 @@ using Microsoft.Win32;
 
 namespace SmartGrid.HeaderIcons
 {
+    public class ExcludeSelfCollectionConvertor : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var collection = value as IEnumerable<HeaderIcon>;
+            if (collection == null) return null;
+            return collection.Skip(1);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     /// <summary>
     /// Логика взаимодействия для IconTemplate.xaml
     /// </summary>
     public partial class CtrlIconEdition : UserControl
     {
+
         public CtrlIconEdition()
         {
             InitializeComponent();
