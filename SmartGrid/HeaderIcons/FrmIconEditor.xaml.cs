@@ -56,7 +56,7 @@ namespace SmartGrid.HeaderIcons
         }
         private void CommandAdd_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            AddIcon(SelectedItem.Parent);
+            AddIcon(SelectedItem.Parent == null ? SelectedItem : SelectedItem.Parent);
         }
         private void CommandAddChield_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -79,7 +79,8 @@ namespace SmartGrid.HeaderIcons
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (SelectedItem == null) return;
-            SelectedItem.Parent.IconCollection.Remove(SelectedItem);
+            SelectedItem.Parent.RemoveFromItemCollection(SelectedItem);
+            
         }
 
         private void ctrlMainIcon_GotFocus(object sender, RoutedEventArgs e)

@@ -73,13 +73,13 @@ namespace SmartGrid.HeaderIcons
         public IconData Icon => _icon;
         public HeaderIcon CurIcon => IconCollection[_curPos];
         [DataMember]
-        public ObservableCollection<HeaderIcon> IconCollection { get; private set; }
+        public List<HeaderIcon> IconCollection { get; private set; }
         [DataMember] public HeaderIcon Parent { get; private set; }
         [DataMember] private int _curPos;
         private HeaderIcon()
         {
             _icon = new IconData("Base Icon");
-            IconCollection = new ObservableCollection<HeaderIcon>(new List<HeaderIcon>());
+            IconCollection = new List<HeaderIcon>();
             IconCollection.Add(this);
         }
         public static HeaderIcon CreateBaseItem() { return new HeaderIcon();}
@@ -90,7 +90,14 @@ namespace SmartGrid.HeaderIcons
             newItem.Icon.FromStream(stram);
             newItem.Parent = parent;
             IconCollection.Add(newItem);
+            OnPropertyChanged(nameof(IconCollection));
             return newItem;
+        }
+
+        public void RemoveFromItemCollection(HeaderIcon icon)
+        {
+            IconCollection.Remove(icon);
+            OnPropertyChanged(nameof(IconCollection));
         }
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
