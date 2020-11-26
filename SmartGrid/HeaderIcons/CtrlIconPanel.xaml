@@ -8,10 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 <ToolBar>
+    <ToolBar.Resources>
+        <iconEditor:ExcludeSelfCollectionConvertor x:Key="ExcludeSelfCollectionConvertor"/>
+    </ToolBar.Resources>
     <ToolBar.CommandBindings>
             <CommandBinding Command="iconEditor:IconEditorCommands.AddIcon" Executed="CommandBinding_OnExecuted" />
     </ToolBar.CommandBindings>
-    <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=CoreHeaderIcon.IconCollection}">
+        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=CoreHeaderIcon.IconCollection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -19,16 +22,16 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <RibbonSplitButton SmallImageSource="{Binding Icon}" 
+                    <RibbonSplitButton SmallImageSource="{Binding Icon.IconBitMap}" 
                                        Command="iconEditor:IconEditorCommands.AddIcon"
                                        CommandParameter="{Binding}"
                                        ItemsSource="{Binding IconCollection}">
                         <RibbonSplitButton.Resources>
                             <Style TargetType="{x:Type RibbonMenuItem}">
-                                <Setter Property="Header" Value="{Binding Path=Name}" />
+                                <Setter Property="Header" Value="{Binding Path=Icon.Name}" />
                                 <Setter Property="Command" Value="iconEditor:IconEditorCommands.AddIcon" />
                                 <Setter Property="CommandParameter" Value="{Binding }"/>
-                                <Setter Property="ImageSource" Value="{Binding Icon}" />
+                                <Setter Property="ImageSource" Value="{Binding Icon.IconBitMap}" />
                             </Style>
                         </RibbonSplitButton.Resources>
 </RibbonSplitButton>

@@ -33,7 +33,7 @@ namespace SmartGrid.Controls
 
         private void Icon_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount < 2) return;
+            if (e.ClickCount < 2 || e.ChangedButton != MouseButton.Left) return;
             var context = ((FrameworkElement) sender).DataContext as HeaderIcon;
             context.NextIcon();
         }

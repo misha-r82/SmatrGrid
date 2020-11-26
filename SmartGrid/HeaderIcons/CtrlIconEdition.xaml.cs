@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,20 +13,6 @@ using Microsoft.Win32;
 
 namespace SmartGrid.HeaderIcons
 {
-    public class ExcludeSelfCollectionConvertor : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var collection = value as IEnumerable<HeaderIcon>;
-            if (collection == null) return null;
-            return collection.Skip(1);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
     /// <summary>
     /// Логика взаимодействия для IconTemplate.xaml
     /// </summary>
