@@ -64,23 +64,27 @@ namespace SmartGrid.HeaderIcons
 
         }
     }
-
+    public class IconCollection
+    {
+        public IconCollection(HeaderIcon firstIcon)
+        {
+            Icons = new List<HeaderIcon>();
+            Icons.Add(firstIcon);
+        }
+        public List<HeaderIcon> Icons { get; private set; }
+    }
     [DataContract(IsReference = true)]
     public class HeaderIcon : INotifyPropertyChanged
     {
         [DataMember]
         private readonly IconData _icon;
         public IconData Icon => _icon;
-        public HeaderIcon CurIcon => IconCollection[_curPos];
-        [DataMember]
-        public List<HeaderIcon> IconCollection { get; private set; }
-        [DataMember] public HeaderIcon Parent { get; private set; }
-        [DataMember] private int _curPos;
+        public HeaderIcon Parent { get; private set; }
+        public IconCollection Collection { get; private set; }
         private HeaderIcon()
         {
             _icon = new IconData("Base Icon");
-            IconCollection = new List<HeaderIcon>();
-            IconCollection.Add(this);
+            Collection = new IconCollection(this);          
         }
         public static HeaderIcon CreateBaseItem() { return new HeaderIcon();}
         public HeaderIcon Create(HeaderIcon parent, string name, Stream stram)
@@ -89,26 +93,24 @@ namespace SmartGrid.HeaderIcons
             newItem.Icon.Name = name;
             newItem.Icon.FromStream(stram);
             newItem.Parent = parent;
-            IconCollection.Add(newItem);
-            OnPropertyChanged(nameof(IconCollection));
+            Collection.Add(newItem);
+            OnPropertyChanged(nameof(Collection));
             return newItem;
         }
 
         public void RemoveFromItemCollection(HeaderIcon icon)
         {
-            IconCollection.Remove(icon);
+            Collection.Remove(icon);
             OnPropertyChanged(nameof(IconCollection));
         }
-        [OnDeserialized()]
-        internal void OnDeserializedMethod(StreamingContext context)
+        //[OnDeserialized()]
+        //internal void OnDeserializedMethod(StreamingContext context)
+        //{
+        //    if(IconCollection.Count == 0) IconCollection.Add(this);
+        //}
+        public HeaderIcon NextIcon()
         {
-            if(IconCollection.Count == 0) IconCollection.Add(this);
-        }
-        public void NextIcon()
-        {
-            _curPos++;
-            if (_curPos == IconCollection.Count) _curPos = 0;
-            OnPropertyChanged(nameof(CurIcon));
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
