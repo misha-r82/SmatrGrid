@@ -1,46 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace SmartGrid.HeaderIcons
 {
+    [CollectionDataContract]
     public class IconCollection : ObservableCollection<HeaderIcon>
     {
-        private IconCollection() { }
-        public IconCollection(IEnumerable<HeaderIcon> source = null)
+        public IconCollection(HeaderIcon firstIcon) : base()
         {
-            if (source!=null)
-                foreach (var item in source)
-                    Add(item);
+            Add(firstIcon);
         }
-        private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
+        public HeaderIcon NextIcon(HeaderIcon icon)
         {
-            return icon.IconCollection.Contains(icon1) || icon1.IconCollection.Contains(icon);
-        }
-        public void Add(HeaderIcon icon)
-        {
-            if (Contains(icon)) return;
-            foreach (HeaderIcon present in this)
-            {
-                if (SameCategory(present, icon))
-                {
-                    int pos = IndexOf(present);
-                    Remove(present);
-                    Insert(pos, icon);
-                    return;
-                }
-            }
-            base.Add(icon);
-        }
-        public void Next(HeaderIcon icon)
-        {
-            if (!icon.IconCollection.Any()) return;
             int pos = IndexOf(icon);
-            if (pos < 0) throw new ArgumentException("IconCollection не содержит переданный IconBitMap");
-            RemoveAt(pos);
-            Insert(pos, icon);
-
+            if(pos < 0) throw new ArgumentException("icon is not contains in Collection");
+            if (pos == Count - 1) return this[0];
+            return this[pos];
         }
     }
+
 }

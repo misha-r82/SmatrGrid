@@ -20,13 +20,13 @@ namespace SmartGrid
     {
         [DataMember]private FontStyle style;
         [DataMember] private string _header;
-        [DataMember] private IconCollection _icons;
+        [DataMember] private IconSet _icons;
 
         public HeaderClass(string header = "")
         {
             _header = header;
             Style = new FontStyle();
-            _icons = new IconCollection();
+            _icons = new IconSet();
         }
 
         public string Header
@@ -45,12 +45,12 @@ namespace SmartGrid
             set => style = value;
         }
 
-        public IconCollection Icons => _icons;
+        public IconSet Icons => _icons;
 
         public void CloneRefs()
         {
             Style = style.GetClone();
-            _icons = new IconCollection(_icons);
+            _icons = new IconSet(_icons);
             
         }
         public object Clone()

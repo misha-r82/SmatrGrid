@@ -23,14 +23,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TreeView Name="iconTree"  ItemsSource="{Binding IconCollection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+        <TreeView Name="iconTree"  ItemsSource="{Binding Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True" />
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding IconCollection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
