@@ -97,7 +97,9 @@ namespace SmartGrid.HeaderIcons
         }
         public HeaderIcon NextIcon()
         {
-            return Collection.NextIcon(this);
+            if (this == Collection.First())
+                return Collection.NextIcon(this);
+            return Parent.Collection.NextIcon(this);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

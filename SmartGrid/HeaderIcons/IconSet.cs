@@ -34,5 +34,13 @@ namespace SmartGrid.HeaderIcons
             base.Add(icon);
         }
 
+        public void NextIcon(HeaderIcon icon)
+        {
+            if (!Contains(icon)) throw new ArgumentException("Cannot set NextItem beacuse icon is noi in the set");
+            var pos = IndexOf(icon);
+            RemoveAt(pos);
+            Insert(pos, icon.NextIcon());
+        }
+
     }
 }

@@ -19,7 +19,7 @@ namespace SmartGrid.HeaderIcons
             int pos = IndexOf(icon);
             if(pos < 0) throw new ArgumentException("icon is not contains in Collection");
             if (pos == Count - 1) return this[0];
-            return this[pos];
+            return this[pos+1];
         }
     }
 
