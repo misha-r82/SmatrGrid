@@ -6,9 +6,10 @@ using System.Runtime.Serialization;
 
 namespace SmartGrid.HeaderIcons
 {
-    [CollectionDataContract]
     public class IconCollection : ObservableCollection<HeaderIcon>
     {
+        private IconCollection():base()
+        { }
         public IconCollection(HeaderIcon firstIcon) : base()
         {
             Add(firstIcon);

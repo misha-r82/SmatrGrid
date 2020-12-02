@@ -14,7 +14,7 @@
     <ToolBar.CommandBindings>
             <CommandBinding Command="iconEditor:IconEditorCommands.AddIcon" Executed="CommandBinding_OnExecuted" />
     </ToolBar.CommandBindings>
-        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=CoreHeaderIcon.IconCollection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=CoreHeaderIcon.Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -25,7 +25,7 @@
                     <RibbonSplitButton SmallImageSource="{Binding Icon.IconBitMap}" 
                                        Command="iconEditor:IconEditorCommands.AddIcon"
                                        CommandParameter="{Binding}"
-                                       ItemsSource="{Binding IconCollection}">
+                                       ItemsSource="{Binding Collection}">
                         <RibbonSplitButton.Resources>
                             <Style TargetType="{x:Type RibbonMenuItem}">
                                 <Setter Property="Header" Value="{Binding Path=Icon.Name}" />
