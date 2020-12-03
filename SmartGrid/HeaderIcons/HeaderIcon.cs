@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace SmartGrid.HeaderIcons
     [DataContract(IsReference = true)]
     public class HeaderIcon : INotifyPropertyChanged
     {
-        [DataMember] private readonly IconData _icon;
+        [DataMember] private IconData _icon;
         public IconData Icon => _icon;
         [DataMember]public HeaderIcon Parent { get; private set; }
         [DataMember] public IconCollection Collection { get; private set; }
@@ -85,6 +86,13 @@ namespace SmartGrid.HeaderIcons
             return newItem;
         }
 
+        public HeaderIcon ToIconSet()
+        {
+            var item = new HeaderIcon();
+            item._icon = _icon;
+            item.Collection = Collection;
+            return item;
+        }
         public void RemoveFromItemCollection(HeaderIcon icon)
         {
             Collection.Remove(icon);
@@ -97,9 +105,8 @@ namespace SmartGrid.HeaderIcons
         }
         public HeaderIcon NextIcon()
         {
-            if (this == Collection.First())
-                return Collection.NextIcon(this);
-            return Parent.Collection.NextIcon(this);
+            if (Parent != null) return Parent.Collection.NextIcon(this);
+            return Collection.NextIcon(this);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
