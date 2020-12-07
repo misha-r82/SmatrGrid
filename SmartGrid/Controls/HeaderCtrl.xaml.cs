@@ -21,7 +21,7 @@ namespace SmartGrid.Controls
     /// </summary>
     public partial class HeaderCtrl : UserControl
     {
-        private Tag _tag;
+        private IHasHeader _header;
         public HeaderCtrl()
         {
             InitializeComponent();
@@ -36,12 +36,12 @@ namespace SmartGrid.Controls
         {
             if (e.ClickCount < 2 || e.ChangedButton != MouseButton.Left) return;
             var icon = ((FrameworkElement) sender).DataContext as HeaderIcon;
-            if (icon != null) _tag.Header.Icons.NextIcon(icon);
+            if (icon != null) _header.Header.Icons.NextIcon(icon);
         }
 
         private void HeaderCtrl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            _tag = e.NewValue as Tag;
+            _header = e.NewValue as IHasHeader;
         }
     }
 }

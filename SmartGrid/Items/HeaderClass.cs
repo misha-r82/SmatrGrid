@@ -21,12 +21,14 @@ namespace SmartGrid
         [DataMember]private FontStyle style;
         [DataMember] private string _header;
         [DataMember] private IconSet _icons;
-
-        public HeaderClass(string header = "")
+        public HeaderClass()
         {
-            _header = header;
             Style = new FontStyle();
             _icons = new IconSet();
+        }
+        public HeaderClass(string header) : this()
+        {
+            _header = header;
         }
 
         public string Header
