@@ -79,7 +79,7 @@ namespace SmartGrid.HeaderIcons
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (SelectedItem == null) return;
-            SelectedItem.Parent.RemoveFromItemCollection(SelectedItem);
+            SelectedItem.Parent.Collection.Remove(SelectedItem);
             
         }
 

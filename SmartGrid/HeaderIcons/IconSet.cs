@@ -16,22 +16,22 @@ namespace SmartGrid.HeaderIcons
         }
         private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
         {
-            return icon.Collection.Contains(icon1) || icon1.Collection.Contains(icon);
+            return icon1.Collection.WithSameIconData(icon) != null;
         }
         public void Add(HeaderIcon icon)
         {
-            if (Contains(icon)) return;
+            if (this.Any(i => i.Icon == icon.Icon)) return;
             foreach (HeaderIcon present in this)
             {
                 if (SameCategory(present, icon))
                 {
                     int pos = IndexOf(present);
                     Remove(present);
-                    Insert(pos, icon);
+                    Insert(pos, icon.ToIconSet());
                     return;
                 }
             }
-            base.Add(icon);
+            base.Add(icon.ToIconSet());
         }
 
         public void NextIcon(HeaderIcon icon)

@@ -14,9 +14,20 @@ namespace SmartGrid.HeaderIcons
         {
             Add(firstIcon);
         }
+        public IconCollection(IEnumerable<HeaderIcon> sourceCollection) : base(sourceCollection) {}
+        public HeaderIcon WithSameIconData(HeaderIcon icon)
+        {
+            foreach(var thisIcon in this)
+            {
+                if (icon.IsSameIconData(thisIcon))
+                    return thisIcon;
+            }
+            return null;
+        }
         public HeaderIcon NextIcon(HeaderIcon icon)
         {
-            int pos = IndexOf(icon);
+            var thisIcon = WithSameIconData(icon);
+            int pos = IndexOf(thisIcon);
             if(pos < 0) throw new ArgumentException("icon is not contains in Collection");
             if (pos == Count - 1) return this[0];
             return this[pos+1];

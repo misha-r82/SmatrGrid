@@ -90,18 +90,20 @@ namespace SmartGrid.HeaderIcons
         {
             var item = new HeaderIcon();
             item._icon = _icon;
-            item.Collection = Collection;
+            item.Collection = new IconCollection(Collection);
+            foreach (var icon in item.Collection)
+                icon.Parent = item;
+            item.Collection[0] = item;
             return item;
-        }
-        public void RemoveFromItemCollection(HeaderIcon icon)
-        {
-            Collection.Remove(icon);
-            OnPropertyChanged(nameof(IconCollection));
         }
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
             if(Collection.Count == 0) Collection.Add(this);
+        }
+        public bool IsSameIconData(HeaderIcon second)
+        {
+            return second.Icon == Icon;
         }
         public HeaderIcon NextIcon()
         {
