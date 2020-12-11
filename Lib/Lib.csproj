@@ -123,6 +123,7 @@
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ColorUtils.cs" />
+    <Compile Include="UI\MenuDataItem.cs" />
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VisualTreeHelper.cs" />

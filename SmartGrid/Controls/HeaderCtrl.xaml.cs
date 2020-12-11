@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Lib.UI;
 using SmartGrid.HeaderIcons;
 
 namespace SmartGrid.Controls
@@ -42,6 +43,20 @@ namespace SmartGrid.Controls
         private void HeaderCtrl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             _header = e.NewValue as IHasHeader;
+        }
+
+        private void IocnMenu_OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var iconElement = sender as FrameworkElement;
+            var menu = iconElement.ContextMenu;
+            var icon = (HeaderIcon) iconElement.DataContext;
+            var menuData = new List<Lib.UI.MenuDataItem>();
+            foreach (var headerIcon in icon.Collection)
+            {
+                menuData.Add(new MenuDataItem(headerIcon.Icon.Name, headerIcon.Icon.IconBitMap));
+            }
+
+            menu.DataContext = menuData;
         }
     }
 }

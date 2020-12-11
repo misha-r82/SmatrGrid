@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SmartGrid.Controls"
+             xmlns:icons="clr-namespace:SmartGrid.HeaderIcons"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="HeaderCtrl_OnDataContextChanged">
     <Grid>
@@ -19,7 +20,25 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Icon.IconBitMap}" Width="16" Height="16" Margin="2,0" Focusable="True" MouseDown="Icon_OnMouseDown"/>
+                    <Image Source="{Binding Icon.IconBitMap}" Width="16" Height="16" Margin="2,0" Focusable="True" MouseDown="Icon_OnMouseDown" ContextMenuOpening="IocnMenu_OnContextMenuOpening">
+                        <Image.ContextMenu>
+                            <ContextMenu Name="IocnMenu" ItemsSource="{Binding}" >
+                                <ContextMenu.ItemTemplate>
+                                    <DataTemplate>
+                                        <MenuItem Header="{Binding Name}" Icon="{Binding Icon}"/>
+                                    </DataTemplate>
+                                </ContextMenu.ItemTemplate>
+                                <!--<ItemsControl ItemsSource="{Binding Collection}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <MenuItem Name="{Binding Icon.name}"></MenuItem>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>-->
+                                <!--<MenuItem Name="itmDel" Header="Delete" Command="Delete"/>-->
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
