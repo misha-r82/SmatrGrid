@@ -16,7 +16,7 @@ namespace SmartGrid.HeaderIcons
         }
         private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
         {
-            return icon1.Collection.WithSameIconData(icon) != null;
+            return icon.Collection.Any(i=>i.IsSameIconData(icon1));
         }
         public void Add(HeaderIcon icon)
         {

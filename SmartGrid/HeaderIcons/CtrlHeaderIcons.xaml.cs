@@ -22,6 +22,7 @@ namespace SmartGrid.Controls
     /// </summary>
     public partial class CtrlHeaderIcons : UserControl
     {
+        
         private IHasHeader _header;
         public CtrlHeaderIcons()
         {
@@ -50,13 +51,35 @@ namespace SmartGrid.Controls
             var iconElement = sender as FrameworkElement;
             var menu = iconElement.ContextMenu;
             var icon = (HeaderIcon) iconElement.DataContext;
-            var menuData = new List<Lib.UI.MenuDataItem>();
+            var menuData = new List<MenuDataItem>();
             foreach (var headerIcon in icon.Collection)
             {
-                menuData.Add(new MenuDataItem(headerIcon.Icon.Name, headerIcon.Icon.IconBitMap));
+                var command = new SetIconCommand(headerIcon, _header.Header.Icons);
+                menuData.Add(new MenuDataItem(headerIcon.Icon.Name, headerIcon.Icon.IconBitMap, command));
             }
 
             menu.DataContext = menuData;
+        }
+        public class SetIconCommand : ICommand
+        {
+            private HeaderIcon _icon;
+            private IconSet _iconSet;
+            public SetIconCommand(HeaderIcon icon, IconSet iconSet)
+            {
+                _icon = icon;
+                _iconSet = iconSet;
+            }
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                _iconSet.Add(_icon);
+            }
+
+            public event EventHandler CanExecuteChanged;
         }
     }
 }

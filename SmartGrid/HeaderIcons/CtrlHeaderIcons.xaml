@@ -12,7 +12,7 @@
             <ColumnDefinition Width="Auto" MaxWidth="64"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding Header.Icons}">
+        <ItemsControl Name="ItemsSet" ItemsSource="{Binding Header.Icons}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -27,9 +27,9 @@
                                     <Style TargetType="MenuItem">
                                         <Setter Property="Header" Value="{Binding Name}" />
                                         <Setter Property="Icon" Value="{Binding Img}" />
+                                        <Setter Property="Command" Value="{Binding Command}" />
                                     </Style>
                                 </ContextMenu.ItemContainerStyle>
-
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
