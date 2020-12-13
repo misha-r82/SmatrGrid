@@ -7,6 +7,7 @@
         xmlns:lib="clr-namespace:Lib;assembly=Lib"
         xmlns:controls="clr-namespace:SmartGrid.Controls"
         xmlns:icons="clr-namespace:SmartGrid.HeaderIcons"
+        xmlns:gridWidth="clr-namespace:SmartGrid.Grid"
         mc:Ignorable="d"
         Title="{Binding Source={x:Static local:WorkSpace.Instance}, Path=ActiveField.Header}" Height="800" Width="1200">
     <Grid Name="gridMain" PreviewMouseMove="GridMain_OnPreviewMouseMove" GotFocus="GridMain_OnGotFocus" >
@@ -63,6 +64,7 @@
             <ToolBar>
                 <Button Name="btnIconEditor" Click="btnIconEditor_Click">IconBitMaps</Button>
             </ToolBar>
+            <gridWidth:CtrlGridWidthCommands Margin="150,0,0,0"/>
         </ToolBar>
         <StackPanel Grid.RowSpan="2" Grid.Row="1">
             <local:CtrlFieldMan/>

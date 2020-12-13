@@ -6,22 +6,22 @@
              xmlns:local="clr-namespace:SmartGrid.Controls"
              xmlns:smartGrid="clr-namespace:SmartGrid"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="CtrlField_OnDataContextChanged">
     <Grid Name="gridWrk">
         <Grid.RowDefinitions>
-            <RowDefinition Height="{Binding ActiveField.GridWidth.GH1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <RowDefinition Height="{Binding GridWidth.GH1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <RowDefinition Height="6"/>
-            <RowDefinition  Height="{Binding ActiveField.GridWidth.GH2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <RowDefinition  Height="{Binding GridWidth.GH2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <RowDefinition Height="6"/>
-            <RowDefinition  Height="{Binding ActiveField.GridWidth.GH3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <RowDefinition  Height="{Binding GridWidth.GH3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="{Binding ActiveField.GridWidth.GW1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ColumnDefinition  Width="{Binding GridWidth.GW1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ColumnDefinition Width="6"/>
-            <ColumnDefinition Width="{Binding ActiveField.GridWidth.GW2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ColumnDefinition Width="{Binding GridWidth.GW2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ColumnDefinition Width="6"/>
-            <ColumnDefinition Width="{Binding ActiveField.GridWidth.GW3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ColumnDefinition Width="{Binding GridWidth.GW3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Name="spltH1" Grid.Row="1" Grid.ColumnSpan="5" MouseDoubleClick="SpltH1_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>
         <GridSplitter Name="spltH2" Grid.Row="3" Grid.ColumnSpan="5" MouseDoubleClick="SpltH2_OnMouseDoubleClick" HorizontalAlignment="Stretch"/>

@@ -84,8 +84,8 @@
     <Compile Include="Controls\ExpandButton.xaml.cs">
       <DependentUpon>ExpandButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\HeaderCtrl.xaml.cs">
-      <DependentUpon>HeaderCtrl.xaml</DependentUpon>
+    <Compile Include="HeaderIcons\CtrlHeaderIcons.xaml.cs">
+      <DependentUpon>CtrlHeaderIcons.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NodeCotrol.xaml.cs">
       <DependentUpon>NodeCotrol.xaml</DependentUpon>
@@ -109,7 +109,11 @@
       <DependentUpon>FrmHyperlink.xaml</DependentUpon>
     </Compile>
     <Compile Include="Editor\HyperlinkCreater.cs" />
-    <Compile Include="GridWidth\GridWidth.cs" />
+    <Compile Include="Grid\CtrlGridWidthCommands.xaml.cs">
+      <DependentUpon>CtrlGridWidthCommands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Grid\GridWidth.cs" />
+    <Compile Include="Grid\WidthManager.cs" />
     <Compile Include="HeaderIcons\CtrlIconPanel.xaml.cs">
       <DependentUpon>CtrlIconPanel.xaml</DependentUpon>
     </Compile>
@@ -162,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\HeaderCtrl.xaml">
+    <Page Include="HeaderIcons\CtrlHeaderIcons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editor\FrmHyperlink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Grid\CtrlGridWidthCommands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +298,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\icon-photo-plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\grid\hor1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\grid\blank_grid.png" />
+    <Resource Include="img\grid\hor2.png" />
+    <Resource Include="img\grid\hor3.png" />
+    <Resource Include="img\grid\vert1.png" />
+    <Resource Include="img\grid\vert2.png" />
+    <Resource Include="img\grid\vert3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\grid\hor_align.png" />
+    <Resource Include="img\grid\vert_align.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

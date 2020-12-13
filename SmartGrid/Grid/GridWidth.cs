@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using SmartGrid.Annotations;
+using SmartGrid.Grid;
 
 namespace SmartGrid
 {
@@ -17,6 +18,8 @@ namespace SmartGrid
     {
         [DataMember] private Double _w1, _w2, _w3, _h1, _h2, _h3;
         [DataMember] public double WidthAll { get; set; }
+        public WidthManager Manager { get; }
+
         public GridLength GW1
         {
             get { return new GridLength(_w1, GridUnitType.Star); }
@@ -41,7 +44,7 @@ namespace SmartGrid
             set
             {
                 _w3 = value.Value;
-                Debug.WriteLine("w3={0}", _w3);
+               Debug.WriteLine("w3={0}", _w3);
             }
         }
         public GridLength GH1
@@ -68,13 +71,14 @@ namespace SmartGrid
             set
             {
                 _h3 = value.Value;
-                Debug.WriteLine("h3={0}", _h3);
+               // Debug.WriteLine("h3={0}", _h3);
             }
         }
 
         public GridWidth()
         {
-            _w1 = _w2 = _w3 = _h1 = _h2 = _h3 = 100;
+            Manager = new WidthManager(this);
+            Manager.ShowAll();
         }
         public double W1
         {

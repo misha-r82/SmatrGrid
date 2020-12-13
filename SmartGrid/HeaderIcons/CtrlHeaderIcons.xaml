@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SmartGrid.Controls.HeaderCtrl"
+﻿<UserControl x:Class="SmartGrid.Controls.CtrlHeaderIcons"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,19 +23,13 @@
                     <Image Source="{Binding Icon.IconBitMap}" Width="16" Height="16" Margin="2,0" Focusable="True" MouseDown="Icon_OnMouseDown" ContextMenuOpening="IocnMenu_OnContextMenuOpening">
                         <Image.ContextMenu>
                             <ContextMenu Name="IocnMenu" ItemsSource="{Binding}" >
-                                <ContextMenu.ItemTemplate>
-                                    <DataTemplate>
-                                        <MenuItem Header="{Binding Name}" Icon="{Binding Icon}"/>
-                                    </DataTemplate>
-                                </ContextMenu.ItemTemplate>
-                                <!--<ItemsControl ItemsSource="{Binding Collection}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <MenuItem Name="{Binding Icon.name}"></MenuItem>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>-->
-                                <!--<MenuItem Name="itmDel" Header="Delete" Command="Delete"/>-->
+                                <ContextMenu.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Header" Value="{Binding Name}" />
+                                        <Setter Property="Icon" Value="{Binding Img}" />
+                                    </Style>
+                                </ContextMenu.ItemContainerStyle>
+
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>

@@ -31,7 +31,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid>
-                <ctrls:HeaderCtrl x:Name="ctrlHeader" TabIndex="0" Focusable="True" GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus" />
+                <ctrls:CtrlHeaderIcons x:Name="ctrlHeader" TabIndex="0" Focusable="True" GotFocus="CtrlHeader_OnGotFocus" LostFocus="CtrlHeader_OnLostFocus" />
             </Grid>
         <Grid Name="gridNewNode" Grid.Row="1" Margin="2"   Visibility="{Binding ElementName=gridMain, Path=IsKeyboardFocusWithin, 
                     Converter={StaticResource BoolVisConverter}}">

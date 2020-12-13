@@ -18,12 +18,12 @@ using SmartGrid.HeaderIcons;
 namespace SmartGrid.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для HeaderCtrl.xaml
+    /// Логика взаимодействия для HeaderIconsCtrl.xaml
     /// </summary>
-    public partial class HeaderCtrl : UserControl
+    public partial class HeaderIconsCtrl : UserControl
     {
         private IHasHeader _header;
-        public HeaderCtrl()
+        public HeaderIconsCtrl()
         {
             InitializeComponent();
         }

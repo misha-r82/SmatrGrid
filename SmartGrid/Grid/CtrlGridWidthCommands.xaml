@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="SmartGrid.Grid.CtrlGridWidthCommands"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartGrid.Grid"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300">
+    <ToolBar>
+        <ToolBar.Resources>
+            <Style TargetType="Image">
+                <Setter Property="Margin" Value="-1"/>
+            </Style>
+        </ToolBar.Resources>
+        <Button Name="btnShowAll" ToolTip="Показать все" Click="BtnShowAll_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/blank_grid.png"/>
+        </Button>
+        
+        <Button Name="btnHideV1" ToolTip="Показать/Скрыть первый столбец" Click="BtnHideV1_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/vert1.png"/>
+        </Button>
+        <Button Name="btnHideV2" ToolTip="Показать/Скрыть первый столбец"  Click="BtnHideV2_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/vert2.png"/>
+        </Button>
+        <Button Name="btnHideV3" ToolTip="Показать/Скрыть первый столбец"  Click="BtnHideV3_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/vert3.png"/>
+        </Button>
+        <Button Name="btnHideH1" ToolTip="Показать/Скрыть первую строку" Click="BtnHideH1_OnClick"  Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/hor1.png" />
+        </Button>
+        <Button Name="btnHideH2" ToolTip="Показать/Скрыть вторую строку" Click="BtnHideH2_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/hor2.png"/>
+        </Button>
+        <Button Name="btnHideH3" ToolTip="Показать/Скрыть третью строку" Click="BtnHideH3_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/hor3.png"/>
+        </Button>
+        <Button Name="btnHorAlign" ToolTip="Выровнять ширину" Click="BtnHorAlign_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/hor_align.png"/>
+        </Button>
+        <Button Name="btnVertAlign" ToolTip="Выровнять высоту" Click="BtnVertAlign_OnClick" Style="{StaticResource SmallBtnStyle}">
+            <Image Source="../img/grid/vert_align.png"/>
+        </Button>
+
+
+    </ToolBar>
+</UserControl>

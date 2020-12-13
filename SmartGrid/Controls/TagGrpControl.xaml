@@ -30,7 +30,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ctrl:HeaderCtrl  PreviewMouseDown="CanvTag_PreviewMouseDown"/>
+                        <ctrl:CtrlHeaderIcons  PreviewMouseDown="CanvTag_PreviewMouseDown"/>
                         <Border Name="canvTag" Grid.Column="1" Style="{StaticResource LvItemDragBorderStyle}" 
                                 MouseDown="CanvTag_PreviewMouseDown"/>
                     </Grid>

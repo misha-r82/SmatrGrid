@@ -23,7 +23,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <local:HeaderCtrl x:Name="ctrlHeader" TabIndex="0" Focusable="True"/>
+        <local:CtrlHeaderIcons x:Name="ctrlHeader" TabIndex="0" Focusable="True"/>
         <RichTextBox Name="txtBody" Grid.Row="1" Grid.ColumnSpan="3" GotKeyboardFocus="TxtVal_OnGotFocus" Loaded="TxtVal_OnLoaded" SizeChanged="TxtVal_OnSizeChanged"
                      Visibility="{Binding ViewStl.DetailsVisile, Converter={StaticResource BoolVisConverter}}"/>
         <Grid Name="gridRight"  Grid.Column="2">

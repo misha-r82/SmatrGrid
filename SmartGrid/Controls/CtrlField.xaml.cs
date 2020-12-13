@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartGrid.Drag;
+using SmartGrid.Grid;
 
 namespace SmartGrid.Controls
 {
@@ -26,29 +27,31 @@ namespace SmartGrid.Controls
         {
             InitializeComponent();
         }
+
+        private WidthManager Wm => WorkSpace.Instance.ActiveField.GridWidth.Manager;
         private void SpltH1_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.H1 + WorkSpace.Instance.ActiveField.GridWidth.H2;
-            WorkSpace.Instance.ActiveField.GridWidth.H1 = WorkSpace.Instance.ActiveField.GridWidth.H2 = all / 2;
+            Wm.MiddleH12();
         }
 
         private void SpltH2_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.H2 + WorkSpace.Instance.ActiveField.GridWidth.H3;
-            WorkSpace.Instance.ActiveField.GridWidth.H2 = WorkSpace.Instance.ActiveField.GridWidth.H3 = all / 2;
+            Wm.MiddleH23();
         }
 
         private void SpltW1_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.W1 + WorkSpace.Instance.ActiveField.GridWidth.W2;
-            WorkSpace.Instance.ActiveField.GridWidth.W1 = WorkSpace.Instance.ActiveField.GridWidth.W2 = all / 2;
+            Wm.MiddleW12();
         }
 
         private void SpltW2_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var all = WorkSpace.Instance.ActiveField.GridWidth.W2 + WorkSpace.Instance.ActiveField.GridWidth.W3;
-            WorkSpace.Instance.ActiveField.GridWidth.W2 = WorkSpace.Instance.ActiveField.GridWidth.W3 = all / 2;
+            Wm.MiddleW23();
         }
 
+        private void CtrlField_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
+        }
     }
 }

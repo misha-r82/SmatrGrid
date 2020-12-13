@@ -207,7 +207,6 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="img\search.png" />
   </ItemGroup>

@@ -14,10 +14,11 @@ namespace Lib.UI
         public MenuDataItem(string name, BitmapImage image)
         {
             Name = name;
-            Image = image;
+            Icon = image;
         }
         public  string Name { get; set; }
-        public BitmapImage Image { get; set; }
+        public BitmapImage Icon { get; set; }
+        public Image Img => new Image() {Source = Icon};
         public ICommand Command { get; set; }
         public string ToolTip { get; set; }
     }
