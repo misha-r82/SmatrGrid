@@ -16,18 +16,20 @@ namespace SmartGrid.HeaderIcons
         }
         private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
         {
-            return icon.Collection.Any(i=>i.IsSameIconData(icon1));
+            if (icon.Parent == null)
+                return icon.Collection.Any(i=>i.IsSameIconData(icon1));
+            return icon.Parent.Collection.Any(i => i.IsSameIconData(icon1));
         }
         public void Add(HeaderIcon icon)
         {
-            if (this.Any(i => i.Icon == icon.Icon)) return;
+            if (this.Any(i => i.IsSameIconData(icon))) return;
             foreach (HeaderIcon present in this)
             {
                 if (SameCategory(present, icon))
                 {
                     int pos = IndexOf(present);
                     Remove(present);
-                    Insert(pos, icon.ToIconSet());
+                    Insert(pos, present == icon ? icon : icon.ToIconSet());
                     return;
                 }
             }

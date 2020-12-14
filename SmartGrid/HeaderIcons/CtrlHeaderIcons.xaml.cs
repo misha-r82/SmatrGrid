@@ -51,13 +51,13 @@ namespace SmartGrid.Controls
             var iconElement = sender as FrameworkElement;
             var menu = iconElement.ContextMenu;
             var icon = (HeaderIcon) iconElement.DataContext;
+            if (icon.Parent != null) icon = icon.Parent;
             var menuData = new List<MenuDataItem>();
             foreach (var headerIcon in icon.Collection)
             {
                 var command = new SetIconCommand(headerIcon, _header.Header.Icons);
                 menuData.Add(new MenuDataItem(headerIcon.Icon.Name, headerIcon.Icon.IconBitMap, command));
             }
-
             menu.DataContext = menuData;
         }
         public class SetIconCommand : ICommand
@@ -73,12 +73,10 @@ namespace SmartGrid.Controls
             {
                 return true;
             }
-
             public void Execute(object parameter)
             {
                 _iconSet.Add(_icon);
             }
-
             public event EventHandler CanExecuteChanged;
         }
     }
