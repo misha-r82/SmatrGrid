@@ -128,6 +128,7 @@
     <Compile Include="HeaderIcons\IconCollection.cs" />
     <Compile Include="HeaderIcons\IconSet.cs" />
     <Compile Include="HeaderIcons\IconRepo.cs" />
+    <Compile Include="HeaderIcons\IconsGroup.cs" />
     <Compile Include="Items\CurElement.cs" />
     <Compile Include="Items\HeaderableList.cs" />
     <Compile Include="Items\HeaderClass.cs" />

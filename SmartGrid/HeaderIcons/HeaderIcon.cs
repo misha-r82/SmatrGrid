@@ -15,20 +15,20 @@ namespace SmartGrid.HeaderIcons
     [DataContract(IsReference = true)]
     [KnownType(typeof(byte[]))]
     [KnownType(typeof(System.Array))]  //here !!!!! for System.Byte[*]
-    public class IconData
+    public class IconElement
     {
-        [DataMember]
-        private byte[] binData;
-        public IconData()
+        [DataMember] private byte[] binData;
+        [DataMember] public string Name { get; set; }
+        [DataMember] IconElement 
+        public IconElement()
         { }
 
-        public IconData(string name)
+        public IconElement(string name)
         {
             Name = name;
         }
 
-        [DataMember]
-        public string Name { get; set; }
+
 
         public BitmapImage IconBitMap { get; private set; }
 
@@ -65,13 +65,13 @@ namespace SmartGrid.HeaderIcons
     [DataContract(IsReference = true)]
     public class HeaderIcon : INotifyPropertyChanged
     {
-        [DataMember] private IconData _icon;
-        public IconData Icon => _icon;
+        [DataMember] private IconElement _icon;
+        public IconElement Icon => _icon;
         [DataMember]public HeaderIcon Parent { get; private set; }
         [DataMember] public IconCollection Collection { get; private set; }
         private HeaderIcon()
         {
-            _icon = new IconData("Base Icon");
+            _icon = new IconElement("Base Icon");
             Collection = new IconCollection(this);          
         }
         public static HeaderIcon CreateBaseItem() { return new HeaderIcon();}
