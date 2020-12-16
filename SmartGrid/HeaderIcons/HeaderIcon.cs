@@ -19,15 +19,15 @@ namespace SmartGrid.HeaderIcons
     {
         [DataMember] private byte[] binData;
         [DataMember] public string Name { get; set; }
-        [DataMember] IconElement 
-        public IconElement()
+        [DataMember] public IconCollection Collection { get; }
+        private IconElement()
         { }
 
-        public IconElement(string name)
+        public IconElement(string name, IconCollection collection)
         {
             Name = name;
+            Collection = collection;
         }
-
 
 
         public BitmapImage IconBitMap { get; private set; }
@@ -62,8 +62,8 @@ namespace SmartGrid.HeaderIcons
         }
     }
 
-    [DataContract(IsReference = true)]
-    public class HeaderIcon : INotifyPropertyChanged
+  /*    [DataContract(IsReference = true)]
+  public class HeaderIcon : INotifyPropertyChanged
     {
         [DataMember] private IconElement _icon;
         public IconElement Icon => _icon;
@@ -117,5 +117,5 @@ namespace SmartGrid.HeaderIcons
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
+    }*/
 }

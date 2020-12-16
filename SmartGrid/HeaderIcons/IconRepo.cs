@@ -8,22 +8,22 @@ namespace SmartGrid.HeaderIcons
     public class IconRepo
     {
         private static string ICONS_FILE = "icons.xml";
-        private static HeaderIcon _repo;
+        private static IconsGroup _repo;
         private static string FileName => System.AppDomain.CurrentDomain.BaseDirectory + ICONS_FILE;
 
-        public static HeaderIcon CoreIcon
+        public static IconsGroup CoreGroup
         {
             get
             {
-                if (_repo == null) _repo = Lib.FileIO.DeserializeDataContract<HeaderIcon>(FileName);
-                if (_repo == null) _repo = HeaderIcon.CreateBaseItem();
+                if (_repo == null) _repo = Lib.FileIO.DeserializeDataContract<IconsGroup>(FileName);
+                if (_repo == null) _repo = new IconsGroup();
                 return _repo;
             }
         }
 
         public static void Save()
         {
-            Lib.FileIO.SerializeDataContract(CoreIcon, FileName);
+            Lib.FileIO.SerializeDataContract(CoreGroup, FileName);
         }
     }
 }

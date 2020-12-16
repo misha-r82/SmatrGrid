@@ -24,11 +24,11 @@ namespace SmartGrid.HeaderIcons
             InitializeComponent();
         }
 
-        public HeaderIcon SelectedIcon
+        public IconElement SelectedIcon
         {
             get
             {
-                return iconTree.SelectedItem as HeaderIcon;
+                return iconTree.SelectedItem as IconElement;
             }
         }
         private void CtrlIconEdition_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -39,7 +39,7 @@ namespace SmartGrid.HeaderIcons
         private void Icon_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount < 2) return;
-            var icon = ((sender as FrameworkElement)?.DataContext) as HeaderIcon;
+            var icon = ((sender as FrameworkElement)?.DataContext) as IconElement;
             var fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = true;
 
@@ -47,7 +47,7 @@ namespace SmartGrid.HeaderIcons
             {
                 if (fileDialog.ShowDialog() != true) return;
                 var stream = new FileStream(fileDialog.FileName, FileMode.Open);
-                icon.Icon.FromStream(stream);
+                icon.FromStream(stream);
             }
             catch (Exception exception)
             {

@@ -10,7 +10,7 @@ namespace SmartGrid.HeaderIcons
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var collection = value as IEnumerable<HeaderIcon>;
+            var collection = value as IEnumerable<IconElement>;
             if (collection == null) return null;
             return collection.Skip(1);
         }

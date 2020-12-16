@@ -19,7 +19,7 @@ namespace SmartGrid
     {
 
         [DataMember] private SmartFiled _activeField;
-        [DataMember] private HeaderIcon _coreHeaderIcon;
+        [DataMember] private IconsGroup iconGroupGroup;
         [DataMember] private static WorkSpace _instance;
         public UndoData Undo { get; private set; }
         public CurElement Curent { get; private set; }
@@ -34,7 +34,7 @@ namespace SmartGrid
             }
         }
 
-        public HeaderIcon CoreHeaderIcon => _coreHeaderIcon;
+        public IconsGroup IconGroup => iconGroupGroup;
         public WorkSpace()
         {
             Undo = new UndoData();
@@ -43,7 +43,7 @@ namespace SmartGrid
             Add(new SmartFiled("Раздел2"));
             Add(new SmartFiled("Раздел3"));
             ActiveField = this[0];
-            _coreHeaderIcon = IconRepo.CoreIcon;
+            iconGroupGroup = IconRepo.CoreGroup;
         }
 
         public SmartFiled ActiveField

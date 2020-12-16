@@ -12,9 +12,9 @@
         <iconEditor:ExcludeSelfCollectionConvertor x:Key="ExcludeSelfCollectionConvertor"/>
     </ToolBar.Resources>
     <ToolBar.CommandBindings>
-            <CommandBinding Command="iconEditor:IconEditorCommands.AddIcon" Executed="CommandBinding_OnExecuted" />
+            <CommandBinding Command="iconEditor:IconEditorCommands.AddCollection" Executed="CommandBinding_OnExecuted" />
     </ToolBar.CommandBindings>
-        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=CoreHeaderIcon.Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=IconGroup.Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -23,13 +23,13 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RibbonSplitButton SmallImageSource="{Binding Icon.IconBitMap}" 
-                                       Command="iconEditor:IconEditorCommands.AddIcon"
+                                       Command="iconEditor:IconEditorCommands.AddCollection"
                                        CommandParameter="{Binding}"
                                        ItemsSource="{Binding Collection}">
                         <RibbonSplitButton.Resources>
                             <Style TargetType="{x:Type RibbonMenuItem}">
                                 <Setter Property="Header" Value="{Binding Path=Icon.Name}" />
-                                <Setter Property="Command" Value="iconEditor:IconEditorCommands.AddIcon" />
+                                <Setter Property="Command" Value="iconEditor:IconEditorCommands.AddCollection" />
                                 <Setter Property="CommandParameter" Value="{Binding }"/>
                                 <Setter Property="ImageSource" Value="{Binding Icon.IconBitMap}" />
                             </Style>

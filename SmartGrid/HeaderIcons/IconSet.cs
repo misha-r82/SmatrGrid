@@ -5,43 +5,41 @@ using System.Linq;
 
 namespace SmartGrid.HeaderIcons
 {
-    public class IconSet : ObservableCollection<HeaderIcon>
+    public class IconSet : ObservableCollection<IconElement>
     {
         private IconSet() { }
-        public IconSet(IEnumerable<HeaderIcon> source = null)
+        public IconSet(IEnumerable<IconElement> source = null)
         {
             if (source!=null)
                 foreach (var item in source)
                     Add(item);
         }
-        private bool SameCategory(HeaderIcon icon, HeaderIcon icon1)
+        private bool SameCategory(IconElement icon, IconElement icon1)
         {
-            if (icon.Parent == null)
-                return icon.Collection.Any(i=>i.IsSameIconData(icon1));
-            return icon.Parent.Collection.Any(i => i.IsSameIconData(icon1));
+            return icon.Collection == icon1.Collection;
         }
-        public void Add(HeaderIcon icon)
+        public void Add(IconElement icon)
         {
-            if (this.Any(i => i.IsSameIconData(icon))) return;
-            foreach (HeaderIcon present in this)
+            if (this.Contains(icon)) return;
+            foreach (IconElement present in this)
             {
                 if (SameCategory(present, icon))
                 {
                     int pos = IndexOf(present);
                     Remove(present);
-                    Insert(pos, present == icon ? icon : icon.ToIconSet());
+                    Insert(pos, icon);
                     return;
                 }
             }
-            base.Add(icon.ToIconSet());
+            base.Add(icon);
         }
 
-        public void NextIcon(HeaderIcon icon)
+        public void NextIcon(IconElement icon)
         {
             if (!Contains(icon)) throw new ArgumentException("Cannot set NextItem beacuse icon is noi in the set");
             var pos = IndexOf(icon);
             RemoveAt(pos);
-            Insert(pos, icon.NextIcon());
+            Insert(pos, icon.Collection.NextIcon(icon));
         }
 
     }
