@@ -23,14 +23,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TreeView Name="iconTree"  ItemsSource="{Binding Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+        <TreeView Name="iconTree"  ItemsSource="{Binding Path=., Converter={StaticResource TestConverter}}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True" />
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding }">
+                <HierarchicalDataTemplate ItemsSource="{Binding}">
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -39,6 +39,18 @@
                         <Image Source="{Binding FirstIcon.IconBitMap}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
                         <controls:EditableLable Text="{Binding FirstIcon.Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
                     </Grid>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding IconBitMap}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
+                                <controls:EditableLable Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
+                            </Grid>
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

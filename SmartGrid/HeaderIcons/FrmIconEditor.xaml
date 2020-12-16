@@ -19,8 +19,6 @@
             </ResourceDictionary>
         </Grid.Resources>
         <Grid.CommandBindings>
-            <CommandBinding Command="{x:Static local:IconEditorCommands.AddCollection}" Executed="CommandAdd_OnExecuted"/>
-            <CommandBinding Command="{x:Static local:IconEditorCommands.AddIcon}"/>
             <CommandBinding Command="{x:Static ApplicationCommands.Delete}" Executed="CommandDelete_OnExecuted"/>
             <CommandBinding Command="Save" Executed="CommandBinding_OnExecuted"></CommandBinding>
         </Grid.CommandBindings>
@@ -30,10 +28,10 @@
         </Grid.RowDefinitions>
 
         <ToolBar>
-            <Button Command="{x:Static local:IconEditorCommands.AddCollection}" ToolTip="Добавить значек" Margin="5,0,0,0" Width="22" Height="22">
+            <Button Command="{x:Static local:IconEditorCommands.AddCollection}" ToolTip="Добавить набор значков" Margin="5,0,0,0" Width="22" Height="22">
                 <Image Source="../img/icon-photo.png" Margin="0"/>
             </Button>
-            <Button Command="{x:Static local:IconEditorCommands.AddIcon}" ToolTip="Добавить дочерний значек" Margin="5,0,0,0" Width="22" Height="22">
+            <Button Command="{x:Static local:IconEditorCommands.AddIconComamnd}" ToolTip="Добавить значек" Margin="5,0,0,0" Width="22" Height="22">
                 <Image Source="../img/icon-photo-plus.png" Margin="-1,0,-1,-2"/>
             </Button>
             <Button Command="Delete" ToolTip="Удалить выбранные элементы" Margin="5,0,0,0" Width="22" Height="22">

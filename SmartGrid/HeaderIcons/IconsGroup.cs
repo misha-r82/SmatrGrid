@@ -9,7 +9,10 @@ namespace SmartGrid.HeaderIcons
 {
     public class IconsGroup : ObservableCollection<IconCollection>
     {
-        public IconsGroup() : base(){}
+        public IconsGroup() : base()
+        {
+            CreateCollection("новый набор");
+        }
 
         public IconCollection CreateCollection(string name)
         {

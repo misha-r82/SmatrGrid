@@ -126,6 +126,7 @@
       <DependentUpon>CtrlIconEdition.xaml</DependentUpon>
     </Compile>
     <Compile Include="HeaderIcons\IconCollection.cs" />
+    <Compile Include="HeaderIcons\IconEditorCommands.cs" />
     <Compile Include="HeaderIcons\IconSet.cs" />
     <Compile Include="HeaderIcons\IconRepo.cs" />
     <Compile Include="HeaderIcons\IconsGroup.cs" />
