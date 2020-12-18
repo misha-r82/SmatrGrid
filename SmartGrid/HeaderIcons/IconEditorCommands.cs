@@ -32,9 +32,7 @@ namespace SmartGrid.HeaderIcons
             {
                 return _collection != null;
             }
-
             private IconCollection _collection;
-
             public IconCollection Collection
             {
                 get => _collection;
@@ -54,16 +52,15 @@ namespace SmartGrid.HeaderIcons
                     if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
                     string name = Path.GetFileNameWithoutExtension(fileName);
                     var stream = new FileStream(fileName, FileMode.Open);
-                    Collection.CreatElement(name, stream);
+                    var coll = Collection.Group.CreateCollection(name);
+                    coll.FirstIcon.FromStream(stream);
                 }
             }
-
             public event EventHandler CanExecuteChanged;
         }
         public class AddIconCommand : ICommand
         {
             private IconElement _icon;
-
             public IconElement SelectedIcon
             {
                 get => _icon;
@@ -74,12 +71,21 @@ namespace SmartGrid.HeaderIcons
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
-
+            private IconCollection _collection;
+            public IconCollection Collection
+            {
+                get => _collection;
+                set
+                {
+                    if (_collection == value) return;
+                    _collection = value;
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
             public bool CanExecute(object parameter)
             {
-                return _icon != null;
+                return _icon != null || _collection!= null;
             }
-
             public void Execute(object parameter)
             {
                 var filenames = IconEditorCommands.ShowFileDialog();
@@ -89,10 +95,10 @@ namespace SmartGrid.HeaderIcons
                     if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName)) continue;
                     string name = Path.GetFileNameWithoutExtension(fileName);
                     var stream = new FileStream(fileName, FileMode.Open);
-                    _icon.Collection.CreatElement(name, stream);
+                    var collection = _icon != null ? _icon.Collection : _collection;
+                    collection.CreatElement(name, stream);
                 }
             }
-
             public event EventHandler CanExecuteChanged;
         }
 

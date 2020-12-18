@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -14,8 +15,10 @@ namespace SmartGrid.HeaderIcons
         public IconCollection(string name, IconsGroup group) : base()
         {
             CreatElement(name);
+            Group = group;
         }
         public IconElement FirstIcon => this[0];
+        public IconsGroup Group { get;}
 
         public IconElement CreatElement(string name, Stream stream = null)
         {

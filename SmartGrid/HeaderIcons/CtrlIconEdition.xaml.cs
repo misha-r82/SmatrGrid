@@ -42,7 +42,6 @@ namespace SmartGrid.HeaderIcons
             var icon = ((sender as FrameworkElement)?.DataContext) as IconElement;
             var fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = true;
-
             try
             {
                 if (fileDialog.ShowDialog() != true) return;

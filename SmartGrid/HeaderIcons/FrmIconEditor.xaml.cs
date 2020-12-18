@@ -35,6 +35,7 @@ namespace SmartGrid.HeaderIcons
             {
                 if (value == selectedItem) return;
                 selectedItem = value;
+                IconEditorCommands.AddIconComamnd.SelectedIcon = value;
             }
         }
 
@@ -46,13 +47,14 @@ namespace SmartGrid.HeaderIcons
                 if (SelectedCollection == value) return;
                 selectedCollection = value;
                 IconEditorCommands.AddCollection.Collection = value;
+                IconEditorCommands.AddIconComamnd.Collection = value;
             }
         }
 
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            /*if (SelectedItem == null) return;
-            SelectedItem.Parent.Collection.Remove(SelectedItem);*/
+            if (SelectedItem == null) return;
+            SelectedItem.Collection.Remove(SelectedItem);
             
         }
 
