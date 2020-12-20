@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Win32;
+using SmartGrid.Controls;
 
 namespace SmartGrid.HeaderIcons
 {
@@ -38,8 +39,10 @@ namespace SmartGrid.HeaderIcons
 
         private void Icon_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount < 2) return;
-            var icon = ((sender as FrameworkElement)?.DataContext) as IconElement;
+            if (e.ClickCount < 2 || e.Source is EditableLable) return;
+            var datacontext = (sender as FrameworkElement)?.DataContext;
+            var icon = datacontext as IconElement;
+            if (icon == null) icon = ((IconCollection) datacontext).FirstIcon;
             var fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = true;
             try

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,7 @@ namespace SmartGrid.HeaderIcons
 {
     public class IconsGroup : ObservableCollection<IconCollection>
     {
-        public IconsGroup() : base()
-        {
-            CreateCollection("новый набор");
-        }
+        public IconsGroup() { }
 
         public IconCollection CreateCollection(string name)
         {

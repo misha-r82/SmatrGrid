@@ -25,6 +25,8 @@ namespace SmartGrid.HeaderIcons
         {
             DataContext = WorkSpace.Instance.IconGroup;
             InitializeComponent();
+            if (WorkSpace.Instance.IconGroup.Count == 0)
+                WorkSpace.Instance.IconGroup.CreateCollection("Новый набор");
             SelectedCollection = WorkSpace.Instance.IconGroup[0];
         }
 

@@ -19,7 +19,7 @@ namespace SmartGrid.HeaderIcons
     {
         [DataMember] private byte[] binData;
         [DataMember] public string Name { get; set; }
-        [DataMember] public IconCollection Collection { get; }
+        [DataMember] public IconCollection Collection { get; private set; }
         private IconElement()
         { }
 
