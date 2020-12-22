@@ -15,7 +15,7 @@ namespace SmartGrid.HeaderIcons
     [DataContract(IsReference = true)]
     [KnownType(typeof(byte[]))]
     [KnownType(typeof(System.Array))]  //here !!!!! for System.Byte[*]
-    public class IconElement
+    public class IconElement : INotifyPropertyChanged
     {
         [DataMember] private byte[] binData;
         [DataMember] public string Name { get; set; }
@@ -59,6 +59,15 @@ namespace SmartGrid.HeaderIcons
             catch (Exception e)
             {
             }
+            OnPropertyChanged(nameof(IconBitMap));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

@@ -14,7 +14,7 @@
     <ToolBar.CommandBindings>
             <CommandBinding Command="iconEditor:IconEditorCommands.AddCollection" Executed="CommandBinding_OnExecuted" />
     </ToolBar.CommandBindings>
-        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=IconGroup.Collection, Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=IconGroup, Converter={StaticResource TestConverter}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -22,16 +22,16 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <RibbonSplitButton SmallImageSource="{Binding Icon.IconBitMap}" 
+                    <RibbonSplitButton SmallImageSource="{Binding FirstIcon.IconBitMap}" 
                                        Command="iconEditor:IconEditorCommands.AddCollection"
                                        CommandParameter="{Binding}"
                                        ItemsSource="{Binding Collection}">
                         <RibbonSplitButton.Resources>
                             <Style TargetType="{x:Type RibbonMenuItem}">
-                                <Setter Property="Header" Value="{Binding Path=Icon.Name}" />
+                                <Setter Property="Header" Value="{Binding Path=Name}" />
                                 <Setter Property="Command" Value="iconEditor:IconEditorCommands.AddCollection" />
                                 <Setter Property="CommandParameter" Value="{Binding }"/>
-                                <Setter Property="ImageSource" Value="{Binding Icon.IconBitMap}" />
+                                <Setter Property="ImageSource" Value="{Binding IconBitMap}" />
                             </Style>
                         </RibbonSplitButton.Resources>
 </RibbonSplitButton>

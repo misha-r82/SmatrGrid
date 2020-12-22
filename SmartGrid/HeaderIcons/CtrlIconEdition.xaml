@@ -30,26 +30,23 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=.}">
-                    <Grid HorizontalAlignment="Stretch">
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=., Converter={StaticResource ExcludeSelfCollectionConvertor}}">
+                    <Grid HorizontalAlignment="Stretch" Background="Transparent" MouseDown="Icon_OnMouseDown">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MouseDown="Icon_OnMouseDown"/>
+                            <ColumnDefinition Width="Auto"  />
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid MouseDown="Icon_OnMouseDown">
                             <Image Source="{Binding FirstIcon.IconBitMap}" Width="16" Height="16" />
                             <controls:EditableLable Text="{Binding FirstIcon.Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
-                        </Grid>
-
                     </Grid>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch" Background="Transparent" MouseDown="Icon_OnMouseDown">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="{Binding IconBitMap}" Width="16" Height="16" MouseDown="Icon_OnMouseDown"/>
+                                <Image Source="{Binding IconBitMap}" Width="16" Height="16"/>
                                 <controls:EditableLable Text="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch"/>
                             </Grid>
                         </DataTemplate>

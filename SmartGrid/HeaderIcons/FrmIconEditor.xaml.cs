@@ -55,9 +55,15 @@ namespace SmartGrid.HeaderIcons
 
         private void CommandDelete_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (SelectedItem == null) return;
-            SelectedItem.Collection.Remove(SelectedItem);
-            
+            if (SelectedItem != null) SelectedItem.Collection.Remove(SelectedItem);
+            if (SelectedCollection != null)
+            {
+                if (MessageBox.Show($"Удалить набор{SelectedCollection.FirstIcon.Name}?", 
+                    "Подтверждение удаления набора значков", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    SelectedCollection.Group.Remove(SelectedCollection);
+            }
+                
+
         }
 
         private void ctrlMainIcon_GotFocus(object sender, RoutedEventArgs e)
