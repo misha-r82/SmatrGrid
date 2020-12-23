@@ -11,8 +11,6 @@
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
-                <lib:TestConverter x:Key="TestConverter"/>
-                <lib:BoolVisConverter x:Key="BoolVisConverter"/>
                 <local:ExcludeSelfCollectionConvertor x:Key="ExcludeSelfCollectionConvertor"/>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="../Themes/StylesDic.xaml"/>

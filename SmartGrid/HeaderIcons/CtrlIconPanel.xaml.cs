@@ -24,11 +24,6 @@ namespace SmartGrid.HeaderIcons
         {
             InitializeComponent();
         }
-        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            var icon = e.Parameter as IconElement;
-            foreach (IHasHeader header in WorkSpace.Instance.Curent.SelectedElements)
-                header.Header.Icons.Add(icon);
-        }
+
     }
 }

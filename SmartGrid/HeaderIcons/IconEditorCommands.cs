@@ -10,7 +10,48 @@ namespace SmartGrid.HeaderIcons
     /// <summary>
     /// Логика взаимодействия для IconEditor.xaml
     /// </summary>
+    public static class HeaderIconCommands
+    {
+        private static readonly AddIconToHeaderCommand _addIconToHeaderCommand = new AddIconToHeaderCommand();
+        public static AddIconToHeaderCommand AddIconToHederCommand
+        {
+            get => _addIconToHeaderCommand;
+        }
+        public class AddIconToHeaderCommand:ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+            public void Execute(object parameter)
+            {
+                var icon = parameter as IconElement;
+                foreach (IHasHeader header in WorkSpace.Instance.Curent.SelectedElements)
+                    header.Header.Icons.Add(icon);
+            }
+            public event EventHandler CanExecuteChanged;
+        }
 
+        public class SetIconCommand : ICommand
+        {
+            private IconElement _icon;
+            private IconSet _iconSet;
+            public SetIconCommand(IconElement icon, IconSet iconSet)
+            {
+                _icon = icon;
+                _iconSet = iconSet;
+            }
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+            public void Execute(object parameter)
+            {
+                _iconSet.Add(_icon);
+            }
+            public event EventHandler CanExecuteChanged;
+        }
+    }
     public static class IconEditorCommands
     {
         private static readonly AddCollectionCommand _addCollectionCommand = new AddCollectionCommand();

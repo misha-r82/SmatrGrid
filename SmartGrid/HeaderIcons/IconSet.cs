@@ -20,7 +20,7 @@ namespace SmartGrid.HeaderIcons
         }
         public void Add(IconElement icon)
         {
-            if (this.Contains(icon)) return;
+            if (Contains(icon)) return;
             foreach (IconElement present in this)
             {
                 if (SameCategory(present, icon))

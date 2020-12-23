@@ -54,29 +54,10 @@ namespace SmartGrid.Controls
             var menuData = new List<MenuDataItem>();
             foreach (var headerIcon in icon.Collection)
             {
-                var command = new SetIconCommand(headerIcon, _header.Header.Icons);
+                var command = new HeaderIconCommands.SetIconCommand(headerIcon, _header.Header.Icons);
                 menuData.Add(new MenuDataItem(headerIcon.Name, headerIcon.IconBitMap, command));
             }
             menu.DataContext = menuData;
-        }
-        public class SetIconCommand : ICommand
-        {
-            private IconElement _icon;
-            private IconSet _iconSet;
-            public SetIconCommand(IconElement icon, IconSet iconSet)
-            {
-                _icon = icon;
-                _iconSet = iconSet;
-            }
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-            public void Execute(object parameter)
-            {
-                _iconSet.Add(_icon);
-            }
-            public event EventHandler CanExecuteChanged;
         }
     }
 }
