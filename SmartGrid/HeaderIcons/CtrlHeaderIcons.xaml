@@ -20,9 +20,13 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding IconBitMap}" Width="16" Height="16" Margin="2,0" Focusable="True" MouseDown="Icon_OnMouseDown" ContextMenuOpening="IocnMenu_OnContextMenuOpening">
+                    <Image Source="{Binding IconBitMap}" Width="16" Height="16" Margin="2,0" Focusable="True" 
+                           MouseDown="Icon_OnMouseDown" ContextMenuOpening="IocnMenu_OnContextMenuOpening">
                         <Image.ContextMenu>
                             <ContextMenu Name="IocnMenu" ItemsSource="{Binding}" >
+                                <ContextMenu.CommandBindings>
+                                    <CommandBinding Command="Delete" Executed="CommandBinding_OnExecuted"></CommandBinding>
+                                </ContextMenu.CommandBindings>
                                 <ContextMenu.ItemContainerStyle>
                                     <Style TargetType="MenuItem">
                                         <Setter Property="Header" Value="{Binding Name}" />

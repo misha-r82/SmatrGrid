@@ -24,6 +24,7 @@ namespace SmartGrid.Controls
     {
         
         private IHasHeader _header;
+        private IconElement _curIcon;
         public CtrlHeaderIcons()
         {
             InitializeComponent();
@@ -36,9 +37,9 @@ namespace SmartGrid.Controls
 
         private void Icon_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+            _curIcon  = ((FrameworkElement)sender).DataContext as IconElement;
             if (e.ClickCount < 2 || e.ChangedButton != MouseButton.Left) return;
-            var icon = ((FrameworkElement) sender).DataContext as IconElement;
-            if (icon != null) _header.Header.Icons.NextIcon(icon);
+            if (_curIcon != null) _header.Header.Icons.NextIcon(_curIcon);
         }
 
         private void HeaderCtrl_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -50,14 +51,21 @@ namespace SmartGrid.Controls
         {
             var iconElement = sender as FrameworkElement;
             var menu = iconElement.ContextMenu;
-            var icon = (IconElement) iconElement.DataContext;
             var menuData = new List<MenuDataItem>();
-            foreach (var headerIcon in icon.Collection)
+            foreach (var headerIcon in _curIcon.Collection)
             {
                 var command = new HeaderIconCommands.SetIconCommand(headerIcon, _header.Header.Icons);
                 menuData.Add(new MenuDataItem(headerIcon.Name, headerIcon.IconBitMap, command));
             }
+
+            var delComm = ApplicationCommands.Delete;
+            menuData.Add(new MenuDataItem("Удалить", new BitmapImage(new Uri(@"pack://application:,,,/img/delete.png")), delComm));
             menu.DataContext = menuData;
+        }
+
+        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            _header.Header.Icons.Remove(_curIcon);
         }
     }
 }

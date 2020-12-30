@@ -8,10 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 <ToolBar>
-    <ToolBar.Resources>
-        <iconEditor:ExcludeSelfCollectionConvertor x:Key="ExcludeSelfCollectionConvertor"/>
-    </ToolBar.Resources>
-        <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=IconGroup}">
+    <ItemsControl ItemsSource="{Binding Source={x:Static local:WorkSpace.Instance}, Path=IconGroup}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -31,7 +28,7 @@
                                 <Setter Property="ImageSource" Value="{Binding IconBitMap}" />
                             </Style>
                         </RibbonSplitButton.Resources>
-</RibbonSplitButton>
+            </RibbonSplitButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
     </ItemsControl>
